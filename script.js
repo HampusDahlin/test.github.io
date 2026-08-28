@@ -74,3 +74,97 @@ updateCountdown();
 
 // Uppdatera varje sekund
 setInterval(updateCountdown, 1000);
+
+
+/* ==================================================
+   WEDDING ASSISTANT
+   ================================================== */
+
+const assistantButton =
+    document.getElementById("assistantButton");
+
+const assistantCard =
+    document.getElementById("assistantCard");
+
+const assistantClose =
+    document.getElementById("assistantClose");
+
+const assistantMessage =
+    document.getElementById("assistantMessage");
+
+
+/* Open assistant */
+
+assistantButton.addEventListener("click", () => {
+
+    assistantCard.classList.toggle("open");
+
+});
+
+
+/* Close assistant */
+
+assistantClose.addEventListener("click", () => {
+
+    assistantCard.classList.remove("open");
+
+});
+
+
+/* Answers */
+
+const answers = {
+
+    vigsel: `
+        Vigseln äger rum <strong>TIME</strong>
+        på <strong>VENUE</strong>.
+        <br><br>
+        Vi hoppas att du vill vara med!
+    `,
+
+    plats: `
+        Festen hålls på <strong>VENUE</strong>,
+        <br>
+        ADDRESS, CITY.
+    `,
+
+    kladsel: `
+        Klädkoden är
+        <strong>DRESS CODE</strong>.
+        <br><br>
+        Vi ser fram emot att se dig där!
+    `,
+
+    osa: `
+        Du kan svara på vår inbjudan
+        genom att klicka på knappen nedan.
+        <br><br>
+
+        <a
+            href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Öppna OSA-formuläret →
+        </a>
+    `
+};
+
+
+/* Question buttons */
+
+document
+    .querySelectorAll(".assistant-options button")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const answer =
+                answers[button.dataset.answer];
+
+            assistantMessage.innerHTML = answer;
+
+        });
+
+    });
+```

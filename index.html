@@ -1,12 +1,26 @@
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NAME & NAME — Bröllopsinbjudan</title>
+    <title>NAME & NAME — Vårt bröllop</title>
+
+    <!-- Elegant Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --cream: #f8f4ed;
+            --cream-dark: #eee7db;
+            --sage: #7d8773;
+            --text: #3d4038;
+            --white: #fffdf9;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -18,186 +32,350 @@
         }
 
         body {
-            font-family: Georgia, "Times New Roman", serif;
-            background: #f8f5ef;
-            color: #3d3934;
+            background: var(--cream);
+            color: var(--text);
+            font-family: "Cormorant Garamond", serif;
+            font-size: 18px;
             line-height: 1.7;
         }
 
-        /* Hero */
+        /* --------------------
+           HERO
+        -------------------- */
+
         .hero {
             min-height: 100vh;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 40px 20px;
+            overflow: hidden;
+
             background:
                 linear-gradient(
-                    rgba(248, 245, 239, 0.78),
-                    rgba(248, 245, 239, 0.78)
+                    rgba(248, 244, 237, .58),
+                    rgba(248, 244, 237, .72)
                 ),
-                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=80")
+                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2200&q=85")
                 center / cover;
         }
 
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 25px;
+            border: 1px solid rgba(61, 64, 56, .35);
+            pointer-events: none;
+        }
+
         .hero-content {
-            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+            animation: fadeUp 1.5s ease forwards;
         }
 
-        .eyebrow {
-            font-family: Arial, sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 4px;
+        .small-title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 11px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 25px;
         }
 
-        h1 {
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: normal;
-            line-height: 1;
-            margin-bottom: 25px;
+        .names {
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(4.5rem, 13vw, 9rem);
+            font-weight: 400;
+            line-height: .95;
+            margin: 25px 0;
         }
 
-        .date {
-            font-size: 1.3rem;
+        .ampersand {
+            display: block;
+            font-family: "Cormorant Garamond", serif;
+            font-size: .4em;
+            font-style: italic;
+            margin: 8px 0;
+        }
+
+        .hero-date {
+            font-family: "Montserrat", sans-serif;
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .scroll-link {
+            display: inline-block;
+            margin-top: 70px;
+            color: var(--text);
+            text-decoration: none;
+            font-family: "Montserrat", sans-serif;
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
         }
 
-        .scroll {
-            display: inline-block;
-            margin-top: 60px;
-            color: inherit;
-            text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .scroll-arrow {
+            display: block;
+            font-size: 20px;
+            margin-top: 8px;
         }
 
-        /* Sektioner */
+        /* --------------------
+           GENERAL
+        -------------------- */
+
         section {
-            padding: 100px 20px;
+            padding: 110px 25px;
             text-align: center;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
+        }
+
+        .section-label {
+            font-family: "Montserrat", sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--sage);
+            margin-bottom: 18px;
         }
 
         h2 {
-            font-size: 2.5rem;
-            font-weight: normal;
-            margin-bottom: 25px;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
         }
 
         .divider {
-            width: 50px;
+            width: 60px;
             height: 1px;
-            background: #999;
-            margin: 25px auto 40px;
+            background: var(--sage);
+            margin: 30px auto 40px;
         }
 
-        .intro {
-            font-size: 1.2rem;
+        .intro-text {
             max-width: 650px;
             margin: auto;
+            font-size: 1.25rem;
         }
 
-        /* Detaljer */
-        .details {
-            background: #ebe6dc;
+        /* --------------------
+           COUNTDOWN
+        -------------------- */
+
+        .countdown-section {
+            background: var(--cream-dark);
         }
 
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: clamp(20px, 6vw, 70px);
             margin-top: 50px;
         }
 
+        .countdown-item {
+            min-width: 70px;
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .countdown-label {
+            display: block;
+            margin-top: 10px;
+            font-family: "Montserrat", sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --------------------
+           DETAILS
+        -------------------- */
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 55px;
+        }
+
         .detail-card {
-            padding: 35px;
-            background: #f8f5ef;
+            background: var(--white);
+            padding: 45px 25px;
+            border: 1px solid rgba(61, 64, 56, .12);
+            transition: transform .3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .detail-icon {
+            font-size: 28px;
+            margin-bottom: 15px;
         }
 
         .detail-card h3 {
-            font-family: Arial, sans-serif;
-            font-size: 0.75rem;
+            font-family: "Montserrat", sans-serif;
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
+            font-weight: 500;
             margin-bottom: 15px;
         }
 
         .detail-card p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
-        /* Vår historia */
+        /* --------------------
+           STORY
+        -------------------- */
+
         .story {
-            max-width: 700px;
-            margin: auto;
+            position: relative;
         }
 
-        /* OSA */
+        .story-text {
+            max-width: 680px;
+            margin: auto;
+            font-size: 1.2rem;
+        }
+
+        .story-quote {
+            font-family: "Great Vibes", cursive;
+            font-size: 3rem;
+            margin-top: 45px;
+        }
+
+        /* --------------------
+           RSVP
+        -------------------- */
+
         .rsvp {
-            background: #3d3934;
-            color: #f8f5ef;
+            background: var(--sage);
+            color: var(--white);
+        }
+
+        .rsvp .section-label {
+            color: rgba(255,255,255,.75);
         }
 
         .rsvp .divider {
-            background: #aaa;
+            background: rgba(255,255,255,.7);
+        }
+
+        .rsvp-text {
+            max-width: 550px;
+            margin: auto;
+            font-size: 1.2rem;
         }
 
         .button {
             display: inline-block;
             margin-top: 35px;
-            padding: 15px 35px;
-            border: 1px solid #f8f5ef;
-            color: #f8f5ef;
+            padding: 16px 40px;
+            border: 1px solid var(--white);
+            color: var(--white);
             text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-size: 0.75rem;
+            font-family: "Montserrat", sans-serif;
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            transition: 0.3s ease;
+            transition: all .3s ease;
         }
 
         .button:hover {
-            background: #f8f5ef;
-            color: #3d3934;
+            background: var(--white);
+            color: var(--sage);
         }
 
-        /* Footer */
+        /* --------------------
+           FOOTER
+        -------------------- */
+
         footer {
-            padding: 50px 20px;
+            padding: 70px 20px;
             text-align: center;
-            background: #f8f5ef;
+            background: var(--cream);
         }
 
-        footer p {
-            font-size: 1.5rem;
+        .footer-names {
+            font-family: "Great Vibes", cursive;
+            font-size: 3.5rem;
         }
 
-        /* Mobil */
-        @media (max-width: 600px) {
-            section {
-                padding: 75px 20px;
+        .footer-date {
+            font-family: "Montserrat", sans-serif;
+            font-size: 9px;
+            letter-spacing: 3px;
+            margin-top: 10px;
+        }
+
+        /* --------------------
+           ANIMATION
+        -------------------- */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
             }
 
-            .detail-grid {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --------------------
+           MOBILE
+        -------------------- */
+
+        @media (max-width: 650px) {
+
+            section {
+                padding: 80px 20px;
+            }
+
+            .hero::before {
+                inset: 12px;
+            }
+
+            .names {
+                font-size: 5rem;
+            }
+
+            .details-grid {
                 grid-template-columns: 1fr;
             }
 
-            h2 {
-                font-size: 2rem;
+            .countdown {
+                gap: 15px;
             }
 
-            .intro {
-                font-size: 1.05rem;
+            .countdown-item {
+                min-width: 55px;
+            }
+
+            .countdown-number {
+                font-size: 2.2rem;
+            }
+
+            .countdown-label {
+                font-size: 8px;
             }
         }
     </style>
@@ -205,86 +383,109 @@
 
 <body>
 
-    <!-- HERO -->
+    <!-- ====================
+         HERO
+    ==================== -->
+
     <header class="hero">
+
         <div class="hero-content">
 
-            <p class="eyebrow">Vi ska gifta oss</p>
+            <p class="small-title">
+                Vi ska gifta oss
+            </p>
 
-            <h1>NAME<br>&<br>NAME</h1>
+            <h1 class="names">
+                NAME
+                <span class="ampersand">&</span>
+                NAME
+            </h1>
 
-            <p class="date">DATE</p>
+            <p class="hero-date">
+                DATE
+            </p>
 
-            <a href="#detaljer" class="scroll">
-                Upptäck ↓
+            <a href="#welcome" class="scroll-link">
+                Välkommen
+                <span class="scroll-arrow">↓</span>
             </a>
 
         </div>
+
     </header>
 
 
-    <!-- INTRO -->
-    <section>
+    <!-- ====================
+         WELCOME
+    ==================== -->
+
+    <section id="welcome">
+
         <div class="container">
 
-            <p class="eyebrow">Tillsammans med våra familjer</p>
+            <p class="section-label">
+                Vår stora dag
+            </p>
 
-            <h2>Välkommen att fira med oss</h2>
+            <h2>
+                Vi vill fira<br>
+                tillsammans med dig
+            </h2>
 
             <div class="divider"></div>
 
-            <p class="intro">
-                Vi skulle bli så glada om du vill vara med
-                och fira vår stora dag när vi tillsammans
-                börjar vårt nästa kapitel.
+            <p class="intro-text">
+                Efter alla skratt, minnen och äventyr
+                har vi bestämt oss för att säga ja till
+                ett liv tillsammans.
+
+                Nu vill vi samla våra nära och kära
+                för att fira vår kärlek och vår stora dag.
             </p>
 
         </div>
+
     </section>
 
 
-    <!-- DETALJER -->
-    <section class="details" id="detaljer">
+    <!-- ====================
+         COUNTDOWN
+    ==================== -->
+
+    <section class="countdown-section">
 
         <div class="container">
 
-            <p class="eyebrow">Vårt bröllop</p>
+            <p class="section-label">
+                Vi räknar ner
+            </p>
 
-            <h2>DATE</h2>
+            <h2>
+                Snart är dagen här
+            </h2>
 
             <div class="divider"></div>
 
-            <div class="detail-grid">
+            <div class="countdown">
 
-                <div class="detail-card">
-                    <h3>Vigsel</h3>
-                    <p>
-                        TIME<br>
-                        VENUE
-                    </p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Dagar</span>
                 </div>
 
-                <div class="detail-card">
-                    <h3>Fest</h3>
-                    <p>
-                        TIME<br>
-                        VENUE
-                    </p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Timmar</span>
                 </div>
 
-                <div class="detail-card">
-                    <h3>Plats</h3>
-                    <p>
-                        ADDRESS<br>
-                        CITY
-                    </p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minuter</span>
                 </div>
 
-                <div class="detail-card">
-                    <h3>Klädsel</h3>
-                    <p>
-                        DRESS CODE
-                    </p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Sekunder</span>
                 </div>
 
             </div>
@@ -294,22 +495,115 @@
     </section>
 
 
-    <!-- HISTORIA -->
+    <!-- ====================
+         DETAILS
+    ==================== -->
+
     <section>
 
-        <div class="container story">
+        <div class="container">
 
-            <p class="eyebrow">Vår historia</p>
+            <p class="section-label">
+                Praktisk information
+            </p>
 
-            <h2>Hur allt började</h2>
+            <h2>
+                Allt du behöver veta
+            </h2>
 
             <div class="divider"></div>
 
-            <p>
+            <div class="details-grid">
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">♡</div>
+
+                    <h3>Vigsel</h3>
+
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">♧</div>
+
+                    <h3>Fest</h3>
+
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">⌖</div>
+
+                    <h3>Plats</h3>
+
+                    <p>
+                        ADDRESS<br>
+                        CITY
+                    </p>
+
+                </div>
+
+
+                <div class="detail-card">
+
+                    <div class="detail-icon">✦</div>
+
+                    <h3>Klädsel</h3>
+
+                    <p>
+                        DRESS CODE
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ====================
+         STORY
+    ==================== -->
+
+    <section class="story">
+
+        <div class="container">
+
+            <p class="section-label">
+                Vår historia
+            </p>
+
+            <h2>
+                Hur allt började
+            </h2>
+
+            <div class="divider"></div>
+
+            <p class="story-text">
                 YOUR STORY GOES HERE.
-                Berätta om hur ni träffades,
-                er resa tillsammans eller något
-                annat ni vill dela med era gäster.
+
+                Berätta om hur ni träffades, ert första
+                möte, något roligt minne eller varför
+                ni vill spendera resten av livet tillsammans.
+            </p>
+
+            <p class="story-quote">
+                "Och så levde vi lyckliga..."
             </p>
 
         </div>
@@ -317,28 +611,35 @@
     </section>
 
 
-    <!-- OSA -->
+    <!-- ====================
+         RSVP
+    ==================== -->
+
     <section class="rsvp">
 
         <div class="container">
 
-            <p class="eyebrow">Vi hoppas att du kan komma</p>
+            <p class="section-label">
+                Vi hoppas att du kommer
+            </p>
 
-            <h2>OSA</h2>
+            <h2>
+                OSA
+            </h2>
 
             <div class="divider"></div>
 
-            <p>
-                Vänligen meddela om du kan
-                vara med och fira vår stora dag.
-            </p>
+            <p class="rsvp-text">
+                Det skulle betyda mycket för oss
+                att få fira den här dagen tillsammans
+                med dig.
 
-            <p style="margin-top: 15px;">
-                OSA SENAST: DATE
+                Vänligen svara senast
+                <strong>DATE</strong>.
             </p>
 
             <a href="#" class="button">
-                OSA
+                Svara på inbjudan
             </a>
 
         </div>
@@ -346,16 +647,92 @@
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- ====================
+         FOOTER
+    ==================== -->
+
     <footer>
 
-        <p>NAME & NAME</p>
+        <div class="footer-names">
+            NAME & NAME
+        </div>
 
-        <p style="font-size: 0.8rem; margin-top: 10px;">
+        <div class="footer-date">
             DATE · VENUE
-        </p>
+        </div>
 
     </footer>
 
+
+    <!-- ====================
+         COUNTDOWN SCRIPT
+    ==================== -->
+
+    <script>
+
+        // Ändra detta till ert bröllopsdatum.
+        // Format: YYYY-MM-DDTHH:MM:SS
+        const weddingDate = new Date("2027-06-12T15:00:00").getTime();
+
+
+        function updateCountdown() {
+
+            const now = new Date().getTime();
+
+            const distance = weddingDate - now;
+
+
+            if (distance <= 0) {
+
+                document.getElementById("days").textContent = "00";
+                document.getElementById("hours").textContent = "00";
+                document.getElementById("minutes").textContent = "00";
+                document.getElementById("seconds").textContent = "00";
+
+                return;
+            }
+
+
+            const days = Math.floor(
+                distance / (1000 * 60 * 60 * 24)
+            );
+
+            const hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24))
+                / (1000 * 60 * 60)
+            );
+
+            const minutes = Math.floor(
+                (distance % (1000 * 60 * 60))
+                / (1000 * 60)
+            );
+
+            const seconds = Math.floor(
+                (distance % (1000 * 60))
+                / 1000
+            );
+
+
+            document.getElementById("days").textContent =
+                String(days).padStart(2, "0");
+
+            document.getElementById("hours").textContent =
+                String(hours).padStart(2, "0");
+
+            document.getElementById("minutes").textContent =
+                String(minutes).padStart(2, "0");
+
+            document.getElementById("seconds").textContent =
+                String(seconds).padStart(2, "0");
+        }
+
+
+        updateCountdown();
+
+        setInterval(updateCountdown, 1000);
+
+    </script>
+
 </body>
 </html>
+```

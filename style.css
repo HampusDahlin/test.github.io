@@ -1,0 +1,295 @@
+:root {
+    --cream: #f8f4ed;
+    --cream-dark: #eee7db;
+    --sage: #7d8773;
+    --text: #3d4038;
+    --white: #fffdf9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+/* --------------------
+   HERO
+-------------------- */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(248, 244, 237, 0.58),
+            rgba(248, 244, 237, 0.72)
+        ),
+        url("images/hero.jpg")
+        center / cover;
+}
+
+.hero-content {
+    padding: 40px 20px;
+}
+
+.eyebrow {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--sage);
+}
+
+h1 {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: normal;
+    line-height: 0.95;
+    margin: 25px 0;
+}
+
+h1 span {
+    display: block;
+    font-size: 0.4em;
+    font-style: italic;
+}
+
+.date {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.scroll-link {
+    display: inline-block;
+    margin-top: 60px;
+
+    color: var(--text);
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+/* --------------------
+   SECTIONS
+-------------------- */
+
+section {
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h2 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: normal;
+    line-height: 1.1;
+    margin-top: 15px;
+}
+
+.divider {
+    width: 60px;
+    height: 1px;
+    background: var(--sage);
+    margin: 30px auto 40px;
+}
+
+.intro {
+    max-width: 650px;
+    margin: auto;
+    font-size: 1.2rem;
+}
+
+
+/* --------------------
+   COUNTDOWN
+-------------------- */
+
+.countdown-section {
+    background: var(--cream-dark);
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 50px;
+}
+
+.countdown div {
+    min-width: 70px;
+}
+
+.countdown span {
+    display: block;
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+.countdown small {
+    display: block;
+    margin-top: 10px;
+
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+/* --------------------
+   DETAILS
+-------------------- */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+
+    margin-top: 50px;
+}
+
+.detail-card {
+    background: var(--white);
+    padding: 40px 20px;
+
+    border: 1px solid rgba(61, 64, 56, 0.1);
+}
+
+.detail-card h3 {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+}
+
+
+/* --------------------
+   STORY
+-------------------- */
+
+.story {
+    max-width: 700px;
+}
+
+.story p:last-child {
+    font-size: 1.2rem;
+}
+
+
+/* --------------------
+   RSVP
+-------------------- */
+
+.rsvp {
+    background: var(--sage);
+    color: var(--white);
+}
+
+.rsvp .eyebrow {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.rsvp .divider {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.button {
+    display: inline-block;
+
+    margin-top: 35px;
+    padding: 16px 40px;
+
+    border: 1px solid var(--white);
+
+    color: var(--white);
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    transition: 0.3s ease;
+}
+
+.button:hover {
+    background: var(--white);
+    color: var(--sage);
+}
+
+
+/* --------------------
+   FOOTER
+-------------------- */
+
+footer {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.footer-names {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+
+/* --------------------
+   MOBILE
+-------------------- */
+
+@media (max-width: 650px) {
+
+    section {
+        padding: 75px 20px;
+    }
+
+    .countdown {
+        gap: 15px;
+    }
+
+    .countdown div {
+        min-width: 55px;
+    }
+
+    .countdown span {
+        font-size: 2.2rem;
+    }
+
+    .countdown small {
+        font-size: 8px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}

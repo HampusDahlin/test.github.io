@@ -1,11 +1,361 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+
+    <title>NAME & NAME — Bröllopsinbjudan</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            background: #f8f5ef;
+            color: #3d3934;
+            line-height: 1.7;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            background:
+                linear-gradient(
+                    rgba(248, 245, 239, 0.78),
+                    rgba(248, 245, 239, 0.78)
+                ),
+                url("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2000&q=80")
+                center / cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .eyebrow {
+            font-family: Arial, sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: normal;
+            line-height: 1;
+            margin-bottom: 25px;
+        }
+
+        .date {
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll {
+            display: inline-block;
+            margin-top: 60px;
+            color: inherit;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Sektioner */
+        section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: normal;
+            margin-bottom: 25px;
+        }
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background: #999;
+            margin: 25px auto 40px;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        /* Detaljer */
+        .details {
+            background: #ebe6dc;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .detail-card {
+            padding: 35px;
+            background: #f8f5ef;
+        }
+
+        .detail-card h3 {
+            font-family: Arial, sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .detail-card p {
+            font-size: 1.1rem;
+        }
+
+        /* Vår historia */
+        .story {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* OSA */
+        .rsvp {
+            background: #3d3934;
+            color: #f8f5ef;
+        }
+
+        .rsvp .divider {
+            background: #aaa;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 15px 35px;
+            border: 1px solid #f8f5ef;
+            color: #f8f5ef;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+        }
+
+        .button:hover {
+            background: #f8f5ef;
+            color: #3d3934;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            background: #f8f5ef;
+        }
+
+        footer p {
+            font-size: 1.5rem;
+        }
+
+        /* Mobil */
+        @media (max-width: 600px) {
+            section {
+                padding: 75px 20px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .intro {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Hello World!</h1>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-content">
+
+            <p class="eyebrow">Vi ska gifta oss</p>
+
+            <h1>NAME<br>&<br>NAME</h1>
+
+            <p class="date">DATE</p>
+
+            <a href="#detaljer" class="scroll">
+                Upptäck ↓
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- INTRO -->
+    <section>
+        <div class="container">
+
+            <p class="eyebrow">Tillsammans med våra familjer</p>
+
+            <h2>Välkommen att fira med oss</h2>
+
+            <div class="divider"></div>
+
+            <p class="intro">
+                Vi skulle bli så glada om du vill vara med
+                och fira vår stora dag när vi tillsammans
+                börjar vårt nästa kapitel.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- DETALJER -->
+    <section class="details" id="detaljer">
+
+        <div class="container">
+
+            <p class="eyebrow">Vårt bröllop</p>
+
+            <h2>DATE</h2>
+
+            <div class="divider"></div>
+
+            <div class="detail-grid">
+
+                <div class="detail-card">
+                    <h3>Vigsel</h3>
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Fest</h3>
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Plats</h3>
+                    <p>
+                        ADDRESS<br>
+                        CITY
+                    </p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Klädsel</h3>
+                    <p>
+                        DRESS CODE
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORIA -->
+    <section>
+
+        <div class="container story">
+
+            <p class="eyebrow">Vår historia</p>
+
+            <h2>Hur allt började</h2>
+
+            <div class="divider"></div>
+
+            <p>
+                YOUR STORY GOES HERE.
+                Berätta om hur ni träffades,
+                er resa tillsammans eller något
+                annat ni vill dela med era gäster.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- OSA -->
+    <section class="rsvp">
+
+        <div class="container">
+
+            <p class="eyebrow">Vi hoppas att du kan komma</p>
+
+            <h2>OSA</h2>
+
+            <div class="divider"></div>
+
+            <p>
+                Vänligen meddela om du kan
+                vara med och fira vår stora dag.
+            </p>
+
+            <p style="margin-top: 15px;">
+                OSA SENAST: DATE
+            </p>
+
+            <a href="#" class="button">
+                OSA
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>NAME & NAME</p>
+
+        <p style="font-size: 0.8rem; margin-top: 10px;">
+            DATE · VENUE
+        </p>
+
+    </footer>
+
 </body>
 </html>

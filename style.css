@@ -1,10 +1,39 @@
+```css
+/* ==================================================
+   WINTER / NEW YEAR'S WEDDING
+   ================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+
+
+/* ==================================================
+   VARIABLES
+   ================================================== */
+
 :root {
-    --cream: #f8f4ed;
-    --cream-dark: #eee7db;
-    --sage: #7d8773;
-    --text: #3d4038;
-    --white: #fffdf9;
+    --ivory: #f6f2e9;
+    --paper: #fffdf8;
+
+    --midnight: #151c27;
+    --midnight-light: #202a38;
+
+    --charcoal: #292d32;
+
+    --gold: #b7a078;
+    --gold-light: #d2c29e;
+
+    --winter-blue: #68778a;
+
+    --white: #ffffff;
+
+    --border-light: rgba(21, 28, 39, 0.15);
+    --border-dark: rgba(255, 255, 255, 0.2);
 }
+
+
+/* ==================================================
+   RESET
+   ================================================== */
 
 * {
     margin: 0;
@@ -17,20 +46,26 @@ html {
 }
 
 body {
-    background: var(--cream);
-    color: var(--text);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 18px;
+    background: var(--ivory);
+    color: var(--charcoal);
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+
+    font-size: 19px;
     line-height: 1.7;
+
+    overflow-x: hidden;
 }
 
 
-/* --------------------
+/* ==================================================
    HERO
--------------------- */
+   ================================================== */
 
 .hero {
     min-height: 100vh;
+
+    position: relative;
 
     display: flex;
     align-items: center;
@@ -38,258 +73,673 @@ body {
 
     text-align: center;
 
+    color: var(--white);
+
     background:
         linear-gradient(
-            rgba(248, 244, 237, 0.58),
-            rgba(248, 244, 237, 0.72)
+            rgba(13, 19, 28, 0.48),
+            rgba(13, 19, 28, 0.72)
         ),
         url("images/hero.jpg")
-        center / cover;
+        center center / cover no-repeat;
 }
+
+
+/* Dark vignette around the edges */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(5, 9, 15, 0.35) 100%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Thin elegant frame */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    top: 28px;
+    right: 28px;
+    bottom: 28px;
+    left: 28px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
 
 .hero-content {
-    padding: 40px 20px;
+    position: relative;
+
+    z-index: 3;
+
+    max-width: 900px;
+
+    padding: 50px 25px;
+
+    animation: fadeUp 1.5s ease forwards;
 }
+
+
+/* ==================================================
+   TYPOGRAPHY
+   ================================================== */
 
 .eyebrow {
-    font-family: Arial, sans-serif;
+    font-family: "Montserrat", sans-serif;
+
     font-size: 10px;
-    letter-spacing: 4px;
+    font-weight: 400;
+
+    letter-spacing: 5px;
+
     text-transform: uppercase;
-    color: var(--sage);
+
+    color: var(--gold);
 }
 
-h1 {
-    font-size: clamp(4rem, 12vw, 8rem);
-    font-weight: normal;
-    line-height: 0.95;
-    margin: 25px 0;
+
+.hero .eyebrow {
+    color: var(--gold-light);
 }
+
+
+h1 {
+    margin: 28px 0;
+
+    font-size: clamp(5rem, 14vw, 10rem);
+
+    font-weight: 300;
+
+    line-height: 0.8;
+
+    letter-spacing: -3px;
+}
+
 
 h1 span {
     display: block;
-    font-size: 0.4em;
-    font-style: italic;
+
+    margin: 15px 0;
+
+    font-size: 0.32em;
+
+    font-weight: 300;
+
+    color: var(--gold-light);
+
+    letter-spacing: 0;
 }
 
+
 .date {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 11px;
+
     letter-spacing: 5px;
+
     text-transform: uppercase;
 }
+
 
 .scroll-link {
     display: inline-block;
-    margin-top: 60px;
 
-    color: var(--text);
+    margin-top: 70px;
+
+    color: var(--white);
+
     text-decoration: none;
 
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+
     text-transform: uppercase;
+
+    transition: opacity 0.3s ease;
 }
 
 
-/* --------------------
+.scroll-link:hover {
+    opacity: 0.65;
+}
+
+
+/* ==================================================
    SECTIONS
--------------------- */
+   ================================================== */
 
 section {
-    padding: 100px 20px;
+    position: relative;
+
+    padding: 120px 25px;
+
     text-align: center;
 }
 
+
 .container {
-    max-width: 900px;
-    margin: auto;
+    max-width: 950px;
+
+    margin: 0 auto;
 }
+
 
 h2 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    font-weight: normal;
-    line-height: 1.1;
-    margin-top: 15px;
+    margin-top: 18px;
+
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+
+    font-weight: 300;
+
+    line-height: 1.05;
 }
 
+
 .divider {
-    width: 60px;
+    position: relative;
+
+    width: 65px;
     height: 1px;
-    background: var(--sage);
-    margin: 30px auto 40px;
+
+    margin: 35px auto 45px;
+
+    background: var(--gold);
 }
+
+
+.divider::before,
+.divider::after {
+    content: "✦";
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-55%);
+
+    color: var(--gold);
+
+    font-size: 8px;
+}
+
+
+.divider::before {
+    left: -16px;
+}
+
+
+.divider::after {
+    right: -16px;
+}
+
 
 .intro {
     max-width: 650px;
+
     margin: auto;
-    font-size: 1.2rem;
+
+    font-size: 1.25rem;
+
+    color: #50545a;
 }
 
 
-/* --------------------
+/* ==================================================
    COUNTDOWN
--------------------- */
+   ================================================== */
 
 .countdown-section {
-    background: var(--cream-dark);
+    background: var(--midnight);
+
+    color: var(--white);
+
+    overflow: hidden;
 }
+
+
+/* Subtle star field */
+
+.countdown-section::before {
+    content: "✦   ·       ✧          ·     ✦        ·        ✧     ·    ✦";
+
+    position: absolute;
+
+    top: 25px;
+    left: 0;
+
+    width: 100%;
+
+    color: rgba(255, 255, 255, 0.18);
+
+    font-size: 14px;
+
+    letter-spacing: 20px;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+}
+
+
+.countdown-section .eyebrow {
+    color: var(--gold-light);
+}
+
+
+.countdown-section .divider {
+    background: var(--gold);
+}
+
 
 .countdown {
     display: flex;
+
     justify-content: center;
-    gap: 60px;
-    margin-top: 50px;
+
+    gap: clamp(25px, 7vw, 80px);
+
+    margin-top: 55px;
 }
 
+
 .countdown div {
-    min-width: 70px;
+    min-width: 75px;
 }
+
 
 .countdown span {
     display: block;
-    font-size: 3.5rem;
+
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+
+    font-weight: 300;
+
     line-height: 1;
+
+    color: var(--white);
 }
+
 
 .countdown small {
     display: block;
-    margin-top: 10px;
 
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    letter-spacing: 2px;
+    margin-top: 12px;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
     text-transform: uppercase;
+
+    color: var(--gold-light);
 }
 
 
-/* --------------------
+/* ==================================================
    DETAILS
--------------------- */
+   ================================================== */
+
+#details {
+    background: var(--ivory);
+}
+
 
 .details-grid {
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
+
     gap: 25px;
 
-    margin-top: 50px;
+    margin-top: 60px;
 }
+
 
 .detail-card {
-    background: var(--white);
-    padding: 40px 20px;
+    position: relative;
 
-    border: 1px solid rgba(61, 64, 56, 0.1);
+    padding: 50px 25px;
+
+    background: var(--paper);
+
+    border: 1px solid var(--border-light);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
 }
+
+
+.detail-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 15px 40px rgba(21, 28, 39, 0.08);
+}
+
+
+.detail-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+
+    border: 1px solid rgba(183, 160, 120, 0.18);
+
+    pointer-events: none;
+}
+
 
 .detail-card h3 {
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
+    position: relative;
 
     margin-bottom: 15px;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 500;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    color: var(--gold);
 }
 
 
-/* --------------------
-   STORY
--------------------- */
+.detail-card p {
+    position: relative;
 
-.story {
-    max-width: 700px;
-}
-
-.story p:last-child {
     font-size: 1.2rem;
 }
 
 
-/* --------------------
+/* ==================================================
+   STORY
+   ================================================== */
+
+.story {
+    max-width: 720px;
+}
+
+
+.story p:last-child {
+    font-size: 1.25rem;
+
+    color: #50545a;
+}
+
+
+.story::before {
+    content: "✦";
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--gold);
+
+    font-size: 20px;
+}
+
+
+/* ==================================================
    RSVP
--------------------- */
+   ================================================== */
 
 .rsvp {
-    background: var(--sage);
+    background: var(--midnight-light);
+
     color: var(--white);
 }
 
+
 .rsvp .eyebrow {
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--gold-light);
 }
 
+
 .rsvp .divider {
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--gold);
 }
+
+
+.rsvp p:not(.eyebrow) {
+    max-width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 1.2rem;
+}
+
+
+.rsvp strong {
+    color: var(--gold-light);
+
+    font-weight: 400;
+}
+
 
 .button {
     display: inline-block;
 
-    margin-top: 35px;
-    padding: 16px 40px;
+    margin-top: 40px;
 
-    border: 1px solid var(--white);
+    padding: 17px 45px;
+
+    border: 1px solid var(--gold-light);
 
     color: var(--white);
+
     text-decoration: none;
 
-    font-family: Arial, sans-serif;
-    font-size: 10px;
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 9px;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
 
-    transition: 0.3s ease;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
+
 
 .button:hover {
-    background: var(--white);
-    color: var(--sage);
+    background: var(--gold-light);
+
+    border-color: var(--gold-light);
+
+    color: var(--midnight);
 }
 
 
-/* --------------------
+/* ==================================================
    FOOTER
--------------------- */
+   ================================================== */
 
 footer {
-    padding: 60px 20px;
+    position: relative;
+
+    padding: 80px 20px;
+
     text-align: center;
+
+    background: var(--ivory);
 }
+
 
 .footer-names {
-    font-size: 2rem;
-    margin-bottom: 5px;
+    font-size: 2.8rem;
+
+    font-weight: 300;
 }
 
 
-/* --------------------
+footer p:last-child {
+    margin-top: 8px;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    color: var(--winter-blue);
+}
+
+
+/* ==================================================
+   ANIMATION
+   ================================================== */
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* ==================================================
    MOBILE
--------------------- */
+   ================================================== */
 
 @media (max-width: 650px) {
 
-    section {
-        padding: 75px 20px;
+    body {
+        font-size: 17px;
     }
+
+
+    section {
+        padding: 85px 20px;
+    }
+
+
+    .hero::before {
+        top: 14px;
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+    }
+
+
+    .hero-content {
+        padding: 40px 15px;
+    }
+
+
+    h1 {
+        font-size: 5rem;
+
+        letter-spacing: -1px;
+    }
+
+
+    .hero .date {
+        font-size: 9px;
+
+        letter-spacing: 3px;
+    }
+
+
+    .scroll-link {
+        margin-top: 50px;
+    }
+
+
+    h2 {
+        font-size: 2.7rem;
+    }
+
 
     .countdown {
         gap: 15px;
     }
 
+
     .countdown div {
         min-width: 55px;
     }
+
 
     .countdown span {
         font-size: 2.2rem;
     }
 
+
     .countdown small {
-        font-size: 8px;
+        font-size: 7px;
+
+        letter-spacing: 1.5px;
     }
+
 
     .details-grid {
         grid-template-columns: 1fr;
+
+        gap: 18px;
+    }
+
+
+    .detail-card {
+        padding: 40px 20px;
+    }
+
+
+    .story p:last-child {
+        font-size: 1.15rem;
+    }
+
+
+    .footer-names {
+        font-size: 2.3rem;
     }
 }
+```

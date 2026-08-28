@@ -623,6 +623,31 @@ footer p:last-child {
     color: var(--winter-blue);
 }
 
+/* ====================
+   MUSIC
+==================== */
+
+.music {
+    background: var(--paper);
+}
+
+.music-intro {
+    max-width: 550px;
+    margin: 0 auto 35px;
+    color: #50545a;
+}
+
+.spotify-player {
+    max-width: 700px;
+    margin: 40px auto 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(21, 28, 39, 0.12);
+}
+
+.spotify-player iframe {
+    display: block;
+}
 
 /* ==================================================
    ANIMATION

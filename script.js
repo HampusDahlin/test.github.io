@@ -1,9 +1,14 @@
 // ========================================
 // BRÖLLOPSDAGEN
 // ========================================
+//
+// Exakt tid är ännu inte bestämd.
+// Därför räknar vi just nu mot början
+// av den 30 december 2026.
+//
 
 const weddingDate = new Date(
-    "2027-12-31T15:00:00"
+    "2026-12-30T00:00:00"
 ).getTime();
 
 
@@ -157,15 +162,6 @@ document.addEventListener(
                 window.scrollY;
 
 
-            /*
-             * Put the names roughly in the
-             * vertical centre of the screen.
-             *
-             * This uses the browser's REAL page
-             * scroll — there is no transform or
-             * second scrolling system involved.
-             */
-
             const namesCenter =
                 namesRect.top +
                 (
@@ -266,11 +262,6 @@ document.addEventListener(
         }
 
 
-        /*
-         * Start the automatic scroll after
-         * "Vi ska gifta oss!" has finished.
-         */
-
         if (heroAnnouncement) {
 
             heroAnnouncement.addEventListener(
@@ -290,11 +281,6 @@ document.addEventListener(
                 }
             );
 
-
-            /*
-             * Fallback in case animationend
-             * isn't fired for some reason.
-             */
 
             setTimeout(
                 () => {
@@ -414,32 +400,35 @@ document.addEventListener(
 
                 vigsel: `
                     Vigseln äger rum
-                    <strong>TIME</strong>
-                    på <strong>VENUE</strong>.
+                    på eftermiddagen
+                    den <strong>30 december 2026</strong>.
                     <br><br>
-                    Vi hoppas att du vill vara med!
+                    Mer information om exakt tid
+                    kommer senare.
                 `,
 
 
                 plats: `
-                    Festen hålls på
-                    <strong>VENUE</strong>.
-                    <br>
-                    ADDRESS, CITY.
+                    Vi kommer att vara i
+                    <strong>Göteborg</strong>.
+                    <br><br>
+                    Vilken lokal vi ska vara i
+                    meddelar vi senare.
                 `,
 
 
                 kladsel: `
                     Klädkoden är
-                    <strong>DRESS CODE</strong>.
+                    <strong>inte bestämd ännu</strong>.
                     <br><br>
-                    Vi ser fram emot att se dig där!
+                    Vi återkommer med mer information
+                    närmare dagen.
                 `,
 
 
                 osa: `
                     Du kan svara på vår inbjudan
-                    genom att klicka på länken nedan.
+                    senast <strong>31 oktober 2026</strong>.
                     <br><br>
 
                     <a

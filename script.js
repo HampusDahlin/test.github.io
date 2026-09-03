@@ -1,18 +1,9 @@
 // ========================================
-// BRÖLLOPSDATUM
-// ========================================
-//
-// Ändra detta till ert riktiga datum.
-//
-// Format:
-// YYYY-MM-DDTHH:MM:SS
-//
-// Exempel:
-// 2027-06-12T15:00:00
+// BRÖLLOPSDAGEN
 // ========================================
 
 const weddingDate = new Date(
-    "2027-06-12T15:00:00"
+    "2027-12-30T15:00:00"
 ).getTime();
 
 
@@ -23,7 +14,6 @@ function updateCountdown() {
     const distance = weddingDate - now;
 
 
-    // Om bröllopsdagen har passerat
     if (distance <= 0) {
 
         document.getElementById("days").textContent = "00";
@@ -69,101 +59,144 @@ function updateCountdown() {
 }
 
 
-// Kör direkt
 updateCountdown();
 
-// Uppdatera varje sekund
 setInterval(updateCountdown, 1000);
 
 
-/* ==================================================
-   WEDDING ASSISTANT
-   ================================================== */
+// ========================================
+// HERO INTRO ANIMATION
+// ========================================
 
-const assistantButton =
-    document.getElementById("assistantButton");
+document.addEventListener("DOMContentLoaded", () => {
 
-const assistantCard =
-    document.getElementById("assistantCard");
-
-const assistantClose =
-    document.getElementById("assistantClose");
-
-const assistantMessage =
-    document.getElementById("assistantMessage");
+    const announcement =
+        document.getElementById("heroAnnouncement");
 
 
-/* Open assistant */
+    if (announcement) {
 
-assistantButton.addEventListener("click", () => {
+        setTimeout(() => {
 
-    assistantCard.classList.toggle("open");
+            announcement.classList.add("visible");
 
-});
+        }, 900);
 
-
-/* Close assistant */
-
-assistantClose.addEventListener("click", () => {
-
-    assistantCard.classList.remove("open");
-
-});
+    }
 
 
-/* Answers */
+    // ========================================
+    // WEDDING ASSISTANT
+    // ========================================
 
-const answers = {
+    const assistantButton =
+        document.getElementById("assistantButton");
 
-    vigsel: `
-        Vigseln äger rum <strong>TIME</strong>
-        på <strong>VENUE</strong>.
-        <br><br>
-        Vi hoppas att du vill vara med!
-    `,
+    const assistantCard =
+        document.getElementById("assistantCard");
 
-    plats: `
-        Festen hålls på <strong>VENUE</strong>,
-        <br>
-        ADDRESS, CITY.
-    `,
+    const assistantClose =
+        document.getElementById("assistantClose");
 
-    kladsel: `
-        Klädkoden är
-        <strong>DRESS CODE</strong>.
-        <br><br>
-        Vi ser fram emot att se dig där!
-    `,
-
-    osa: `
-        Du kan svara på vår inbjudan
-        genom att klicka på knappen nedan.
-        <br><br>
-
-        <a
-            href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Öppna OSA-formuläret →
-        </a>
-    `
-};
+    const assistantMessage =
+        document.getElementById("assistantMessage");
 
 
-/* Question buttons */
+    if (
+        !assistantButton ||
+        !assistantCard ||
+        !assistantClose ||
+        !assistantMessage
+    ) {
 
-document
-    .querySelectorAll(".assistant-options button")
-    .forEach(button => {
+        console.error(
+            "Wedding assistant: required HTML elements not found."
+        );
 
-        button.addEventListener("click", () => {
+        return;
+    }
 
-            const answer =
-                answers[button.dataset.answer];
 
-            assistantMessage.innerHTML = answer;
+    // Open / close
+    assistantButton.addEventListener("click", () => {
+
+        assistantCard.classList.toggle("open");
+
+    });
+
+
+    // Close
+    assistantClose.addEventListener("click", () => {
+
+        assistantCard.classList.remove("open");
+
+    });
+
+
+    // ========================================
+    // ASSISTANT ANSWERS
+    // ========================================
+
+    const answers = {
+
+        vigsel: `
+            Vigseln äger rum
+            <strong>TIME</strong>
+            på <strong>VENUE</strong>.
+            <br><br>
+            Vi hoppas att du vill vara med!
+        `,
+
+        plats: `
+            Festen hålls på
+            <strong>VENUE</strong>.
+            <br>
+            ADDRESS, CITY.
+        `,
+
+        kladsel: `
+            Klädkoden är
+            <strong>DRESS CODE</strong>.
+            <br><br>
+            Vi ser fram emot att se dig där!
+        `,
+
+        osa: `
+            Du kan svara på vår inbjudan
+            genom att klicka på länken nedan.
+            <br><br>
+
+            <a
+                href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Öppna OSA-formuläret →
+            </a>
+        `
+    };
+
+
+    // Question buttons
+    document
+        .querySelectorAll(".assistant-options button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const answer =
+                    answers[button.dataset.answer];
+
+
+                if (answer) {
+
+                    assistantMessage.innerHTML =
+                        answer;
+
+                }
+
+            });
 
         });
 
-    });
+});

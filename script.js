@@ -9,8 +9,7 @@ const weddingDate = new Date(
 
 function updateCountdown() {
 
-    const now =
-        new Date().getTime();
+    const now = new Date().getTime();
 
     const distance =
         weddingDate - now;
@@ -18,17 +17,10 @@ function updateCountdown() {
 
     if (distance <= 0) {
 
-        document.getElementById("days").textContent =
-            "00";
-
-        document.getElementById("hours").textContent =
-            "00";
-
-        document.getElementById("minutes").textContent =
-            "00";
-
-        document.getElementById("seconds").textContent =
-            "00";
+        document.getElementById("days").textContent = "00";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("minutes").textContent = "00";
+        document.getElementById("seconds").textContent = "00";
 
         return;
     }
@@ -98,7 +90,7 @@ setInterval(
 
 
 // ========================================
-// HERO SCROLL
+// HERO
 // ========================================
 
 document.addEventListener(
@@ -107,11 +99,6 @@ document.addEventListener(
 
         const hero =
             document.querySelector(".hero");
-
-        const heroSequence =
-            document.querySelector(
-                ".hero-sequence"
-            );
 
         const heroAnnouncement =
             document.getElementById(
@@ -124,198 +111,60 @@ document.addEventListener(
             );
 
         const scrollLink =
-            document.querySelector(
-                ".scroll-link"
+            document.getElementById(
+                "scrollLink"
             );
 
 
-        if (
-            !hero ||
-            !heroSequence ||
-            !heroNames
-        ) {
-            return;
+        // ========================================
+        // AUTOMATIC HERO SCROLL
+        // ========================================
+
+        let autoScrollStarted = false;
+
+
+        function easeInOutCubic(t) {
+
+            return t < 0.5
+                ? 4 * t * t * t
+                : 1 -
+                    Math.pow(
+                        -2 * t + 2,
+                        3
+                    ) / 2;
         }
 
 
-        let automaticScrollStarted =
-            false;
-
-        let userHasScrolled =
-            false;
-
-        let animationFallback =
-            null;
-
-
-        // ========================================
-        // UPDATE HERO
-        // ========================================
-
-        function updateHero() {
-
-            const heroHeight =
-                hero.offsetHeight;
-
-            const viewportHeight =
-                window.innerHeight;
-
-
-            /*
-             * This is the actual amount of
-             * scroll available inside the hero.
-             */
-
-            const maxScroll =
-                Math.max(
-                    0,
-                    heroHeight -
-                    viewportHeight
-                );
-
-
-            /*
-             * Because the hero itself starts at
-             * document position 0, scrollY is
-             * the correct travel distance here.
-             */
-
-            const scroll =
-                Math.max(
-                    0,
-                    Math.min(
-                        window.scrollY,
-                        maxScroll
-                    )
-                );
-
-
-            /*
-             * Move the entire sequence upward
-             * exactly as far as the page has
-             * been scrolled.
-             *
-             * This creates the natural feeling
-             * of physically scrolling past the
-             * announcement and down to the names.
-             */
-
-            heroSequence.style.transform =
-                `translate3d(
-                    0,
-                    -${scroll}px,
-                    0
-                )`;
-
-
-            // ==================================
-            // SCROLL LINK
-            // ==================================
-
-            if (scrollLink) {
-
-                const progress =
-                    maxScroll > 0
-                        ? scroll / maxScroll
-                        : 0;
-
-
-                scrollLink.style.opacity =
-                    Math.max(
-                        0,
-                        1 -
-                        (progress * 5)
-                    );
-            }
-        }
-
-
-        updateHero();
-
-
-        window.addEventListener(
-            "scroll",
-            () => {
-
-                /*
-                 * If the visitor starts scrolling
-                 * manually before the automatic
-                 * sequence begins, leave control
-                 * to them.
-                 */
-
-                if (
-                    !automaticScrollStarted
-                ) {
-                    userHasScrolled = true;
-                }
-
-
-                updateHero();
-
-            },
-            {
-                passive: true
-            }
-        );
-
-
-        window.addEventListener(
-            "resize",
-            updateHero
-        );
-
-
-
-        // ========================================
-        // AUTOMATIC SCROLL
-        // ========================================
-
-        function startAutomaticScroll() {
+        function scrollToNames() {
 
             if (
-                automaticScrollStarted ||
-                userHasScrolled
+                autoScrollStarted ||
+                !hero ||
+                !heroNames
             ) {
                 return;
             }
 
 
-            automaticScrollStarted =
-                true;
+            autoScrollStarted = true;
 
-
-            const heroHeight =
-                hero.offsetHeight;
-
-            const viewportHeight =
-                window.innerHeight;
-
-
-            const maxScroll =
-                Math.max(
-                    0,
-                    heroHeight -
-                    viewportHeight
-                );
-
-
-            /*
-             * The names are positioned at 92vh.
-             *
-             * We want their content block to
-             * arrive around the center of the
-             * screen.
-             *
-             * Instead of using a magic 55% of
-             * the hero, calculate the destination
-             * from the actual position of the
-             * names.
-             */
 
             const namesRect =
                 heroNames.getBoundingClientRect();
 
+
+            const currentScroll =
+                window.scrollY;
+
+
+            /*
+             * Put the names roughly in the
+             * vertical centre of the screen.
+             *
+             * This uses the browser's REAL page
+             * scroll — there is no transform or
+             * second scrolling system involved.
+             */
 
             const namesCenter =
                 namesRect.top +
@@ -324,81 +173,38 @@ document.addEventListener(
                 );
 
 
-            /*
-             * The amount needed to bring the
-             * center of NAME & NAME to the
-             * center of the viewport.
-             */
-
-            const desiredScroll =
-                window.scrollY +
+            const targetScroll =
+                currentScroll +
+                namesCenter -
                 (
-                    namesCenter -
-                    (viewportHeight / 2)
+                    window.innerHeight / 2
                 );
 
 
-            /*
-             * Keep the destination inside
-             * the hero's available scroll.
-             */
+            const maxScroll =
+                Math.max(
+                    0,
+                    document.documentElement
+                        .scrollHeight -
+                    window.innerHeight
+                );
 
-            const targetScroll =
+
+            const finalTarget =
                 Math.max(
                     0,
                     Math.min(
-                        desiredScroll,
+                        targetScroll,
                         maxScroll
                     )
                 );
-
-
-            const startingScroll =
-                window.scrollY;
-
-
-            const distance =
-                targetScroll -
-                startingScroll;
-
-
-            if (distance <= 1) {
-
-                updateHero();
-
-                return;
-            }
-
-
-            /*
-             * Five seconds gives the movement
-             * a deliberate, cinematic pace.
-             */
-
-            const duration =
-                5000;
 
 
             const startTime =
                 performance.now();
 
 
-            function easeInOutCubic(
-                value
-            ) {
-
-                return value < 0.5
-                    ? 4 *
-                        value *
-                        value *
-                        value
-                    : 1 -
-                        Math.pow(
-                            -2 * value + 2,
-                            3
-                        ) /
-                        2;
-            }
+            const duration = 5000;
 
 
             function animateScroll(
@@ -410,37 +216,35 @@ document.addEventListener(
                     startTime;
 
 
-                const rawProgress =
+                const progress =
                     Math.min(
-                        elapsed /
-                        duration,
+                        elapsed / duration,
                         1
                     );
 
 
-                const easedProgress =
+                const eased =
                     easeInOutCubic(
-                        rawProgress
+                        progress
                     );
 
 
-                const currentScroll =
-                    startingScroll +
+                const position =
+                    currentScroll +
                     (
-                        distance *
-                        easedProgress
-                    );
+                        finalTarget -
+                        currentScroll
+                    ) *
+                    eased;
 
 
                 window.scrollTo(
                     0,
-                    currentScroll
+                    position
                 );
 
 
-                if (
-                    rawProgress < 1
-                ) {
+                if (progress < 1) {
 
                     requestAnimationFrame(
                         animateScroll
@@ -448,7 +252,10 @@ document.addEventListener(
 
                 } else {
 
-                    updateHero();
+                    window.scrollTo(
+                        0,
+                        finalTarget
+                    );
                 }
             }
 
@@ -459,66 +266,88 @@ document.addEventListener(
         }
 
 
-
-        // ========================================
-        // WAIT FOR ANNOUNCEMENT
-        // ========================================
+        /*
+         * Start the automatic scroll after
+         * "Vi ska gifta oss!" has finished.
+         */
 
         if (heroAnnouncement) {
 
             heroAnnouncement.addEventListener(
                 "animationend",
-                () => {
+                (event) => {
 
                     if (
-                        animationFallback
+                        event.animationName ===
+                        "announcementIn"
                     ) {
-                        clearTimeout(
-                            animationFallback
+
+                        setTimeout(
+                            scrollToNames,
+                            450
                         );
                     }
-
-
-                    /*
-                     * Small pause after
-                     * "Vi ska gifta oss!"
-                     * has appeared.
-                     */
-
-                    setTimeout(
-                        startAutomaticScroll,
-                        500
-                    );
-
-                },
-                {
-                    once: true
                 }
             );
 
 
             /*
-             * Fallback for browsers/settings
-             * where animationend doesn't fire.
+             * Fallback in case animationend
+             * isn't fired for some reason.
              */
 
-            animationFallback =
-                setTimeout(
-                    () => {
-
-                        startAutomaticScroll();
-
-                    },
-                    2800
-                );
-
-        } else {
-
             setTimeout(
-                startAutomaticScroll,
-                1800
+                () => {
+
+                    if (!autoScrollStarted) {
+                        scrollToNames();
+                    }
+
+                },
+                3000
             );
         }
+
+
+        // ========================================
+        // SCROLL LINK
+        // ========================================
+
+        function updateScrollLink() {
+
+            if (!scrollLink) {
+                return;
+            }
+
+
+            const fadeDistance =
+                window.innerHeight * 0.35;
+
+
+            const opacity =
+                Math.max(
+                    0,
+                    1 -
+                    (
+                        window.scrollY /
+                        fadeDistance
+                    )
+                );
+
+
+            scrollLink.style.opacity =
+                opacity;
+        }
+
+
+        updateScrollLink();
+
+
+        window.addEventListener(
+            "scroll",
+            updateScrollLink,
+            { passive: true }
+        );
 
 
 
@@ -531,15 +360,18 @@ document.addEventListener(
                 "assistantButton"
             );
 
+
         const assistantCard =
             document.getElementById(
                 "assistantCard"
             );
 
+
         const assistantClose =
             document.getElementById(
                 "assistantClose"
             );
+
 
         const assistantMessage =
             document.getElementById(
@@ -618,6 +450,7 @@ document.addEventListener(
                         Öppna OSA-formuläret →
                     </a>
                 `
+
             };
 
 
@@ -642,6 +475,7 @@ document.addEventListener(
 
                                     assistantMessage.innerHTML =
                                         answer;
+
                                 }
 
                             }

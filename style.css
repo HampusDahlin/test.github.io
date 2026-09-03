@@ -57,26 +57,24 @@ body {
 ================================================== */
 
 .hero {
-    min-height: 160vh;
-
     position: relative;
 
-    display: flex;
-    justify-content: center;
-
-    text-align: center;
+    height: 180vh;
+    min-height: 1200px;
 
     color: var(--white);
 
     background:
         linear-gradient(
-            rgba(13, 19, 28, 0.43),
+            rgba(13, 19, 28, 0.42),
             rgba(13, 19, 28, 0.72)
         ),
-        url("images/20260720_151840.png")
+        url("images/hero.jpg")
         center center / cover no-repeat;
 
     background-attachment: fixed;
+
+    overflow: hidden;
 }
 
 
@@ -86,13 +84,14 @@ body {
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     background:
         radial-gradient(
             circle at center,
-            transparent 15%,
-            rgba(5, 9, 15, 0.45) 100%
+            transparent 10%,
+            rgba(5, 9, 15, 0.5) 100%
         );
 
     pointer-events: none;
@@ -113,7 +112,7 @@ body {
 
     border: 1px solid rgba(255, 255, 255, 0.32);
 
-    z-index: 2;
+    z-index: 5;
 
     pointer-events: none;
 }
@@ -124,36 +123,50 @@ body {
 ================================================== */
 
 .hero-content {
-    position: relative;
+    position: sticky;
 
-    z-index: 3;
+    top: 0;
+
+    height: 100vh;
 
     width: 100%;
-    max-width: 1000px;
-
-    padding: 20vh 25px 0;
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    z-index: 3;
 }
 
 
 /* ==================================================
-   FIRST MESSAGE
+   HURRA
 ================================================== */
 
 .hero-intro {
-    min-height: 45vh;
+    position: absolute;
+
+    inset: 0;
 
     display: flex;
+
     flex-direction: column;
-    align-items: center;
+
     justify-content: center;
+
+    align-items: center;
+
+    padding-bottom: 5vh;
 }
 
-
-/* HURRA */
 
 .hero-hurra {
     margin: 0;
@@ -165,7 +178,12 @@ body {
         Georgia,
         serif;
 
-    font-size: clamp(5rem, 12vw, 9rem);
+    font-size:
+        clamp(
+            5rem,
+            13vw,
+            10rem
+        );
 
     font-weight: 300;
 
@@ -176,7 +194,8 @@ body {
     opacity: 0;
 
     animation:
-        heroHurra 1s
+        hurraIn
+        1s
         cubic-bezier(0.16, 1, 0.3, 1)
         forwards;
 
@@ -185,11 +204,11 @@ body {
 
 
 /* ==================================================
-   "VI SKA GIFTA OSS!"
+   VI SKA GIFTA OSS
 ================================================== */
 
 .hero-announcement {
-    margin-top: 35px;
+    margin-top: 40px;
 
     color: var(--gold-light);
 
@@ -198,7 +217,12 @@ body {
         Georgia,
         serif;
 
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            4rem
+        );
 
     font-style: italic;
 
@@ -208,14 +232,15 @@ body {
 
     opacity: 0;
 
-    transform: translateX(-180px);
+    transform: translateX(-200px);
 
     clip-path: inset(
         0 100% 0 0
     );
 
     animation:
-        heroAnnouncement 1.3s
+        announcementIn
+        1.3s
         cubic-bezier(0.16, 1, 0.3, 1)
         forwards;
 
@@ -224,40 +249,51 @@ body {
 
 
 /* ==================================================
-   NAMES — HIDDEN UNTIL SCROLL
+   NAMES
 ================================================== */
 
 .hero-names {
-    min-height: 70vh;
+    position: absolute;
+
+    inset: 0;
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
+
     align-items: center;
+
+    padding-top: 5vh;
+
+    /*
+       JS controls these values while scrolling.
+    */
 
     opacity: 0;
 
-    transform: translateY(80px);
+    transform:
+        translateY(100px)
+        scale(0.96);
 
-    transition:
-        opacity 1.2s ease,
-        transform 1.2s
-        cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+
+    will-change:
+        opacity,
+        transform;
 }
 
-
-.hero-names.visible {
-    opacity: 1;
-
-    transform: translateY(0);
-}
-
-
-/* Names */
 
 .hero-names h1 {
     margin: 0 0 30px;
+
+    color: var(--white);
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
 
     font-size:
         clamp(
@@ -309,7 +345,11 @@ body {
 .scroll-link {
     position: absolute;
 
-    top: calc(100vh - 100px);
+    left: 50%;
+
+    bottom: 70px;
+
+    transform: translateX(-50%);
 
     color: var(--white);
 
@@ -326,7 +366,10 @@ body {
     opacity: 0;
 
     animation:
-        heroFadeIn 1s ease forwards;
+        fadeIn
+        1s
+        ease
+        forwards;
 
     animation-delay: 2.8s;
 
@@ -343,14 +386,14 @@ body {
    HERO ANIMATIONS
 ================================================== */
 
-@keyframes heroHurra {
+@keyframes hurraIn {
 
     from {
         opacity: 0;
 
         transform:
-            translateY(35px)
-            scale(0.95);
+            translateY(40px)
+            scale(0.94);
     }
 
     to {
@@ -363,13 +406,13 @@ body {
 }
 
 
-@keyframes heroAnnouncement {
+@keyframes announcementIn {
 
     from {
         opacity: 0;
 
         transform:
-            translateX(-180px);
+            translateX(-200px);
     }
 
     to {
@@ -381,7 +424,7 @@ body {
 }
 
 
-@keyframes heroFadeIn {
+@keyframes fadeIn {
 
     from {
         opacity: 0;
@@ -391,7 +434,6 @@ body {
         opacity: 1;
     }
 }
-
 
 /* ==================================================
    MAIN NAMES

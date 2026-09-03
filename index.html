@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>NAME & NAME — Vårt bröllop</title>
 
@@ -15,46 +11,47 @@
 
 <body>
 
-    <!-- =========================================
+    <!-- ====================
          HERO
-    ========================================== -->
+    ==================== -->
 
     <header class="hero">
 
         <div class="hero-content">
 
-            <div class="hero-intro">
+            <div class="hero-sequence">
 
-                <p class="hero-hurra">
-                    Hurra!
-                </p>
+                <div class="hero-intro">
 
-                <div class="hero-announcement">
-                    Vi ska gifta oss!
+                    <p class="hero-hurra">
+                        Hurra!
+                    </p>
+
+                    <div class="hero-announcement" id="heroAnnouncement">
+                        Vi ska gifta oss!
+                    </div>
+
+                </div>
+
+
+                <div class="hero-names" id="heroNames">
+
+                    <h1>
+                        NAME
+                        <span>&</span>
+                        NAME
+                    </h1>
+
+                    <p class="date">
+                        DATE
+                    </p>
+
                 </div>
 
             </div>
 
 
-            <div class="hero-names" id="heroNames">
-
-                <h1>
-                    NAME
-                    <span>&</span>
-                    NAME
-                </h1>
-
-                <p class="date">
-                    31 DECEMBER 2027
-                </p>
-
-            </div>
-
-
-            <a
-                href="#welcome"
-                class="scroll-link"
-            >
+            <a href="#welcome" class="scroll-link">
                 Välkommen ↓
             </a>
 
@@ -63,9 +60,9 @@
     </header>
 
 
-    <!-- =========================================
+    <!-- ====================
          VÄLKOMMEN
-    ========================================== -->
+    ==================== -->
 
     <section id="welcome">
 
@@ -91,9 +88,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          NEDRÄKNING
-    ========================================== -->
+    ==================== -->
 
     <section class="countdown-section">
 
@@ -108,7 +105,6 @@
             </h2>
 
             <div class="divider"></div>
-
 
             <div class="countdown">
 
@@ -139,9 +135,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          DETALJER
-    ========================================== -->
+    ==================== -->
 
     <section id="details">
 
@@ -156,7 +152,6 @@
             </h2>
 
             <div class="divider"></div>
-
 
             <div class="details-grid">
 
@@ -221,9 +216,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          VÅR HISTORIA
-    ========================================== -->
+    ==================== -->
 
     <section>
 
@@ -248,9 +243,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          RSVP
-    ========================================== -->
+    ==================== -->
 
     <section class="rsvp">
 
@@ -285,9 +280,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          MUSIK
-    ========================================== -->
+    ==================== -->
 
     <section class="music">
 
@@ -307,7 +302,6 @@
                 En liten samling låtar som betyder något för oss.
             </p>
 
-
             <div class="spotify-player">
 
                 <iframe
@@ -323,8 +317,7 @@
                         fullscreen;
                         picture-in-picture
                     "
-                    loading="lazy"
-                >
+                    loading="lazy">
                 </iframe>
 
             </div>
@@ -334,9 +327,9 @@
     </section>
 
 
-    <!-- =========================================
+    <!-- ====================
          FOOTER
-    ========================================== -->
+    ==================== -->
 
     <footer>
 
@@ -345,15 +338,15 @@
         </p>
 
         <p>
-            31 DECEMBER 2027 · VENUE
+            DATE · VENUE
         </p>
 
     </footer>
 
 
-    <!-- =========================================
+    <!-- ====================
          WEDDING ASSISTANT
-    ========================================== -->
+    ==================== -->
 
     <div class="wedding-assistant">
 
@@ -361,7 +354,6 @@
             class="assistant-character"
             id="assistantButton"
             aria-label="Öppna bröllopsassistenten"
-            type="button"
         >
             ✦
         </button>
@@ -376,21 +368,17 @@
                 class="assistant-close"
                 id="assistantClose"
                 aria-label="Stäng"
-                type="button"
             >
                 ×
             </button>
-
 
             <div class="assistant-sparkle">
                 ✦
             </div>
 
-
             <h3>
                 Hej där!
             </h3>
-
 
             <p id="assistantMessage">
                 Jag är här för att hjälpa till.
@@ -400,31 +388,19 @@
 
             <div class="assistant-options">
 
-                <button
-                    data-answer="vigsel"
-                    type="button"
-                >
+                <button data-answer="vigsel">
                     När är vigseln?
                 </button>
 
-                <button
-                    data-answer="plats"
-                    type="button"
-                >
+                <button data-answer="plats">
                     Var är festen?
                 </button>
 
-                <button
-                    data-answer="kladsel"
-                    type="button"
-                >
+                <button data-answer="kladsel">
                     Vad ska jag ha på mig?
                 </button>
 
-                <button
-                    data-answer="osa"
-                    type="button"
-                >
+                <button data-answer="osa">
                     Hur svarar jag?
                 </button>
 
@@ -438,5 +414,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>

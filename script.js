@@ -3,7 +3,7 @@
 // ========================================
 
 const weddingDate = new Date(
-    "2027-12-30T15:00:00"
+    "2027-12-31T15:00:00"
 ).getTime();
 
 
@@ -64,39 +64,176 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 
-    // ========================================
-    // HERO SCROLL REVEAL
-    // ========================================
-    
+// ========================================
+// HERO SCROLL ANIMATION
+// ========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const hero =
+        document.querySelector(".hero");
+
+    const heroIntro =
+        document.querySelector(".hero-intro");
+
     const heroNames =
         document.getElementById("heroNames");
-    
-    
-    if (heroNames) {
-    
-        const heroObserver =
-            new IntersectionObserver(
-                (entries) => {
-    
-                    entries.forEach(entry => {
-    
-                        if (entry.isIntersecting) {
-    
-                            heroNames.classList.add("visible");
-    
-                        }
-    
-                    });
-    
-                },
-                {
-                    threshold: 0.35
-                }
+
+
+    function updateHero() {
+
+        if (!hero || !heroIntro || !heroNames) {
+            return;
+        }
+
+
+        const heroHeight =
+            hero.offsetHeight;
+
+        const viewportHeight =
+            window.innerHeight;
+
+
+        /*
+         * How far we've travelled through
+         * the hero.
+         *
+         * 0 = top of hero
+         * 1 = bottom of hero
+         */
+
+        const maxScroll =
+            heroHeight - viewportHeight;
+
+
+        const scroll =
+            Math.max(
+                0,
+                Math.min(
+                    window.scrollY,
+                    maxScroll
+                )
             );
-    
-    
-        heroObserver.observe(heroNames);
+
+
+        const progress =
+            maxScroll > 0
+                ? scroll / maxScroll
+                : 0;
+
+
+        // ==================================
+        // INTRO FADES OUT
+        // ==================================
+
+        /*
+         * Keep HURRA visible at first.
+         *
+         * Then gradually fade it away.
+         */
+
+        const introFade =
+            Math.max(
+                0,
+                1 - (progress * 4)
+            );
+
+
+        heroIntro.style.opacity =
+            introFade;
+
+
+        // ==================================
+        // NAMES FADE IN
+        // ==================================
+
+        /*
+         * Names begin appearing after
+         * roughly 20% scroll.
+         */
+
+        const namesProgress =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    (progress - 0.18) / 0.35
+                )
+            );
+
+
+        const namesOpacity =
+            namesProgress;
+
+
+        const namesTranslate =
+            100 -
+            (namesProgress * 100);
+
+
+        const namesScale =
+            0.96 +
+            (namesProgress * 0.04);
+
+
+        heroNames.style.opacity =
+            namesOpacity;
+
+
+        heroNames.style.transform =
+            `
+            translateY(${namesTranslate}px)
+            scale(${namesScale})
+            `;
+
+
+        // ==================================
+        // SCROLL LINK
+        // ==================================
+
+        const scrollLink =
+            document.querySelector(".scroll-link");
+
+
+        if (scrollLink) {
+
+            scrollLink.style.opacity =
+                Math.max(
+                    0,
+                    1 - (progress * 5)
+                );
+
+        }
+
     }
+
+
+    /*
+     * Run once immediately.
+     */
+
+    updateHero();
+
+
+    /*
+     * Update while scrolling.
+     */
+
+    window.addEventListener(
+        "scroll",
+        updateHero,
+        { passive: true }
+    );
+
+
+    /*
+     * Update after resizing.
+     */
+
+    window.addEventListener(
+        "resize",
+        updateHero
+    );
 
 
     // ========================================
@@ -104,113 +241,125 @@ setInterval(updateCountdown, 1000);
     // ========================================
 
     const assistantButton =
-        document.getElementById("assistantButton");
+        document.getElementById(
+            "assistantButton"
+        );
 
     const assistantCard =
-        document.getElementById("assistantCard");
+        document.getElementById(
+            "assistantCard"
+        );
 
     const assistantClose =
-        document.getElementById("assistantClose");
+        document.getElementById(
+            "assistantClose"
+        );
 
     const assistantMessage =
-        document.getElementById("assistantMessage");
+        document.getElementById(
+            "assistantMessage"
+        );
 
 
     if (
-        !assistantButton ||
-        !assistantCard ||
-        !assistantClose ||
-        !assistantMessage
+        assistantButton &&
+        assistantCard &&
+        assistantClose &&
+        assistantMessage
     ) {
 
-        console.error(
-            "Wedding assistant: required HTML elements not found."
+        assistantButton.addEventListener(
+            "click",
+            () => {
+
+                assistantCard.classList.toggle(
+                    "open"
+                );
+
+            }
         );
 
-        return;
-    }
+
+        assistantClose.addEventListener(
+            "click",
+            () => {
+
+                assistantCard.classList.remove(
+                    "open"
+                );
+
+            }
+        );
 
 
-    // Open / close
-    assistantButton.addEventListener("click", () => {
+        const answers = {
 
-        assistantCard.classList.toggle("open");
+            vigsel: `
+                Vigseln äger rum
+                <strong>TIME</strong>
+                på <strong>VENUE</strong>.
+                <br><br>
+                Vi hoppas att du vill vara med!
+            `,
 
-    });
+            plats: `
+                Festen hålls på
+                <strong>VENUE</strong>.
+                <br>
+                ADDRESS, CITY.
+            `,
 
+            kladsel: `
+                Klädkoden är
+                <strong>DRESS CODE</strong>.
+                <br><br>
+                Vi ser fram emot att se dig där!
+            `,
 
-    // Close
-    assistantClose.addEventListener("click", () => {
+            osa: `
+                Du kan svara på vår inbjudan
+                genom att klicka på länken nedan.
+                <br><br>
 
-        assistantCard.classList.remove("open");
-
-    });
-
-
-    // ========================================
-    // ASSISTANT ANSWERS
-    // ========================================
-
-    const answers = {
-
-        vigsel: `
-            Vigseln äger rum
-            <strong>TIME</strong>
-            på <strong>VENUE</strong>.
-            <br><br>
-            Vi hoppas att du vill vara med!
-        `,
-
-        plats: `
-            Festen hålls på
-            <strong>VENUE</strong>.
-            <br>
-            ADDRESS, CITY.
-        `,
-
-        kladsel: `
-            Klädkoden är
-            <strong>DRESS CODE</strong>.
-            <br><br>
-            Vi ser fram emot att se dig där!
-        `,
-
-        osa: `
-            Du kan svara på vår inbjudan
-            genom att klicka på länken nedan.
-            <br><br>
-
-            <a
-                href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Öppna OSA-formuläret →
-            </a>
-        `
-    };
+                <a
+                    href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Öppna OSA-formuläret →
+                </a>
+            `
+        };
 
 
-    // Question buttons
-    document
-        .querySelectorAll(".assistant-options button")
-        .forEach(button => {
+        document
+            .querySelectorAll(
+                ".assistant-options button"
+            )
+            .forEach(button => {
 
-            button.addEventListener("click", () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                const answer =
-                    answers[button.dataset.answer];
+                        const answer =
+                            answers[
+                                button.dataset.answer
+                            ];
 
 
-                if (answer) {
+                        if (answer) {
 
-                    assistantMessage.innerHTML =
-                        answer;
+                            assistantMessage.innerHTML =
+                                answer;
 
-                }
+                        }
+
+                    }
+                );
 
             });
 
-        });
+    }
 
 });

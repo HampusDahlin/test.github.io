@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+@import url(
+    'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap'
+);
 
 
 /* ==================================================
@@ -79,6 +81,11 @@ body {
 
     background-attachment: fixed;
 
+    /*
+     * IMPORTANT:
+     * Do not use overflow:hidden here.
+     * It interferes with the sticky hero content.
+     */
     overflow: visible;
 }
 
@@ -89,7 +96,6 @@ body {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     background:
@@ -100,6 +106,8 @@ body {
         );
 
     pointer-events: none;
+
+    z-index: 1;
 }
 
 
@@ -115,11 +123,13 @@ body {
     bottom: 28px;
     left: 28px;
 
-    border: 1px solid rgba(255, 255, 255, 0.32);
-
-    z-index: 5;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.32);
 
     pointer-events: none;
+
+    z-index: 5;
 }
 
 
@@ -132,10 +142,12 @@ body {
 
     top: 0;
 
-    width: 100%;
     height: 100vh;
+    width: 100%;
 
     display: flex;
+
+    flex-direction: column;
 
     align-items: center;
     justify-content: center;
@@ -145,8 +157,6 @@ body {
     padding: 30px;
 
     z-index: 3;
-
-    overflow: hidden;
 }
 
 
@@ -257,7 +267,7 @@ body {
 
 
 /* ==================================================
-   NAMES
+   HERO NAMES
 ================================================== */
 
 .hero-names {
@@ -289,10 +299,9 @@ body {
 
 
 /*
-   IMPORTANT:
-   These properties intentionally override
-   generic h1/date styles.
-*/
+ * These rules are deliberately scoped.
+ * There are NO global h1/date animation rules.
+ */
 
 .hero-names h1 {
     margin: 0 0 30px;
@@ -389,15 +398,7 @@ body {
 
     text-transform: uppercase;
 
-    opacity: 0;
-
-    animation:
-        fadeIn
-        1s
-        ease
-        forwards;
-
-    animation-delay: 2.8s;
+    opacity: 1;
 
     transition:
         opacity 0.3s ease;
@@ -430,6 +431,7 @@ body {
             translateY(0)
             scale(1);
     }
+
 }
 
 
@@ -458,18 +460,7 @@ body {
                 0 0 0 0
             );
     }
-}
 
-
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
 
 
@@ -516,7 +507,9 @@ h2 {
     width: 65px;
     height: 1px;
 
-    margin: 35px auto 45px;
+    margin:
+        35px auto
+        45px;
 
     background: var(--gold);
 }
@@ -604,7 +597,13 @@ section {
 
     width: 100%;
 
-    color: rgba(255, 255, 255, 0.18);
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        );
 
     font-size: 14px;
 
@@ -723,7 +722,12 @@ section {
 
     box-shadow:
         0 15px 40px
-        rgba(21, 28, 39, 0.08);
+        rgba(
+            21,
+            28,
+            39,
+            0.08
+        );
 }
 
 
@@ -739,7 +743,12 @@ section {
 
     border:
         1px solid
-        rgba(183, 160, 120, 0.18);
+        rgba(
+            183,
+            160,
+            120,
+            0.18
+        );
 
     pointer-events: none;
 }
@@ -898,7 +907,12 @@ section {
 
     box-shadow:
         0 15px 40px
-        rgba(21, 28, 39, 0.12);
+        rgba(
+            21,
+            28,
+            39,
+            0.12
+        );
 }
 
 
@@ -982,7 +996,12 @@ footer p:last-child {
 
     box-shadow:
         0 8px 25px
-        rgba(0, 0, 0, 0.2);
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        );
 
     transition:
         transform 0.3s ease,
@@ -997,7 +1016,12 @@ footer p:last-child {
 
     box-shadow:
         0 12px 30px
-        rgba(0, 0, 0, 0.25);
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
 }
 
 
@@ -1021,7 +1045,12 @@ footer p:last-child {
 
     box-shadow:
         0 20px 50px
-        rgba(21, 28, 39, 0.2);
+        rgba(
+            21,
+            28,
+            39,
+            0.2
+        );
 
     opacity: 0;
 
@@ -1069,8 +1098,7 @@ footer p:last-child {
         1px solid
         var(--gold-light);
 
-    transform:
-        rotate(45deg);
+    transform: rotate(45deg);
 }
 
 
@@ -1156,14 +1184,16 @@ footer p:last-child {
 
     transition:
         background 0.2s ease,
-        border-color 0.2s ease;
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
 
 .assistant-options button:hover {
     background: var(--midnight);
 
-    border-color: var(--midnight);
+    border-color:
+        var(--midnight);
 
     color: var(--white);
 }
@@ -1191,7 +1221,8 @@ footer p:last-child {
 
         min-height: 1000px;
 
-        background-attachment: scroll;
+        background-attachment:
+            scroll;
     }
 
 
@@ -1210,7 +1241,12 @@ footer p:last-child {
 
 
     .hero-hurra {
-        font-size: 5.5rem;
+        font-size:
+            clamp(
+                5rem,
+                24vw,
+                7rem
+            );
     }
 
 
@@ -1221,10 +1257,28 @@ footer p:last-child {
     }
 
 
-    .hero-names h1 {
-        font-size: 5rem;
+    .hero-names {
+        padding:
+            0 20px;
+    }
 
-        letter-spacing: -1px;
+
+    .hero-names h1 {
+        font-size:
+            clamp(
+                4rem,
+                18vw,
+                6rem
+            );
+
+        letter-spacing:
+            -1px;
+    }
+
+
+    .hero-names h1 span {
+        margin:
+            14px 0;
     }
 
 
@@ -1236,7 +1290,7 @@ footer p:last-child {
 
 
     .scroll-link {
-        bottom: 45px;
+        bottom: 50px;
     }
 
 
@@ -1305,6 +1359,7 @@ footer p:last-child {
                 calc(100vw - 30px)
             );
     }
+
 }
 
 
@@ -1317,13 +1372,17 @@ footer p:last-child {
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
+        animation-duration:
+            0.01ms !important;
 
-        animation-iteration-count: 1 !important;
+        animation-iteration-count:
+            1 !important;
 
-        transition-duration: 0.01ms !important;
+        transition-duration:
+            0.01ms !important;
 
-        scroll-behavior: auto !important;
+        scroll-behavior:
+            auto !important;
     }
 
 
@@ -1334,4 +1393,5 @@ footer p:last-child {
 
         clip-path: none;
     }
+
 }

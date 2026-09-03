@@ -16,12 +16,35 @@ function updateCountdown() {
         weddingDate - now;
 
 
+    const daysElement =
+        document.getElementById("days");
+
+    const hoursElement =
+        document.getElementById("hours");
+
+    const minutesElement =
+        document.getElementById("minutes");
+
+    const secondsElement =
+        document.getElementById("seconds");
+
+
+    if (
+        !daysElement ||
+        !hoursElement ||
+        !minutesElement ||
+        !secondsElement
+    ) {
+        return;
+    }
+
+
     if (distance <= 0) {
 
-        document.getElementById("days").textContent = "00";
-        document.getElementById("hours").textContent = "00";
-        document.getElementById("minutes").textContent = "00";
-        document.getElementById("seconds").textContent = "00";
+        daysElement.textContent = "00";
+        hoursElement.textContent = "00";
+        minutesElement.textContent = "00";
+        secondsElement.textContent = "00";
 
         return;
     }
@@ -36,44 +59,44 @@ function updateCountdown() {
 
     const hours =
         Math.floor(
-            (distance %
-                (1000 * 60 * 60 * 24))
-            /
+            (
+                distance %
+                (1000 * 60 * 60 * 24)
+            ) /
             (1000 * 60 * 60)
         );
 
 
     const minutes =
         Math.floor(
-            (distance %
-                (1000 * 60 * 60))
-            /
+            (
+                distance %
+                (1000 * 60 * 60)
+            ) /
             (1000 * 60)
         );
 
 
     const seconds =
         Math.floor(
-            (distance %
-                (1000 * 60))
-            /
+            (
+                distance %
+                (1000 * 60)
+            ) /
             1000
         );
 
 
-    document.getElementById("days").textContent =
+    daysElement.textContent =
         String(days).padStart(2, "0");
 
-
-    document.getElementById("hours").textContent =
+    hoursElement.textContent =
         String(hours).padStart(2, "0");
 
-
-    document.getElementById("minutes").textContent =
+    minutesElement.textContent =
         String(minutes).padStart(2, "0");
 
-
-    document.getElementById("seconds").textContent =
+    secondsElement.textContent =
         String(seconds).padStart(2, "0");
 }
 
@@ -86,9 +109,8 @@ setInterval(
 );
 
 
-
 // ========================================
-// HERO SCROLL ANIMATION
+// HERO
 // ========================================
 
 document.addEventListener(
@@ -117,24 +139,20 @@ document.addEventListener(
         }
 
 
-        // ==================================
-        // USER SCROLL DETECTION
-        // ==================================
+        let automaticScrollStarted =
+            false;
 
-        let userHasScrolled = false;
+        let userHasScrolled =
+            false;
 
-        let automaticScrollStarted = false;
 
+        // ------------------------------------
+        // Detect real user scrolling
+        // ------------------------------------
 
         window.addEventListener(
             "scroll",
             () => {
-
-                /*
-                 * Once the visitor has manually
-                 * started scrolling, we don't want
-                 * the automatic scroll to interfere.
-                 */
 
                 if (
                     window.scrollY > 10 &&
@@ -150,9 +168,9 @@ document.addEventListener(
         );
 
 
-        // ==================================
-        // HERO ANIMATION
-        // ==================================
+        // ------------------------------------
+        // Update hero animation
+        // ------------------------------------
 
         function updateHero() {
 
@@ -165,13 +183,13 @@ document.addEventListener(
 
             const maxScroll =
                 Math.max(
-                    1,
+                    0,
                     heroHeight -
                     viewportHeight
                 );
 
 
-            const scroll =
+            const currentScroll =
                 Math.max(
                     0,
                     Math.min(
@@ -182,43 +200,47 @@ document.addEventListener(
 
 
             const progress =
-                scroll /
-                maxScroll;
+                maxScroll > 0
+                    ? currentScroll / maxScroll
+                    : 0;
 
 
-            // ==================================
-            // INTRO FADES OUT
-            // ==================================
+            // --------------------------------
+            // INTRO
+            // --------------------------------
 
-            const introFade =
-                Math.max(
-                    0,
-                    1 -
-                    (progress * 4)
+            const introProgress =
+                Math.min(
+                    1,
+                    progress / 0.16
                 );
 
 
+            const introOpacity =
+                1 - introProgress;
+
+
             heroIntro.style.opacity =
-                introFade;
+                introOpacity;
 
 
-            // ==================================
-            // NAMES FADE IN
-            // ==================================
-
-            /*
-             * Names begin appearing after
-             * approximately 18% of the
-             * hero scroll.
-             */
+            // --------------------------------
+            // NAMES
+            // --------------------------------
+            //
+            // Names begin appearing around
+            // 18% of the hero scroll.
+            //
 
             const namesProgress =
                 Math.max(
                     0,
                     Math.min(
                         1,
-                        (progress - 0.18) /
-                        0.35
+                        (
+                            progress -
+                            0.18
+                        ) / 0.30
                     )
                 );
 
@@ -229,12 +251,18 @@ document.addEventListener(
 
             const namesTranslate =
                 100 -
-                (namesProgress * 100);
+                (
+                    namesProgress *
+                    100
+                );
 
 
             const namesScale =
                 0.96 +
-                (namesProgress * 0.04);
+                (
+                    namesProgress *
+                    0.04
+                );
 
 
             heroNames.style.opacity =
@@ -248,9 +276,9 @@ document.addEventListener(
                 `;
 
 
-            // ==================================
+            // --------------------------------
             // SCROLL LINK
-            // ==================================
+            // --------------------------------
 
             if (scrollLink) {
 
@@ -258,7 +286,10 @@ document.addEventListener(
                     Math.max(
                         0,
                         1 -
-                        (progress * 5)
+                        (
+                            progress *
+                            6
+                        )
                     );
 
             }
@@ -266,35 +297,56 @@ document.addEventListener(
         }
 
 
-        // ==================================
-        // INITIAL HERO STATE
-        // ==================================
+        // ------------------------------------
+        // Initial state
+        // ------------------------------------
 
         updateHero();
 
 
-        // ==================================
-        // AUTOMATIC SCROLL
-        // ==================================
+        // ------------------------------------
+        // Scroll
+        // ------------------------------------
 
-        /*
-         * Give the opening animation some time
-         * to establish itself first.
-         *
-         * After 0.5 seconds, smoothly scroll
-         * into the hero so the names begin
-         * appearing.
-         */
+        window.addEventListener(
+            "scroll",
+            updateHero,
+            {
+                passive: true
+            }
+        );
+
+
+        // ------------------------------------
+        // Resize
+        // ------------------------------------
+
+        window.addEventListener(
+            "resize",
+            updateHero
+        );
+
+
+        // ====================================
+        // AUTOMATIC HERO SCROLL
+        // ====================================
 
         setTimeout(
             () => {
+
+                /*
+                 * If the visitor has already
+                 * scrolled manually, don't
+                 * interfere.
+                 */
 
                 if (userHasScrolled) {
                     return;
                 }
 
 
-                automaticScrollStarted = true;
+                automaticScrollStarted =
+                    true;
 
 
                 const heroHeight =
@@ -313,54 +365,29 @@ document.addEventListener(
 
 
                 /*
-                 * 20% of the available hero
-                 * scroll puts us just before
-                 * the names begin appearing.
-                 *
-                 * This creates a natural transition
-                 * from the announcement into the names.
+                 * Move far enough to start
+                 * revealing the names,
+                 * but not so far that the
+                 * transition is skipped.
                  */
 
                 const targetScroll =
-                    maxScroll * 0.22;
+                    maxScroll * 0.24;
+
+
+                if (targetScroll <= 0) {
+                    return;
+                }
 
 
                 window.scrollTo({
-
                     top: targetScroll,
-
                     behavior: "smooth"
-
                 });
 
             },
-
             500
         );
-
-
-        // ==================================
-        // SCROLL LISTENER
-        // ==================================
-
-        window.addEventListener(
-            "scroll",
-            updateHero,
-            {
-                passive: true
-            }
-        );
-
-
-        // ==================================
-        // RESIZE LISTENER
-        // ==================================
-
-        window.addEventListener(
-            "resize",
-            updateHero
-        );
-
 
 
         // ========================================
@@ -372,18 +399,15 @@ document.addEventListener(
                 "assistantButton"
             );
 
-
         const assistantCard =
             document.getElementById(
                 "assistantCard"
             );
 
-
         const assistantClose =
             document.getElementById(
                 "assistantClose"
             );
-
 
         const assistantMessage =
             document.getElementById(
@@ -399,6 +423,10 @@ document.addEventListener(
         ) {
 
 
+            // --------------------------------
+            // Open
+            // --------------------------------
+
             assistantButton.addEventListener(
                 "click",
                 () => {
@@ -410,6 +438,10 @@ document.addEventListener(
                 }
             );
 
+
+            // --------------------------------
+            // Close
+            // --------------------------------
 
             assistantClose.addEventListener(
                 "click",
@@ -423,6 +455,10 @@ document.addEventListener(
             );
 
 
+            // --------------------------------
+            // Answers
+            // --------------------------------
+
             const answers = {
 
                 vigsel: `
@@ -433,7 +469,6 @@ document.addEventListener(
                     Vi hoppas att du vill vara med!
                 `,
 
-
                 plats: `
                     Festen hålls på
                     <strong>VENUE</strong>.
@@ -441,14 +476,12 @@ document.addEventListener(
                     ADDRESS, CITY.
                 `,
 
-
                 kladsel: `
                     Klädkoden är
                     <strong>DRESS CODE</strong>.
                     <br><br>
                     Vi ser fram emot att se dig där!
                 `,
-
 
                 osa: `
                     Du kan svara på vår inbjudan
@@ -466,6 +499,10 @@ document.addEventListener(
 
             };
 
+
+            // --------------------------------
+            // Option buttons
+            // --------------------------------
 
             document
                 .querySelectorAll(

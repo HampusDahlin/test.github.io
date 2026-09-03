@@ -129,6 +129,11 @@ document.addEventListener(
         const scrollLink =
             document.querySelector(".scroll-link");
 
+        const heroAnnouncement =
+            document.querySelector(
+                ".hero-announcement"
+            );
+
 
         if (
             !hero ||
@@ -144,6 +149,9 @@ document.addEventListener(
 
         let userHasScrolled =
             false;
+
+        let automaticScrollFrame =
+            null;
 
 
         // ------------------------------------
@@ -168,9 +176,9 @@ document.addEventListener(
         );
 
 
-        // ------------------------------------
-        // Update hero animation
-        // ------------------------------------
+        // ====================================
+        // UPDATE HERO
+        // ====================================
 
         function updateHero() {
 
@@ -227,6 +235,10 @@ document.addEventListener(
             // --------------------------------
             // NAMES FADE IN
             // --------------------------------
+            //
+            // Starts at 18%
+            // Fully visible at 48%
+            //
 
             const namesProgress =
                 Math.max(
@@ -324,92 +336,256 @@ document.addEventListener(
 
 
         // ====================================
-        // AUTOMATIC HERO SCROLL
-        // ====================================
-        //
-        // The text animations finish at:
-        //
-        // "Hurra!"
-        // 0.2s delay + 1.0s animation
-        // = 1.2s
-        //
-        // "Vi ska gifta oss!"
-        // 1.0s delay + 1.3s animation
-        // = 2.3s
-        //
-        // We then wait another 0.5s.
-        //
-        // Scroll starts at:
-        // 2.3s + 0.5s = 2.8s
+        // SLOW AUTOMATIC SCROLL
         // ====================================
 
-        const textAnimationsFinished =
-            2300;
+        function startAutomaticScroll() {
 
-        const pauseAfterText =
-            500;
+            /*
+             * Never interfere with a visitor
+             * who has already started scrolling.
+             */
 
-        const automaticScrollDelay =
-            textAnimationsFinished +
-            pauseAfterText;
-
-
-        setTimeout(
-            () => {
-
-                /*
-                 * Don't interfere if the visitor
-                 * has already started scrolling.
-                 */
-
-                if (userHasScrolled) {
-                    return;
-                }
+            if (userHasScrolled) {
+                return;
+            }
 
 
-                automaticScrollStarted =
-                    true;
+            automaticScrollStarted =
+                true;
 
 
-                const heroHeight =
-                    hero.offsetHeight;
+            const heroHeight =
+                hero.offsetHeight;
 
-                const viewportHeight =
-                    window.innerHeight;
+            const viewportHeight =
+                window.innerHeight;
 
 
-                const maxScroll =
-                    Math.max(
-                        0,
-                        heroHeight -
-                        viewportHeight
+            const maxScroll =
+                Math.max(
+                    0,
+                    heroHeight -
+                    viewportHeight
+                );
+
+
+            /*
+             * The names become fully opaque
+             * at approximately 48%.
+             *
+             * We scroll slightly beyond that
+             * point so the final state feels
+             * deliberate rather than stopping
+             * exactly when opacity reaches 1.
+             */
+
+            const targetProgress =
+                0.55;
+
+
+            const startScroll =
+                window.scrollY;
+
+
+            const targetScroll =
+                maxScroll *
+                targetProgress;
+
+
+            const distance =
+                targetScroll -
+                startScroll;
+
+
+            if (
+                maxScroll <= 0 ||
+                distance <= 0
+            ) {
+                return;
+            }
+
+
+            /*
+             * 4.5 seconds makes the transition
+             * noticeably slower and more elegant.
+             */
+
+            const duration =
+                4500;
+
+
+            const startTime =
+                performance.now();
+
+
+            /*
+             * Ease in/out.
+             *
+             * Starts gently,
+             * moves smoothly,
+             * then slows down before stopping.
+             */
+
+            function easeInOutCubic(t) {
+
+                return t < 0.5
+                    ? 4 * t * t * t
+                    : 1 -
+                        Math.pow(
+                            -2 * t + 2,
+                            3
+                        ) / 2;
+
+            }
+
+
+            function animateScroll(
+                currentTime
+            ) {
+
+                const elapsed =
+                    currentTime -
+                    startTime;
+
+
+                const rawProgress =
+                    Math.min(
+                        elapsed /
+                        duration,
+                        1
                     );
 
 
-                /*
-                 * Scroll far enough to begin
-                 * the transition from the
-                 * introductory text to the
-                 * names.
-                 */
-
-                const targetScroll =
-                    maxScroll * 0.24;
+                const easedProgress =
+                    easeInOutCubic(
+                        rawProgress
+                    );
 
 
-                if (targetScroll <= 0) {
+                const currentPosition =
+                    startScroll +
+                    (
+                        distance *
+                        easedProgress
+                    );
+
+
+                window.scrollTo(
+                    0,
+                    currentPosition
+                );
+
+
+                if (
+                    rawProgress < 1
+                ) {
+
+                    automaticScrollFrame =
+                        requestAnimationFrame(
+                            animateScroll
+                        );
+
+                } else {
+
+                    automaticScrollFrame =
+                        null;
+
+                    updateHero();
+
+                }
+
+            }
+
+
+            automaticScrollFrame =
+                requestAnimationFrame(
+                    animateScroll
+                );
+
+        }
+
+
+        // ====================================
+        // WAIT FOR TEXT ANIMATION
+        // ====================================
+
+        /*
+         * The announcement is the last
+         * introductory text element to finish.
+         *
+         * Rather than guessing a total load
+         * time, wait for its actual
+         * animationend event.
+         */
+
+        if (heroAnnouncement) {
+
+            let scrollTimerStarted =
+                false;
+
+
+            function scheduleAutomaticScroll() {
+
+                if (scrollTimerStarted) {
                     return;
                 }
 
 
-                window.scrollTo({
-                    top: targetScroll,
-                    behavior: "smooth"
-                });
+                scrollTimerStarted = true;
 
-            },
-            automaticScrollDelay
-        );
+
+                /*
+                 * Half a second pause after
+                 * the text animation finishes.
+                 */
+
+                setTimeout(
+                    startAutomaticScroll,
+                    500
+                );
+
+            }
+
+
+            heroAnnouncement.addEventListener(
+                "animationend",
+                scheduleAutomaticScroll,
+                {
+                    once: true
+                }
+            );
+
+
+            /*
+             * Safety fallback.
+             *
+             * If animationend doesn't fire for
+             * any reason, don't leave the hero
+             * stuck forever.
+             *
+             * The current CSS animation finishes
+             * after roughly 2.3 seconds.
+             */
+
+            setTimeout(
+                scheduleAutomaticScroll,
+                2500
+            );
+
+        } else {
+
+            /*
+             * If the announcement element is
+             * missing, use a safe fallback.
+             */
+
+            setTimeout(
+                startAutomaticScroll,
+                500
+            );
+
+        }
 
 
         // ========================================

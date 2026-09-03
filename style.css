@@ -35,11 +35,15 @@
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
+    margin: 0;
+
     background: var(--ivory);
     color: var(--charcoal);
 
@@ -55,6 +59,24 @@ body {
 /* ==================================================
    HERO
 ================================================== */
+
+/*
+   The hero is intentionally taller than the screen.
+
+   The user scrolls through this space while the
+   hero-content remains visible.
+
+   JS uses this scroll distance to control the
+   transition from:
+
+   HURRA
+       ↓
+   VI SKA GIFTA OSS
+       ↓
+   NAME & NAME
+       ↓
+   DATE
+*/
 
 .hero {
     position: relative;
@@ -73,18 +95,15 @@ body {
         center center / cover no-repeat;
 
     background-attachment: fixed;
-
-    overflow: hidden;
 }
 
 
-/* Vignette */
+/* Dark vignette */
 
 .hero::after {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     background:
@@ -95,10 +114,12 @@ body {
         );
 
     pointer-events: none;
+
+    z-index: 1;
 }
 
 
-/* Elegant frame */
+/* Elegant border */
 
 .hero::before {
     content: "";
@@ -112,9 +133,9 @@ body {
 
     border: 1px solid rgba(255, 255, 255, 0.32);
 
-    z-index: 5;
-
     pointer-events: none;
+
+    z-index: 10;
 }
 
 
@@ -127,28 +148,24 @@ body {
 
     top: 0;
 
-    height: 100vh;
-
     width: 100%;
+    height: 100vh;
 
     display: flex;
 
-    flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     text-align: center;
 
     padding: 30px;
 
-    z-index: 3;
+    z-index: 5;
 }
 
 
 /* ==================================================
-   HURRA
+   HERO INTRO
 ================================================== */
 
 .hero-intro {
@@ -160,13 +177,20 @@ body {
 
     flex-direction: column;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
-
     padding-bottom: 5vh;
+
+    opacity: 1;
+
+    will-change: opacity;
 }
 
+
+/* ==================================================
+   HURRA
+================================================== */
 
 .hero-hurra {
     margin: 0;
@@ -178,12 +202,11 @@ body {
         Georgia,
         serif;
 
-    font-size:
-        clamp(
-            5rem,
-            13vw,
-            10rem
-        );
+    font-size: clamp(
+        5rem,
+        13vw,
+        10rem
+    );
 
     font-weight: 300;
 
@@ -193,13 +216,16 @@ body {
 
     opacity: 0;
 
+    transform:
+        translateY(40px)
+        scale(0.94);
+
     animation:
         hurraIn
         1s
         cubic-bezier(0.16, 1, 0.3, 1)
+        0.2s
         forwards;
-
-    animation-delay: 0.2s;
 }
 
 
@@ -217,16 +243,15 @@ body {
         Georgia,
         serif;
 
-    font-size:
-        clamp(
-            2rem,
-            5vw,
-            4rem
-        );
-
-    font-style: italic;
+    font-size: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
 
     font-weight: 400;
+
+    font-style: italic;
 
     line-height: 1;
 
@@ -242,14 +267,13 @@ body {
         announcementIn
         1.3s
         cubic-bezier(0.16, 1, 0.3, 1)
+        1s
         forwards;
-
-    animation-delay: 1s;
 }
 
 
 /* ==================================================
-   NAMES
+   HERO NAMES
 ================================================== */
 
 .hero-names {
@@ -261,14 +285,14 @@ body {
 
     flex-direction: column;
 
-    justify-content: center;
-
     align-items: center;
+    justify-content: center;
 
     padding-top: 5vh;
 
     /*
-       JS controls these values while scrolling.
+       JS controls opacity and transform.
+       No CSS entrance animation here.
     */
 
     opacity: 0;
@@ -295,18 +319,28 @@ body {
         Georgia,
         serif;
 
-    font-size:
-        clamp(
-            5rem,
-            14vw,
-            10rem
-        );
+    font-size: clamp(
+        5rem,
+        14vw,
+        10rem
+    );
 
     font-weight: 300;
 
     line-height: 0.8;
 
     letter-spacing: -3px;
+
+    /*
+       IMPORTANT:
+       The old global h1 animation is gone.
+    */
+
+    opacity: 1;
+
+    transform: none;
+
+    animation: none;
 }
 
 
@@ -326,15 +360,27 @@ body {
 
 
 .hero-names .date {
-    font-family: "Montserrat", sans-serif;
+    margin: 0;
+
+    color: var(--white);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 11px;
+
+    font-weight: 400;
 
     letter-spacing: 5px;
 
     text-transform: uppercase;
 
-    color: var(--white);
+    opacity: 1;
+
+    transform: none;
+
+    animation: none;
 }
 
 
@@ -355,7 +401,9 @@ body {
 
     text-decoration: none;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -369,9 +417,8 @@ body {
         fadeIn
         1s
         ease
+        2.8s
         forwards;
-
-    animation-delay: 2.8s;
 
     transition: opacity 0.3s ease;
 }
@@ -413,6 +460,9 @@ body {
 
         transform:
             translateX(-200px);
+
+        clip-path:
+            inset(0 100% 0 0);
     }
 
     to {
@@ -420,6 +470,9 @@ body {
 
         transform:
             translateX(0);
+
+        clip-path:
+            inset(0 0 0 0);
     }
 }
 
@@ -435,108 +488,17 @@ body {
     }
 }
 
-/* ==================================================
-   MAIN NAMES
-================================================== */
-
-h1 {
-    margin: 10px 0 28px;
-
-    font-size: clamp(5rem, 14vw, 10rem);
-
-    font-weight: 300;
-
-    line-height: 0.8;
-
-    letter-spacing: -3px;
-
-    opacity: 0;
-
-    transform: translateY(25px);
-
-    animation:
-        heroNames 1.2s ease forwards;
-
-    animation-delay: 1.4s;
-}
-
-
-h1 span {
-    display: block;
-
-    margin: 17px 0;
-
-    color: var(--gold-light);
-
-    font-size: 0.32em;
-
-    font-weight: 300;
-
-    letter-spacing: 0;
-}
-
-
-.date {
-    font-family: "Montserrat", sans-serif;
-
-    font-size: 11px;
-
-    letter-spacing: 5px;
-
-    text-transform: uppercase;
-
-    opacity: 0;
-
-    animation:
-        heroFadeIn 0.9s ease forwards;
-
-    animation-delay: 2s;
-}
-
-
-/* ==================================================
-   SCROLL LINK
-================================================== */
-
-.scroll-link {
-    display: inline-block;
-
-    margin-top: 65px;
-
-    color: var(--white);
-
-    text-decoration: none;
-
-    font-family: "Montserrat", sans-serif;
-
-    font-size: 9px;
-
-    letter-spacing: 4px;
-
-    text-transform: uppercase;
-
-    opacity: 0;
-
-    animation:
-        heroFadeIn 1s ease forwards;
-
-    animation-delay: 2.4s;
-
-    transition: opacity 0.3s ease;
-}
-
-
-.scroll-link:hover {
-    opacity: 0.6;
-}
-
 
 /* ==================================================
    GENERAL TYPOGRAPHY
 ================================================== */
 
 .eyebrow {
-    font-family: "Montserrat", sans-serif;
+    color: var(--gold);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 10px;
 
@@ -545,15 +507,18 @@ h1 span {
     letter-spacing: 5px;
 
     text-transform: uppercase;
-
-    color: var(--gold);
 }
 
 
 h2 {
     margin-top: 18px;
 
-    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    font-size:
+        clamp(
+            2.6rem,
+            5vw,
+            4.2rem
+        );
 
     font-weight: 300;
 
@@ -567,7 +532,9 @@ h2 {
     width: 65px;
     height: 1px;
 
-    margin: 35px auto 45px;
+    margin:
+        35px auto
+        45px;
 
     background: var(--gold);
 }
@@ -581,7 +548,8 @@ h2 {
 
     top: 50%;
 
-    transform: translateY(-55%);
+    transform:
+        translateY(-55%);
 
     color: var(--gold);
 
@@ -613,6 +581,8 @@ section {
 
 
 .container {
+    width: 100%;
+
     max-width: 950px;
 
     margin: 0 auto;
@@ -624,9 +594,9 @@ section {
 
     margin: auto;
 
-    font-size: 1.25rem;
-
     color: #50545a;
+
+    font-size: 1.25rem;
 }
 
 
@@ -635,16 +605,19 @@ section {
 ================================================== */
 
 .countdown-section {
+    position: relative;
+
+    overflow: hidden;
+
     background: var(--midnight);
 
     color: var(--white);
-
-    overflow: hidden;
 }
 
 
 .countdown-section::before {
-    content: "✦   ·       ✧          ·     ✦        ·        ✧     ·    ✦";
+    content:
+        "✦   ·       ✧          ·     ✦        ·        ✧     ·    ✦";
 
     position: absolute;
 
@@ -653,7 +626,13 @@ section {
 
     width: 100%;
 
-    color: rgba(255, 255, 255, 0.18);
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        );
 
     font-size: 14px;
 
@@ -670,17 +649,17 @@ section {
 }
 
 
-.countdown-section .divider {
-    background: var(--gold);
-}
-
-
 .countdown {
     display: flex;
 
     justify-content: center;
 
-    gap: clamp(25px, 7vw, 80px);
+    gap:
+        clamp(
+            25px,
+            7vw,
+            80px
+        );
 
     margin-top: 55px;
 }
@@ -694,13 +673,18 @@ section {
 .countdown span {
     display: block;
 
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    color: var(--white);
+
+    font-size:
+        clamp(
+            2.8rem,
+            6vw,
+            4.5rem
+        );
 
     font-weight: 300;
 
     line-height: 1;
-
-    color: var(--white);
 }
 
 
@@ -709,15 +693,17 @@ section {
 
     margin-top: 12px;
 
-    font-family: "Montserrat", sans-serif;
+    color: var(--gold-light);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 8px;
 
     letter-spacing: 3px;
 
     text-transform: uppercase;
-
-    color: var(--gold-light);
 }
 
 
@@ -733,7 +719,11 @@ section {
 .details-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
 
     gap: 25px;
 
@@ -748,7 +738,9 @@ section {
 
     background: var(--paper);
 
-    border: 1px solid var(--border-light);
+    border:
+        1px solid
+        var(--border-light);
 
     transition:
         transform 0.35s ease,
@@ -757,10 +749,17 @@ section {
 
 
 .detail-card:hover {
-    transform: translateY(-6px);
+    transform:
+        translateY(-6px);
 
     box-shadow:
-        0 15px 40px rgba(21, 28, 39, 0.08);
+        0 15px 40px
+        rgba(
+            21,
+            28,
+            39,
+            0.08
+        );
 }
 
 
@@ -774,7 +773,14 @@ section {
     bottom: 12px;
     left: 12px;
 
-    border: 1px solid rgba(183, 160, 120, 0.18);
+    border:
+        1px solid
+        rgba(
+            183,
+            160,
+            120,
+            0.18
+        );
 
     pointer-events: none;
 }
@@ -785,7 +791,11 @@ section {
 
     margin-bottom: 15px;
 
-    font-family: "Montserrat", sans-serif;
+    color: var(--gold);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -794,8 +804,6 @@ section {
     letter-spacing: 3px;
 
     text-transform: uppercase;
-
-    color: var(--gold);
 }
 
 
@@ -829,9 +837,9 @@ section {
 
 
 .story p:last-child {
-    font-size: 1.25rem;
-
     color: #50545a;
+
+    font-size: 1.25rem;
 }
 
 
@@ -851,16 +859,11 @@ section {
 }
 
 
-.rsvp .divider {
-    background: var(--gold);
-}
-
-
 .rsvp p:not(.eyebrow) {
     max-width: 600px;
 
-    margin-left: auto;
-    margin-right: auto;
+    margin:
+        0 auto;
 
     font-size: 1.2rem;
 }
@@ -871,15 +874,20 @@ section {
 
     margin-top: 40px;
 
-    padding: 17px 45px;
+    padding:
+        17px 45px;
 
-    border: 1px solid var(--gold-light);
+    border:
+        1px solid
+        var(--gold-light);
 
     color: var(--white);
 
     text-decoration: none;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -912,7 +920,8 @@ section {
 .music-intro {
     max-width: 550px;
 
-    margin: 0 auto 35px;
+    margin:
+        0 auto 35px;
 
     color: #50545a;
 }
@@ -921,14 +930,21 @@ section {
 .spotify-player {
     max-width: 700px;
 
-    margin: 40px auto 0;
+    margin:
+        40px auto 0;
 
     overflow: hidden;
 
     border-radius: 12px;
 
     box-shadow:
-        0 15px 40px rgba(21, 28, 39, 0.12);
+        0 15px 40px
+        rgba(
+            21,
+            28,
+            39,
+            0.12
+        );
 }
 
 
@@ -944,9 +960,9 @@ section {
 footer {
     padding: 80px 20px;
 
-    text-align: center;
-
     background: var(--ivory);
+
+    text-align: center;
 }
 
 
@@ -960,15 +976,17 @@ footer {
 footer p:last-child {
     margin-top: 8px;
 
-    font-family: "Montserrat", sans-serif;
+    color: var(--winter-blue);
+
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 8px;
 
     letter-spacing: 3px;
 
     text-transform: uppercase;
-
-    color: var(--winter-blue);
 }
 
 
@@ -990,9 +1008,13 @@ footer p:last-child {
     width: 58px;
     height: 58px;
 
-    border-radius: 50%;
+    padding: 0;
 
-    border: 1px solid var(--gold-light);
+    border:
+        1px solid
+        var(--gold-light);
+
+    border-radius: 50%;
 
     background: var(--midnight);
 
@@ -1005,7 +1027,13 @@ footer p:last-child {
     cursor: pointer;
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.2);
+        0 8px 25px
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        );
 
     transition:
         transform 0.3s ease,
@@ -1014,10 +1042,18 @@ footer p:last-child {
 
 
 .assistant-character:hover {
-    transform: translateY(-4px) rotate(8deg);
+    transform:
+        translateY(-4px)
+        rotate(8deg);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.25);
+        0 12px 30px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
 }
 
 
@@ -1035,10 +1071,18 @@ footer p:last-child {
 
     color: var(--charcoal);
 
-    border: 1px solid var(--gold-light);
+    border:
+        1px solid
+        var(--gold-light);
 
     box-shadow:
-        0 20px 50px rgba(21, 28, 39, 0.2);
+        0 20px 50px
+        rgba(
+            21,
+            28,
+            39,
+            0.2
+        );
 
     opacity: 0;
 
@@ -1078,10 +1122,16 @@ footer p:last-child {
 
     background: var(--paper);
 
-    border-right: 1px solid var(--gold-light);
-    border-bottom: 1px solid var(--gold-light);
+    border-right:
+        1px solid
+        var(--gold-light);
 
-    transform: rotate(45deg);
+    border-bottom:
+        1px solid
+        var(--gold-light);
+
+    transform:
+        rotate(45deg);
 }
 
 
@@ -1090,6 +1140,8 @@ footer p:last-child {
 
     top: 10px;
     right: 13px;
+
+    padding: 0;
 
     border: none;
 
@@ -1104,11 +1156,11 @@ footer p:last-child {
 
 
 .assistant-sparkle {
+    margin-bottom: 5px;
+
     color: var(--gold);
 
     font-size: 20px;
-
-    margin-bottom: 5px;
 }
 
 
@@ -1142,9 +1194,12 @@ footer p:last-child {
 
 
 .assistant-options button {
-    padding: 9px 12px;
+    padding:
+        9px 12px;
 
-    border: 1px solid var(--border-light);
+    border:
+        1px solid
+        var(--border-light);
 
     background: var(--ivory);
 
@@ -1152,7 +1207,9 @@ footer p:last-child {
 
     text-align: left;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -1162,50 +1219,31 @@ footer p:last-child {
 
     transition:
         background 0.2s ease,
-        border-color 0.2s ease;
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
 
 .assistant-options button:hover {
     background: var(--midnight);
 
-    border-color: var(--midnight);
+    border-color:
+        var(--midnight);
 
     color: var(--white);
 }
 
 
-/* ==================================================
-   HERO ANIMATIONS
-================================================== */
+.assistant-options button:focus-visible,
+.assistant-close:focus-visible,
+.assistant-character:focus-visible,
+.button:focus-visible,
+.scroll-link:focus-visible {
+    outline:
+        2px solid
+        var(--gold);
 
-@keyframes heroFadeIn {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-
-@keyframes heroNames {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
+    outline-offset: 4px;
 }
 
 
@@ -1221,7 +1259,19 @@ footer p:last-child {
 
 
     section {
-        padding: 85px 20px;
+        padding:
+            85px 20px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        height: 160vh;
+
+        min-height: 1000px;
+
+        background-attachment: scroll;
     }
 
 
@@ -1234,33 +1284,47 @@ footer p:last-child {
 
 
     .hero-content {
-        padding: 40px 15px;
+        height: 100vh;
+
+        padding:
+            20px 15px;
     }
 
 
-    .hero-eyebrow {
-        font-size: 10px;
-
-        letter-spacing: 5px;
+    .hero-hurra {
+        font-size: 5.5rem;
     }
 
 
     .hero-announcement {
-        font-size: 2.2rem;
+        margin-top: 30px;
 
-        margin-top: 18px;
-        margin-bottom: 28px;
+        font-size: 2.3rem;
     }
 
 
-    h1 {
+    .hero-names {
+        padding:
+            0 20px;
+    }
+
+
+    .hero-names h1 {
+        margin-bottom: 25px;
+
         font-size: 5rem;
 
         letter-spacing: -1px;
     }
 
 
-    .hero .date {
+    .hero-names h1 span {
+        margin:
+            14px 0;
+    }
+
+
+    .hero-names .date {
         font-size: 9px;
 
         letter-spacing: 3px;
@@ -1268,14 +1332,18 @@ footer p:last-child {
 
 
     .scroll-link {
-        margin-top: 50px;
+        bottom: 45px;
     }
 
+
+    /* General */
 
     h2 {
         font-size: 2.7rem;
     }
 
+
+    /* Countdown */
 
     .countdown {
         gap: 15px;
@@ -1299,6 +1367,8 @@ footer p:last-child {
     }
 
 
+    /* Details */
+
     .details-grid {
         grid-template-columns: 1fr;
 
@@ -1307,19 +1377,26 @@ footer p:last-child {
 
 
     .detail-card {
-        padding: 40px 20px;
+        padding:
+            40px 20px;
     }
 
+
+    /* Story */
 
     .story p:last-child {
         font-size: 1.15rem;
     }
 
 
+    /* Footer */
+
     .footer-names {
         font-size: 2.3rem;
     }
 
+
+    /* Assistant */
 
     .wedding-assistant {
         right: 15px;
@@ -1336,6 +1413,7 @@ footer p:last-child {
                 calc(100vw - 30px)
             );
     }
+
 }
 
 
@@ -1348,15 +1426,21 @@ footer p:last-child {
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
+        animation-duration:
+            0.01ms !important;
 
-        animation-iteration-count: 1 !important;
+        animation-iteration-count:
+            1 !important;
 
-        transition-duration: 0.01ms !important;
+        transition-duration:
+            0.01ms !important;
 
-        scroll-behavior: auto !important;
+        scroll-behavior:
+            auto !important;
     }
 
+
+    .hero-hurra,
     .hero-announcement {
         opacity: 1;
 
@@ -1364,4 +1448,5 @@ footer p:last-child {
 
         clip-path: none;
     }
+
 }

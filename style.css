@@ -45,9 +45,13 @@ body {
     background: var(--ivory);
     color: var(--charcoal);
 
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
 
     font-size: 19px;
+
     line-height: 1.7;
 
     overflow-x: hidden;
@@ -76,11 +80,18 @@ body {
 
     background-attachment: fixed;
 
+    /*
+     * Important:
+     * The sequence needs to be allowed to move
+     * through the viewport.
+     */
     overflow: visible;
 }
 
 
-/* Vignette */
+/* ==================================================
+   HERO VIGNETTE
+================================================== */
 
 .hero::after {
     content: "";
@@ -97,10 +108,14 @@ body {
         );
 
     pointer-events: none;
+
+    z-index: 1;
 }
 
 
-/* Elegant frame */
+/* ==================================================
+   HERO FRAME
+================================================== */
 
 .hero::before {
     content: "";
@@ -112,11 +127,13 @@ body {
     bottom: 28px;
     left: 28px;
 
-    border: 1px solid rgba(255, 255, 255, 0.32);
-
-    z-index: 5;
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.32);
 
     pointer-events: none;
+
+    z-index: 5;
 }
 
 
@@ -129,8 +146,8 @@ body {
 
     top: 0;
 
-    height: 100vh;
     width: 100%;
+    height: 100vh;
 
     display: flex;
 
@@ -139,11 +156,14 @@ body {
 
     text-align: center;
 
-    padding: 30px;
-
     z-index: 3;
 
-    overflow: hidden;
+    /*
+     * Do NOT use overflow:hidden here.
+     * The names need to travel naturally
+     * into the viewport.
+     */
+    overflow: visible;
 }
 
 
@@ -160,15 +180,8 @@ body {
     width: 100%;
     height: 100%;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    pointer-events: none;
-
-    will-change: transform;
+    will-change:
+        transform;
 }
 
 
@@ -190,7 +203,11 @@ body {
 
     align-items: center;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
 
     padding-bottom: 5vh;
 }
@@ -228,7 +245,12 @@ body {
     animation:
         hurraIn
         1s
-        cubic-bezier(0.16, 1, 0.3, 1)
+        cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        )
         forwards;
 
     animation-delay: 0.2s;
@@ -236,7 +258,7 @@ body {
 
 
 /* ==================================================
-   VI SKA GIFTA OSS
+   ANNOUNCEMENT
 ================================================== */
 
 .hero-announcement {
@@ -264,16 +286,23 @@ body {
 
     opacity: 0;
 
-    transform: translateX(-120px);
+    transform:
+        translateX(-120px);
 
-    clip-path: inset(
-        0 100% 0 0
-    );
+    clip-path:
+        inset(
+            0 100% 0 0
+        );
 
     animation:
         announcementIn
         1.3s
-        cubic-bezier(0.16, 1, 0.3, 1)
+        cubic-bezier(
+            0.16,
+            1,
+            0.3,
+            1
+        )
         forwards;
 
     animation-delay: 1s;
@@ -287,7 +316,14 @@ body {
 .hero-names {
     position: absolute;
 
-    top: 145vh;
+    /*
+     * This is the important positioning change.
+     *
+     * The names begin below the first message.
+     * JavaScript simply moves the whole sequence
+     * upward with the page scroll.
+     */
+    top: 92vh;
 
     left: 0;
 
@@ -301,18 +337,26 @@ body {
 
     justify-content: center;
 
-    padding: 0 30px;
+    padding:
+        0 30px;
 
+    /*
+     * Names are ALWAYS visible.
+     * No fade.
+     * No scale.
+     * No independent transform.
+     */
     opacity: 1;
 
     transform: none;
 
-    will-change: transform;
+    pointer-events: none;
 }
 
 
 .hero-names h1 {
-    margin: 0 0 30px;
+    margin:
+        0 0 30px;
 
     color: var(--white);
 
@@ -333,13 +377,24 @@ body {
     line-height: 0.8;
 
     letter-spacing: -3px;
+
+    /*
+     * Explicitly disable any inherited
+     * animation from the old stylesheet.
+     */
+    opacity: 1;
+
+    transform: none;
+
+    animation: none;
 }
 
 
 .hero-names h1 span {
     display: block;
 
-    margin: 18px 0;
+    margin:
+        18px 0;
 
     color: var(--gold-light);
 
@@ -352,7 +407,9 @@ body {
 
 
 .hero-names .date {
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 11px;
 
@@ -361,6 +418,12 @@ body {
     text-transform: uppercase;
 
     color: var(--white);
+
+    opacity: 1;
+
+    transform: none;
+
+    animation: none;
 }
 
 
@@ -375,13 +438,16 @@ body {
 
     bottom: 70px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     color: var(--white);
 
     text-decoration: none;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -478,7 +544,9 @@ body {
 ================================================== */
 
 .eyebrow {
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 10px;
 
@@ -514,7 +582,8 @@ h2 {
     width: 65px;
     height: 1px;
 
-    margin: 35px auto 45px;
+    margin:
+        35px auto 45px;
 
     background: var(--gold);
 }
@@ -554,7 +623,8 @@ h2 {
 section {
     position: relative;
 
-    padding: 120px 25px;
+    padding:
+        120px 25px;
 
     text-align: center;
 }
@@ -583,11 +653,14 @@ section {
 ================================================== */
 
 .countdown-section {
-    background: var(--midnight);
+    background:
+        var(--midnight);
 
-    color: var(--white);
+    color:
+        var(--white);
 
-    overflow: hidden;
+    overflow:
+        hidden;
 }
 
 
@@ -603,7 +676,12 @@ section {
     width: 100%;
 
     color:
-        rgba(255, 255, 255, 0.18);
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        );
 
     font-size: 14px;
 
@@ -616,12 +694,14 @@ section {
 
 
 .countdown-section .eyebrow {
-    color: var(--gold-light);
+    color:
+        var(--gold-light);
 }
 
 
 .countdown-section .divider {
-    background: var(--gold);
+    background:
+        var(--gold);
 }
 
 
@@ -660,7 +740,8 @@ section {
 
     line-height: 1;
 
-    color: var(--white);
+    color:
+        var(--white);
 }
 
 
@@ -669,7 +750,9 @@ section {
 
     margin-top: 12px;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 8px;
 
@@ -677,7 +760,8 @@ section {
 
     text-transform: uppercase;
 
-    color: var(--gold-light);
+    color:
+        var(--gold-light);
 }
 
 
@@ -686,7 +770,8 @@ section {
 ================================================== */
 
 #details {
-    background: var(--ivory);
+    background:
+        var(--ivory);
 }
 
 
@@ -708,9 +793,11 @@ section {
 .detail-card {
     position: relative;
 
-    padding: 50px 25px;
+    padding:
+        50px 25px;
 
-    background: var(--paper);
+    background:
+        var(--paper);
 
     border:
         1px solid
@@ -765,7 +852,9 @@ section {
 
     margin-bottom: 15px;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -775,7 +864,8 @@ section {
 
     text-transform: uppercase;
 
-    color: var(--gold);
+    color:
+        var(--gold);
 }
 
 
@@ -802,7 +892,8 @@ section {
 
     margin-bottom: 25px;
 
-    color: var(--gold);
+    color:
+        var(--gold);
 
     font-size: 20px;
 }
@@ -811,7 +902,8 @@ section {
 .story p:last-child {
     font-size: 1.25rem;
 
-    color: #50545a;
+    color:
+        #50545a;
 }
 
 
@@ -823,17 +915,20 @@ section {
     background:
         var(--midnight-light);
 
-    color: var(--white);
+    color:
+        var(--white);
 }
 
 
 .rsvp .eyebrow {
-    color: var(--gold-light);
+    color:
+        var(--gold-light);
 }
 
 
 .rsvp .divider {
-    background: var(--gold);
+    background:
+        var(--gold);
 }
 
 
@@ -859,11 +954,14 @@ section {
         1px solid
         var(--gold-light);
 
-    color: var(--white);
+    color:
+        var(--white);
 
     text-decoration: none;
 
-    font-family: "Montserrat", sans-serif;
+    font-family:
+        "Montserrat",
+        sans-serif;
 
     font-size: 9px;
 
@@ -938,7 +1036,8 @@ section {
 ================================================== */
 
 footer {
-    padding: 80px 20px;
+    padding:
+        80px 20px;
 
     text-align: center;
 
@@ -948,7 +1047,8 @@ footer {
 
 
 .footer-names {
-    font-size: 2.8rem;
+    font-size:
+        2.8rem;
 
     font-weight: 300;
 }
@@ -1275,8 +1375,12 @@ footer p:last-child {
     }
 
 
+    /*
+     * On smaller screens the names need
+     * slightly less travel distance.
+     */
     .hero-names {
-        top: 125vh;
+        top: 84vh;
 
         padding:
             0 20px;

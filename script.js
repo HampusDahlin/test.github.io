@@ -147,7 +147,7 @@ document.addEventListener(
 
 
         // ------------------------------------
-        // Detect real user scrolling
+        // Detect manual scrolling
         // ------------------------------------
 
         window.addEventListener(
@@ -206,7 +206,7 @@ document.addEventListener(
 
 
             // --------------------------------
-            // INTRO
+            // INTRO FADES OUT
             // --------------------------------
 
             const introProgress =
@@ -225,12 +225,8 @@ document.addEventListener(
 
 
             // --------------------------------
-            // NAMES
+            // NAMES FADE IN
             // --------------------------------
-            //
-            // Names begin appearing around
-            // 18% of the hero scroll.
-            //
 
             const namesProgress =
                 Math.max(
@@ -305,7 +301,7 @@ document.addEventListener(
 
 
         // ------------------------------------
-        // Scroll
+        // Scroll listener
         // ------------------------------------
 
         window.addEventListener(
@@ -318,7 +314,7 @@ document.addEventListener(
 
 
         // ------------------------------------
-        // Resize
+        // Resize listener
         // ------------------------------------
 
         window.addEventListener(
@@ -330,14 +326,40 @@ document.addEventListener(
         // ====================================
         // AUTOMATIC HERO SCROLL
         // ====================================
+        //
+        // The text animations finish at:
+        //
+        // "Hurra!"
+        // 0.2s delay + 1.0s animation
+        // = 1.2s
+        //
+        // "Vi ska gifta oss!"
+        // 1.0s delay + 1.3s animation
+        // = 2.3s
+        //
+        // We then wait another 0.5s.
+        //
+        // Scroll starts at:
+        // 2.3s + 0.5s = 2.8s
+        // ====================================
+
+        const textAnimationsFinished =
+            2300;
+
+        const pauseAfterText =
+            500;
+
+        const automaticScrollDelay =
+            textAnimationsFinished +
+            pauseAfterText;
+
 
         setTimeout(
             () => {
 
                 /*
-                 * If the visitor has already
-                 * scrolled manually, don't
-                 * interfere.
+                 * Don't interfere if the visitor
+                 * has already started scrolling.
                  */
 
                 if (userHasScrolled) {
@@ -365,10 +387,10 @@ document.addEventListener(
 
 
                 /*
-                 * Move far enough to start
-                 * revealing the names,
-                 * but not so far that the
-                 * transition is skipped.
+                 * Scroll far enough to begin
+                 * the transition from the
+                 * introductory text to the
+                 * names.
                  */
 
                 const targetScroll =
@@ -386,7 +408,7 @@ document.addEventListener(
                 });
 
             },
-            500
+            automaticScrollDelay
         );
 
 
@@ -424,7 +446,7 @@ document.addEventListener(
 
 
             // --------------------------------
-            // Open
+            // Open assistant
             // --------------------------------
 
             assistantButton.addEventListener(
@@ -440,7 +462,7 @@ document.addEventListener(
 
 
             // --------------------------------
-            // Close
+            // Close assistant
             // --------------------------------
 
             assistantClose.addEventListener(
@@ -456,7 +478,7 @@ document.addEventListener(
 
 
             // --------------------------------
-            // Answers
+            // Assistant answers
             // --------------------------------
 
             const answers = {

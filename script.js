@@ -64,24 +64,38 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 
-// ========================================
-// HERO INTRO ANIMATION
-// ========================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const announcement =
-        document.getElementById("heroAnnouncement");
-
-
-    if (announcement) {
-
-        setTimeout(() => {
-
-            announcement.classList.add("visible");
-
-        }, 900);
-
+    // ========================================
+    // HERO SCROLL REVEAL
+    // ========================================
+    
+    const heroNames =
+        document.getElementById("heroNames");
+    
+    
+    if (heroNames) {
+    
+        const heroObserver =
+            new IntersectionObserver(
+                (entries) => {
+    
+                    entries.forEach(entry => {
+    
+                        if (entry.isIntersecting) {
+    
+                            heroNames.classList.add("visible");
+    
+                        }
+    
+                    });
+    
+                },
+                {
+                    threshold: 0.35
+                }
+            );
+    
+    
+        heroObserver.observe(heroNames);
     }
 
 

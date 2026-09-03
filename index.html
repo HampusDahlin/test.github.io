@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>NAME & NAME — Vårt bröllop</title>
 
@@ -11,15 +15,14 @@
 
 <body>
 
-    <!-- ==================================================
+    <!-- =========================================
          HERO
-    ================================================== -->
+    ========================================== -->
 
     <header class="hero">
 
         <div class="hero-content">
 
-            <!-- INTRO -->
             <div class="hero-intro">
 
                 <p class="hero-hurra">
@@ -33,7 +36,6 @@
             </div>
 
 
-            <!-- NAMES REVEALED THROUGH SCROLL -->
             <div class="hero-names" id="heroNames">
 
                 <h1>
@@ -43,14 +45,16 @@
                 </h1>
 
                 <p class="date">
-                    DATE
+                    31 DECEMBER 2027
                 </p>
 
             </div>
 
 
-            <!-- SCROLL LINK -->
-            <a href="#welcome" class="scroll-link">
+            <a
+                href="#welcome"
+                class="scroll-link"
+            >
                 Välkommen ↓
             </a>
 
@@ -59,9 +63,9 @@
     </header>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          VÄLKOMMEN
-    ================================================== -->
+    ========================================== -->
 
     <section id="welcome">
 
@@ -87,9 +91,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          NEDRÄKNING
-    ================================================== -->
+    ========================================== -->
 
     <section class="countdown-section">
 
@@ -135,9 +139,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          DETALJER
-    ================================================== -->
+    ========================================== -->
 
     <section id="details">
 
@@ -217,9 +221,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          VÅR HISTORIA
-    ================================================== -->
+    ========================================== -->
 
     <section>
 
@@ -244,9 +248,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          RSVP
-    ================================================== -->
+    ========================================== -->
 
     <section class="rsvp">
 
@@ -281,9 +285,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          MUSIK
-    ================================================== -->
+    ========================================== -->
 
     <section class="music">
 
@@ -319,7 +323,8 @@
                         fullscreen;
                         picture-in-picture
                     "
-                    loading="lazy">
+                    loading="lazy"
+                >
                 </iframe>
 
             </div>
@@ -329,9 +334,9 @@
     </section>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          FOOTER
-    ================================================== -->
+    ========================================== -->
 
     <footer>
 
@@ -340,15 +345,15 @@
         </p>
 
         <p>
-            DATE · VENUE
+            31 DECEMBER 2027 · VENUE
         </p>
 
     </footer>
 
 
-    <!-- ==================================================
+    <!-- =========================================
          WEDDING ASSISTANT
-    ================================================== -->
+    ========================================== -->
 
     <div class="wedding-assistant">
 
@@ -356,6 +361,7 @@
             class="assistant-character"
             id="assistantButton"
             aria-label="Öppna bröllopsassistenten"
+            type="button"
         >
             ✦
         </button>
@@ -370,6 +376,7 @@
                 class="assistant-close"
                 id="assistantClose"
                 aria-label="Stäng"
+                type="button"
             >
                 ×
             </button>
@@ -379,9 +386,11 @@
                 ✦
             </div>
 
+
             <h3>
                 Hej där!
             </h3>
+
 
             <p id="assistantMessage">
                 Jag är här för att hjälpa till.
@@ -391,19 +400,31 @@
 
             <div class="assistant-options">
 
-                <button data-answer="vigsel">
+                <button
+                    data-answer="vigsel"
+                    type="button"
+                >
                     När är vigseln?
                 </button>
 
-                <button data-answer="plats">
+                <button
+                    data-answer="plats"
+                    type="button"
+                >
                     Var är festen?
                 </button>
 
-                <button data-answer="kladsel">
+                <button
+                    data-answer="kladsel"
+                    type="button"
+                >
                     Vad ska jag ha på mig?
                 </button>
 
-                <button data-answer="osa">
+                <button
+                    data-answer="osa"
+                    type="button"
+                >
                     Hur svarar jag?
                 </button>
 
@@ -417,4 +438,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>

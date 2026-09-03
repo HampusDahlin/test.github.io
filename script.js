@@ -1,32 +1,20 @@
-/* ==================================================
-   BRÖLLOPSDAGEN
-================================================== */
-
-/*
-   Wedding date:
-   31 December 2027 at 15:00
-*/
+// ========================================
+// BRÖLLOPSDAGEN
+// ========================================
 
 const weddingDate = new Date(
     "2027-12-31T15:00:00"
 ).getTime();
 
 
-/* ==================================================
-   COUNTDOWN
-================================================== */
-
 function updateCountdown() {
 
-    const now = new Date().getTime();
+    const now =
+        new Date().getTime();
 
     const distance =
         weddingDate - now;
 
-
-    /*
-       Wedding day has arrived.
-    */
 
     if (distance <= 0) {
 
@@ -48,30 +36,27 @@ function updateCountdown() {
 
     const hours =
         Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60 * 24)
-            ) /
+            (distance %
+                (1000 * 60 * 60 * 24))
+            /
             (1000 * 60 * 60)
         );
 
 
     const minutes =
         Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60)
-            ) /
+            (distance %
+                (1000 * 60 * 60))
+            /
             (1000 * 60)
         );
 
 
     const seconds =
         Math.floor(
-            (
-                distance %
-                (1000 * 60)
-            ) /
+            (distance %
+                (1000 * 60))
+            /
             1000
         );
 
@@ -101,31 +86,10 @@ setInterval(
 );
 
 
-/* ==================================================
-   HERO SCROLL ANIMATION
-================================================== */
 
-/*
-   The hero has a height of 180vh.
-
-   While the visitor scrolls through that space,
-   the content itself stays in place.
-
-   Scroll progression:
-
-   0%
-   └── HURRA + VI SKA GIFTA OSS
-
-   ~15%
-   └── Intro begins fading
-
-   ~15–50%
-   └── NAME & NAME enters
-
-   ~50–100%
-   └── NAME & NAME + DATE remain visible
-*/
-
+// ========================================
+// HERO SCROLL ANIMATION
+// ========================================
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -134,151 +98,128 @@ document.addEventListener(
         const hero =
             document.querySelector(".hero");
 
-
         const heroIntro =
             document.querySelector(".hero-intro");
-
 
         const heroNames =
             document.getElementById("heroNames");
 
-
         const scrollLink =
             document.querySelector(".scroll-link");
 
-
-        /*
-           Safety check.
-        */
 
         if (
             !hero ||
             !heroIntro ||
             !heroNames
         ) {
-
-            console.error(
-                "Hero elements could not be found."
-            );
-
             return;
         }
 
 
-        let ticking = false;
+        // ==================================
+        // USER SCROLL DETECTION
+        // ==================================
+
+        let userHasScrolled = false;
+
+        let automaticScrollStarted = false;
 
 
-        function clamp(
-            value,
-            min,
-            max
-        ) {
+        window.addEventListener(
+            "scroll",
+            () => {
 
-            return Math.min(
-                Math.max(
-                    value,
-                    min
-                ),
-                max
-            );
-        }
+                /*
+                 * Once the visitor has manually
+                 * started scrolling, we don't want
+                 * the automatic scroll to interfere.
+                 */
 
+                if (
+                    window.scrollY > 10 &&
+                    !automaticScrollStarted
+                ) {
+                    userHasScrolled = true;
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        // ==================================
+        // HERO ANIMATION
+        // ==================================
 
         function updateHero() {
 
-            /*
-               How much scrollable space exists
-               inside the hero?
-            */
-
             const heroHeight =
                 hero.offsetHeight;
-
 
             const viewportHeight =
                 window.innerHeight;
 
 
-            const scrollDistance =
+            const maxScroll =
                 Math.max(
+                    1,
                     heroHeight -
-                    viewportHeight,
-                    1
+                    viewportHeight
                 );
 
 
-            /*
-               Position relative to the beginning
-               of the hero.
-            */
-
-            const heroTop =
-                hero.getBoundingClientRect().top;
-
-
-            const heroScroll =
-                clamp(
-                    -heroTop,
+            const scroll =
+                Math.max(
                     0,
-                    scrollDistance
+                    Math.min(
+                        window.scrollY,
+                        maxScroll
+                    )
                 );
 
-
-            /*
-               Convert to 0 → 1.
-            */
 
             const progress =
-                heroScroll /
-                scrollDistance;
+                scroll /
+                maxScroll;
 
 
-            /* ======================================
-               INTRO
-            ====================================== */
+            // ==================================
+            // INTRO FADES OUT
+            // ==================================
 
-            /*
-               Intro stays fully visible initially.
-
-               It then fades away between roughly
-               5% and 25% of the hero scroll.
-            */
-
-            const introProgress =
-                clamp(
-                    (
-                        progress - 0.05
-                    ) / 0.20,
+            const introFade =
+                Math.max(
                     0,
-                    1
+                    1 -
+                    (progress * 4)
                 );
-
-
-            const introOpacity =
-                1 - introProgress;
 
 
             heroIntro.style.opacity =
-                introOpacity;
+                introFade;
 
 
-            /* ======================================
-               NAMES
-            ====================================== */
+            // ==================================
+            // NAMES FADE IN
+            // ==================================
 
             /*
-               Names begin entering at around 15%.
-
-               They are fully visible by around 50%.
-            */
+             * Names begin appearing after
+             * approximately 18% of the
+             * hero scroll.
+             */
 
             const namesProgress =
-                clamp(
-                    (
-                        progress - 0.15
-                    ) / 0.35,
+                Math.max(
                     0,
-                    1
+                    Math.min(
+                        1,
+                        (progress - 0.18) /
+                        0.35
+                    )
                 );
 
 
@@ -288,16 +229,12 @@ document.addEventListener(
 
             const namesTranslate =
                 100 -
-                (
-                    namesProgress * 100
-                );
+                (namesProgress * 100);
 
 
             const namesScale =
                 0.96 +
-                (
-                    namesProgress * 0.04
-                );
+                (namesProgress * 0.04);
 
 
             heroNames.style.opacity =
@@ -311,89 +248,124 @@ document.addEventListener(
                 `;
 
 
-            /* ======================================
-               SCROLL LINK
-            ====================================== */
-
-            /*
-               The "Välkommen" hint disappears
-               shortly after the visitor starts scrolling.
-            */
+            // ==================================
+            // SCROLL LINK
+            // ==================================
 
             if (scrollLink) {
 
-                const scrollOpacity =
-                    clamp(
-                        1 -
-                        (
-                            progress * 6
-                        ),
+                scrollLink.style.opacity =
+                    Math.max(
                         0,
-                        1
+                        1 -
+                        (progress * 5)
                     );
 
-
-                scrollLink.style.opacity =
-                    scrollOpacity;
             }
 
-
-            ticking = false;
         }
 
 
-        /*
-           Use requestAnimationFrame so the scroll
-           handler doesn't constantly force layout
-           updates.
-        */
-
-        function requestHeroUpdate() {
-
-            if (!ticking) {
-
-                window.requestAnimationFrame(
-                    updateHero
-                );
-
-                ticking = true;
-            }
-        }
-
-
-        /*
-           Initial state.
-        */
+        // ==================================
+        // INITIAL HERO STATE
+        // ==================================
 
         updateHero();
 
 
+        // ==================================
+        // AUTOMATIC SCROLL
+        // ==================================
+
         /*
-           Scroll.
-        */
+         * Give the opening animation some time
+         * to establish itself first.
+         *
+         * After 0.5 seconds, smoothly scroll
+         * into the hero so the names begin
+         * appearing.
+         */
+
+        setTimeout(
+            () => {
+
+                if (userHasScrolled) {
+                    return;
+                }
+
+
+                automaticScrollStarted = true;
+
+
+                const heroHeight =
+                    hero.offsetHeight;
+
+                const viewportHeight =
+                    window.innerHeight;
+
+
+                const maxScroll =
+                    Math.max(
+                        0,
+                        heroHeight -
+                        viewportHeight
+                    );
+
+
+                /*
+                 * 20% of the available hero
+                 * scroll puts us just before
+                 * the names begin appearing.
+                 *
+                 * This creates a natural transition
+                 * from the announcement into the names.
+                 */
+
+                const targetScroll =
+                    maxScroll * 0.22;
+
+
+                window.scrollTo({
+
+                    top: targetScroll,
+
+                    behavior: "smooth"
+
+                });
+
+            },
+
+            500
+        );
+
+
+        // ==================================
+        // SCROLL LISTENER
+        // ==================================
 
         window.addEventListener(
             "scroll",
-            requestHeroUpdate,
+            updateHero,
             {
                 passive: true
             }
         );
 
 
-        /*
-           Resize.
-        */
+        // ==================================
+        // RESIZE LISTENER
+        // ==================================
 
         window.addEventListener(
             "resize",
-            requestHeroUpdate
+            updateHero
         );
 
 
-        /* ==========================================
-           WEDDING ASSISTANT
-        ========================================== */
+
+        // ========================================
+        // WEDDING ASSISTANT
+        // ========================================
 
         const assistantButton =
             document.getElementById(
@@ -427,10 +399,6 @@ document.addEventListener(
         ) {
 
 
-            /*
-               Open / close assistant.
-            */
-
             assistantButton.addEventListener(
                 "click",
                 () => {
@@ -454,10 +422,6 @@ document.addEventListener(
                 }
             );
 
-
-            /*
-               Assistant answers.
-            */
 
             const answers = {
 
@@ -502,10 +466,6 @@ document.addEventListener(
 
             };
 
-
-            /*
-               Assistant buttons.
-            */
 
             document
                 .querySelectorAll(

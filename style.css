@@ -37,7 +37,7 @@
 
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 
@@ -45,13 +45,9 @@ body {
     background: var(--ivory);
     color: var(--charcoal);
 
-    font-family:
-        "Cormorant Garamond",
-        Georgia,
-        serif;
+    font-family: "Cormorant Garamond", Georgia, serif;
 
     font-size: 19px;
-
     line-height: 1.7;
 
     overflow-x: hidden;
@@ -79,19 +75,10 @@ body {
         center center / cover no-repeat;
 
     background-attachment: fixed;
-
-    /*
-     * Important:
-     * The sequence needs to be allowed to move
-     * through the viewport.
-     */
-    overflow: visible;
 }
 
 
-/* ==================================================
-   HERO VIGNETTE
-================================================== */
+/* Vignette */
 
 .hero::after {
     content: "";
@@ -113,9 +100,7 @@ body {
 }
 
 
-/* ==================================================
-   HERO FRAME
-================================================== */
+/* Elegant frame */
 
 .hero::before {
     content: "";
@@ -127,13 +112,11 @@ body {
     bottom: 28px;
     left: 28px;
 
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.32);
-
-    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.32);
 
     z-index: 5;
+
+    pointer-events: none;
 }
 
 
@@ -142,74 +125,40 @@ body {
 ================================================== */
 
 .hero-content {
-    position: sticky;
-
-    top: 0;
+    position: relative;
 
     width: 100%;
-    height: 100vh;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
+    height: 100%;
 
     text-align: center;
 
-    z-index: 3;
-
-    /*
-     * Do NOT use overflow:hidden here.
-     * The names need to travel naturally
-     * into the viewport.
-     */
-    overflow: visible;
+    z-index: 2;
 }
 
 
 /* ==================================================
-   HERO SEQUENCE
+   FIRST MESSAGE
 ================================================== */
 
-.hero-sequence {
+.hero-intro {
     position: absolute;
 
     top: 0;
     left: 0;
 
     width: 100%;
-    height: 100%;
-
-    will-change:
-        transform;
-}
-
-
-/* ==================================================
-   INTRO
-================================================== */
-
-.hero-intro {
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    width: 100%;
+    height: 100vh;
 
     display: flex;
 
     flex-direction: column;
 
+    justify-content: center;
     align-items: center;
 
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
+    padding: 0 30px 5vh;
 
-    padding-bottom: 5vh;
+    pointer-events: none;
 }
 
 
@@ -245,12 +194,7 @@ body {
     animation:
         hurraIn
         1s
-        cubic-bezier(
-            0.16,
-            1,
-            0.3,
-            1
-        )
+        cubic-bezier(0.16, 1, 0.3, 1)
         forwards;
 
     animation-delay: 0.2s;
@@ -286,23 +230,16 @@ body {
 
     opacity: 0;
 
-    transform:
-        translateX(-120px);
+    transform: translateX(-200px);
 
-    clip-path:
-        inset(
-            0 100% 0 0
-        );
+    clip-path: inset(
+        0 100% 0 0
+    );
 
     animation:
         announcementIn
         1.3s
-        cubic-bezier(
-            0.16,
-            1,
-            0.3,
-            1
-        )
+        cubic-bezier(0.16, 1, 0.3, 1)
         forwards;
 
     animation-delay: 1s;
@@ -316,15 +253,7 @@ body {
 .hero-names {
     position: absolute;
 
-    /*
-     * This is the important positioning change.
-     *
-     * The names begin below the first message.
-     * JavaScript simply moves the whole sequence
-     * upward with the page scroll.
-     */
-    top: 92vh;
-
+    top: 108vh;
     left: 0;
 
     width: 100%;
@@ -333,30 +262,31 @@ body {
 
     flex-direction: column;
 
+    justify-content: center;
     align-items: center;
 
-    justify-content: center;
+    padding: 0 30px;
 
-    padding:
-        0 30px;
+    text-align: center;
 
-    /*
-     * Names are ALWAYS visible.
-     * No fade.
-     * No scale.
-     * No independent transform.
-     */
     opacity: 1;
 
-    transform: none;
-
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 
+/*
+   IMPORTANT:
+
+   There is deliberately NO transform,
+   opacity animation or JS positioning here.
+
+   The browser's normal document scroll
+   moves this block into view.
+*/
+
 .hero-names h1 {
-    margin:
-        0 0 30px;
+    margin: 0 0 30px;
 
     color: var(--white);
 
@@ -378,10 +308,6 @@ body {
 
     letter-spacing: -3px;
 
-    /*
-     * Explicitly disable any inherited
-     * animation from the old stylesheet.
-     */
     opacity: 1;
 
     transform: none;
@@ -393,8 +319,7 @@ body {
 .hero-names h1 span {
     display: block;
 
-    margin:
-        18px 0;
+    margin: 18px 0;
 
     color: var(--gold-light);
 
@@ -407,9 +332,7 @@ body {
 
 
 .hero-names .date {
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 11px;
 
@@ -421,8 +344,6 @@ body {
 
     opacity: 1;
 
-    transform: none;
-
     animation: none;
 }
 
@@ -432,22 +353,18 @@ body {
 ================================================== */
 
 .scroll-link {
-    position: absolute;
+    position: fixed;
 
     left: 50%;
-
     bottom: 70px;
 
-    transform:
-        translateX(-50%);
+    transform: translateX(-50%);
 
     color: var(--white);
 
     text-decoration: none;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 9px;
 
@@ -467,6 +384,8 @@ body {
 
     transition:
         opacity 0.3s ease;
+
+    z-index: 20;
 }
 
 
@@ -505,12 +424,10 @@ body {
         opacity: 0;
 
         transform:
-            translateX(-120px);
+            translateX(-200px);
 
         clip-path:
-            inset(
-                0 100% 0 0
-            );
+            inset(0 100% 0 0);
     }
 
     to {
@@ -520,9 +437,7 @@ body {
             translateX(0);
 
         clip-path:
-            inset(
-                0 0 0 0
-            );
+            inset(0 0 0 0);
     }
 }
 
@@ -544,9 +459,7 @@ body {
 ================================================== */
 
 .eyebrow {
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 10px;
 
@@ -557,6 +470,11 @@ body {
     text-transform: uppercase;
 
     color: var(--gold);
+}
+
+
+h1 {
+    font-weight: 300;
 }
 
 
@@ -582,8 +500,7 @@ h2 {
     width: 65px;
     height: 1px;
 
-    margin:
-        35px auto 45px;
+    margin: 35px auto 45px;
 
     background: var(--gold);
 }
@@ -597,8 +514,7 @@ h2 {
 
     top: 50%;
 
-    transform:
-        translateY(-55%);
+    transform: translateY(-55%);
 
     color: var(--gold);
 
@@ -623,8 +539,7 @@ h2 {
 section {
     position: relative;
 
-    padding:
-        120px 25px;
+    padding: 120px 25px;
 
     text-align: center;
 }
@@ -653,14 +568,11 @@ section {
 ================================================== */
 
 .countdown-section {
-    background:
-        var(--midnight);
+    background: var(--midnight);
 
-    color:
-        var(--white);
+    color: var(--white);
 
-    overflow:
-        hidden;
+    overflow: hidden;
 }
 
 
@@ -675,13 +587,7 @@ section {
 
     width: 100%;
 
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            0.18
-        );
+    color: rgba(255, 255, 255, 0.18);
 
     font-size: 14px;
 
@@ -694,14 +600,12 @@ section {
 
 
 .countdown-section .eyebrow {
-    color:
-        var(--gold-light);
+    color: var(--gold-light);
 }
 
 
 .countdown-section .divider {
-    background:
-        var(--gold);
+    background: var(--gold);
 }
 
 
@@ -740,8 +644,7 @@ section {
 
     line-height: 1;
 
-    color:
-        var(--white);
+    color: var(--white);
 }
 
 
@@ -750,9 +653,7 @@ section {
 
     margin-top: 12px;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 8px;
 
@@ -760,8 +661,7 @@ section {
 
     text-transform: uppercase;
 
-    color:
-        var(--gold-light);
+    color: var(--gold-light);
 }
 
 
@@ -770,8 +670,7 @@ section {
 ================================================== */
 
 #details {
-    background:
-        var(--ivory);
+    background: var(--ivory);
 }
 
 
@@ -779,10 +678,7 @@ section {
     display: grid;
 
     grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
+        repeat(2, 1fr);
 
     gap: 25px;
 
@@ -793,15 +689,11 @@ section {
 .detail-card {
     position: relative;
 
-    padding:
-        50px 25px;
+    padding: 50px 25px;
 
-    background:
-        var(--paper);
+    background: var(--paper);
 
-    border:
-        1px solid
-        var(--border-light);
+    border: 1px solid var(--border-light);
 
     transition:
         transform 0.35s ease,
@@ -810,12 +702,10 @@ section {
 
 
 .detail-card:hover {
-    transform:
-        translateY(-6px);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 15px 40px
-        rgba(
+        0 15px 40px rgba(
             21,
             28,
             39,
@@ -852,9 +742,7 @@ section {
 
     margin-bottom: 15px;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 9px;
 
@@ -864,8 +752,7 @@ section {
 
     text-transform: uppercase;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 }
 
 
@@ -892,8 +779,7 @@ section {
 
     margin-bottom: 25px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     font-size: 20px;
 }
@@ -902,8 +788,7 @@ section {
 .story p:last-child {
     font-size: 1.25rem;
 
-    color:
-        #50545a;
+    color: #50545a;
 }
 
 
@@ -912,23 +797,19 @@ section {
 ================================================== */
 
 .rsvp {
-    background:
-        var(--midnight-light);
+    background: var(--midnight-light);
 
-    color:
-        var(--white);
+    color: var(--white);
 }
 
 
 .rsvp .eyebrow {
-    color:
-        var(--gold-light);
+    color: var(--gold-light);
 }
 
 
 .rsvp .divider {
-    background:
-        var(--gold);
+    background: var(--gold);
 }
 
 
@@ -947,21 +828,15 @@ section {
 
     margin-top: 40px;
 
-    padding:
-        17px 45px;
+    padding: 17px 45px;
 
-    border:
-        1px solid
-        var(--gold-light);
+    border: 1px solid var(--gold-light);
 
-    color:
-        var(--white);
+    color: var(--white);
 
     text-decoration: none;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 9px;
 
@@ -976,11 +851,9 @@ section {
 
 
 .button:hover {
-    background:
-        var(--gold-light);
+    background: var(--gold-light);
 
-    color:
-        var(--midnight);
+    color: var(--midnight);
 }
 
 
@@ -989,27 +862,23 @@ section {
 ================================================== */
 
 .music {
-    background:
-        var(--paper);
+    background: var(--paper);
 }
 
 
 .music-intro {
     max-width: 550px;
 
-    margin:
-        0 auto 35px;
+    margin: 0 auto 35px;
 
-    color:
-        #50545a;
+    color: #50545a;
 }
 
 
 .spotify-player {
     max-width: 700px;
 
-    margin:
-        40px auto 0;
+    margin: 40px auto 0;
 
     overflow: hidden;
 
@@ -1036,19 +905,16 @@ section {
 ================================================== */
 
 footer {
-    padding:
-        80px 20px;
+    padding: 80px 20px;
 
     text-align: center;
 
-    background:
-        var(--ivory);
+    background: var(--ivory);
 }
 
 
 .footer-names {
-    font-size:
-        2.8rem;
+    font-size: 2.8rem;
 
     font-weight: 300;
 }
@@ -1057,9 +923,7 @@ footer {
 footer p:last-child {
     margin-top: 8px;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 8px;
 
@@ -1067,8 +931,7 @@ footer p:last-child {
 
     text-transform: uppercase;
 
-    color:
-        var(--winter-blue);
+    color: var(--winter-blue);
 }
 
 
@@ -1096,15 +959,11 @@ footer p:last-child {
         1px solid
         var(--gold-light);
 
-    background:
-        var(--midnight);
+    background: var(--midnight);
 
-    color:
-        var(--gold-light);
+    color: var(--gold-light);
 
-    font-family:
-        Georgia,
-        serif;
+    font-family: Georgia, serif;
 
     font-size: 25px;
 
@@ -1151,11 +1010,9 @@ footer p:last-child {
 
     padding: 28px;
 
-    background:
-        var(--paper);
+    background: var(--paper);
 
-    color:
-        var(--charcoal);
+    color: var(--charcoal);
 
     border:
         1px solid
@@ -1206,8 +1063,7 @@ footer p:last-child {
     width: 18px;
     height: 18px;
 
-    background:
-        var(--paper);
+    background: var(--paper);
 
     border-right:
         1px solid
@@ -1217,8 +1073,7 @@ footer p:last-child {
         1px solid
         var(--gold-light);
 
-    transform:
-        rotate(45deg);
+    transform: rotate(45deg);
 }
 
 
@@ -1232,8 +1087,7 @@ footer p:last-child {
 
     background: none;
 
-    color:
-        var(--winter-blue);
+    color: var(--winter-blue);
 
     font-size: 22px;
 
@@ -1242,8 +1096,7 @@ footer p:last-child {
 
 
 .assistant-sparkle {
-    color:
-        var(--gold);
+    color: var(--gold);
 
     font-size: 20px;
 
@@ -1263,8 +1116,7 @@ footer p:last-child {
 .assistant-card p {
     margin-bottom: 20px;
 
-    color:
-        #555b62;
+    color: #555b62;
 
     font-size: 1rem;
 
@@ -1282,24 +1134,19 @@ footer p:last-child {
 
 
 .assistant-options button {
-    padding:
-        9px 12px;
+    padding: 9px 12px;
 
     border:
         1px solid
         var(--border-light);
 
-    background:
-        var(--ivory);
+    background: var(--ivory);
 
-    color:
-        var(--charcoal);
+    color: var(--charcoal);
 
     text-align: left;
 
-    font-family:
-        "Montserrat",
-        sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     font-size: 9px;
 
@@ -1314,14 +1161,11 @@ footer p:last-child {
 
 
 .assistant-options button:hover {
-    background:
-        var(--midnight);
+    background: var(--midnight);
 
-    border-color:
-        var(--midnight);
+    border-color: var(--midnight);
 
-    color:
-        var(--white);
+    color: var(--white);
 }
 
 
@@ -1336,19 +1180,21 @@ footer p:last-child {
     }
 
 
+    html {
+        scroll-behavior: auto;
+    }
+
+
     section {
-        padding:
-            85px 20px;
+        padding: 85px 20px;
     }
 
 
     .hero {
-        height: 160vh;
-
+        height: 180vh;
         min-height: 1000px;
 
-        background-attachment:
-            scroll;
+        background-attachment: scroll;
     }
 
 
@@ -1360,27 +1206,33 @@ footer p:last-child {
     }
 
 
-    .hero-content {
+    .hero-intro {
+        height: 100vh;
+
         padding:
-            40px 15px;
+            0 20px 5vh;
+    }
+
+
+    .hero-hurra {
+        font-size:
+            clamp(
+                5rem,
+                22vw,
+                8rem
+            );
     }
 
 
     .hero-announcement {
-        font-size:
-            2.2rem;
+        font-size: 2.2rem;
 
-        margin-top:
-            18px;
+        margin-top: 18px;
     }
 
 
-    /*
-     * On smaller screens the names need
-     * slightly less travel distance.
-     */
     .hero-names {
-        top: 84vh;
+        top: 105vh;
 
         padding:
             0 20px;
@@ -1388,95 +1240,81 @@ footer p:last-child {
 
 
     .hero-names h1 {
-        font-size:
-            5rem;
+        font-size: 5rem;
 
-        letter-spacing:
-            -1px;
+        letter-spacing: -1px;
     }
 
 
-    .hero-names .date {
-        font-size:
-            9px;
+    .hero-names h1 span {
+        margin: 15px 0;
+    }
 
-        letter-spacing:
-            3px;
+
+    .hero .date {
+        font-size: 9px;
+
+        letter-spacing: 3px;
     }
 
 
     .scroll-link {
-        bottom:
-            50px;
+        bottom: 45px;
     }
 
 
     h2 {
-        font-size:
-            2.7rem;
+        font-size: 2.7rem;
     }
 
 
     .countdown {
-        gap:
-            15px;
+        gap: 15px;
     }
 
 
     .countdown div {
-        min-width:
-            55px;
+        min-width: 55px;
     }
 
 
     .countdown span {
-        font-size:
-            2.2rem;
+        font-size: 2.2rem;
     }
 
 
     .countdown small {
-        font-size:
-            7px;
+        font-size: 7px;
 
-        letter-spacing:
-            1.5px;
+        letter-spacing: 1.5px;
     }
 
 
     .details-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
 
-        gap:
-            18px;
+        gap: 18px;
     }
 
 
     .detail-card {
-        padding:
-            40px 20px;
+        padding: 40px 20px;
     }
 
 
     .story p:last-child {
-        font-size:
-            1.15rem;
+        font-size: 1.15rem;
     }
 
 
     .footer-names {
-        font-size:
-            2.3rem;
+        font-size: 2.3rem;
     }
 
 
     .wedding-assistant {
-        right:
-            15px;
-
-        bottom:
-            15px;
+        right: 15px;
+        bottom: 15px;
     }
 
 
@@ -1501,21 +1339,14 @@ footer p:last-child {
     *,
     *::before,
     *::after {
-        animation-duration:
-            0.01ms !important;
+        animation-duration: 0.01ms !important;
 
-        animation-iteration-count:
-            1 !important;
+        animation-iteration-count: 1 !important;
 
-        transition-duration:
-            0.01ms !important;
-
-        scroll-behavior:
-            auto !important;
+        transition-duration: 0.01ms !important;
     }
 
 
-    .hero-hurra,
     .hero-announcement {
         opacity: 1;
 

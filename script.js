@@ -18,10 +18,17 @@ function updateCountdown() {
 
     if (distance <= 0) {
 
-        document.getElementById("days").textContent = "00";
-        document.getElementById("hours").textContent = "00";
-        document.getElementById("minutes").textContent = "00";
-        document.getElementById("seconds").textContent = "00";
+        document.getElementById("days").textContent =
+            "00";
+
+        document.getElementById("hours").textContent =
+            "00";
+
+        document.getElementById("minutes").textContent =
+            "00";
+
+        document.getElementById("seconds").textContent =
+            "00";
 
         return;
     }
@@ -36,27 +43,30 @@ function updateCountdown() {
 
     const hours =
         Math.floor(
-            (distance %
-                (1000 * 60 * 60 * 24))
-            /
+            (
+                distance %
+                (1000 * 60 * 60 * 24)
+            ) /
             (1000 * 60 * 60)
         );
 
 
     const minutes =
         Math.floor(
-            (distance %
-                (1000 * 60 * 60))
-            /
+            (
+                distance %
+                (1000 * 60 * 60)
+            ) /
             (1000 * 60)
         );
 
 
     const seconds =
         Math.floor(
-            (distance %
-                (1000 * 60))
-            /
+            (
+                distance %
+                (1000 * 60)
+            ) /
             1000
         );
 
@@ -86,6 +96,7 @@ setInterval(
 );
 
 
+
 // ========================================
 // HERO SCROLL
 // ========================================
@@ -98,7 +109,9 @@ document.addEventListener(
             document.querySelector(".hero");
 
         const heroSequence =
-            document.querySelector(".hero-sequence");
+            document.querySelector(
+                ".hero-sequence"
+            );
 
         const heroAnnouncement =
             document.getElementById(
@@ -136,7 +149,7 @@ document.addEventListener(
 
 
         // ========================================
-        // HERO POSITION
+        // UPDATE HERO
         // ========================================
 
         function updateHero() {
@@ -147,55 +160,52 @@ document.addEventListener(
             const viewportHeight =
                 window.innerHeight;
 
+
+            /*
+             * This is the actual amount of
+             * scroll available inside the hero.
+             */
+
             const maxScroll =
                 Math.max(
-                    1,
+                    0,
                     heroHeight -
                     viewportHeight
                 );
 
 
-            const heroTop =
-                hero.getBoundingClientRect().top;
-
+            /*
+             * Because the hero itself starts at
+             * document position 0, scrollY is
+             * the correct travel distance here.
+             */
 
             const scroll =
                 Math.max(
                     0,
                     Math.min(
-                        -heroTop,
+                        window.scrollY,
                         maxScroll
                     )
                 );
 
 
             /*
-             * 0 = top of hero
+             * Move the entire sequence upward
+             * exactly as far as the page has
+             * been scrolled.
              *
-             * 1 = bottom of hero
+             * This creates the natural feeling
+             * of physically scrolling past the
+             * announcement and down to the names.
              */
-
-            const progress =
-                scroll / maxScroll;
-
-
-            // ==================================
-            // NATURAL HERO MOVEMENT
-            // ==================================
-
-            /*
-             * The entire sequence moves upward
-             * as the page is scrolled.
-             *
-             * No fading is used here.
-             */
-
-            const movement =
-                scroll;
-
 
             heroSequence.style.transform =
-                `translateY(-${movement}px)`;
+                `translate3d(
+                    0,
+                    -${scroll}px,
+                    0
+                )`;
 
 
             // ==================================
@@ -203,6 +213,12 @@ document.addEventListener(
             // ==================================
 
             if (scrollLink) {
+
+                const progress =
+                    maxScroll > 0
+                        ? scroll / maxScroll
+                        : 0;
+
 
                 scrollLink.style.opacity =
                     Math.max(
@@ -214,13 +230,19 @@ document.addEventListener(
         }
 
 
-        // ========================================
-        // MANUAL SCROLL DETECTION
-        // ========================================
+        updateHero();
+
 
         window.addEventListener(
             "scroll",
             () => {
+
+                /*
+                 * If the visitor starts scrolling
+                 * manually before the automatic
+                 * sequence begins, leave control
+                 * to them.
+                 */
 
                 if (
                     !automaticScrollStarted
@@ -228,7 +250,9 @@ document.addEventListener(
                     userHasScrolled = true;
                 }
 
+
                 updateHero();
+
             },
             {
                 passive: true
@@ -242,11 +266,9 @@ document.addEventListener(
         );
 
 
-        updateHero();
-
 
         // ========================================
-        // AUTOMATIC HERO SCROLL
+        // AUTOMATIC SCROLL
         // ========================================
 
         function startAutomaticScroll() {
@@ -269,6 +291,7 @@ document.addEventListener(
             const viewportHeight =
                 window.innerHeight;
 
+
             const maxScroll =
                 Math.max(
                     0,
@@ -278,17 +301,55 @@ document.addEventListener(
 
 
             /*
-             * Stop once the names have
-             * naturally reached the center.
+             * The names are positioned at 92vh.
              *
-             * This is deliberately slower
-             * than before.
+             * We want their content block to
+             * arrive around the center of the
+             * screen.
+             *
+             * Instead of using a magic 55% of
+             * the hero, calculate the destination
+             * from the actual position of the
+             * names.
+             */
+
+            const namesRect =
+                heroNames.getBoundingClientRect();
+
+
+            const namesCenter =
+                namesRect.top +
+                (
+                    namesRect.height / 2
+                );
+
+
+            /*
+             * The amount needed to bring the
+             * center of NAME & NAME to the
+             * center of the viewport.
+             */
+
+            const desiredScroll =
+                window.scrollY +
+                (
+                    namesCenter -
+                    (viewportHeight / 2)
+                );
+
+
+            /*
+             * Keep the destination inside
+             * the hero's available scroll.
              */
 
             const targetScroll =
-                Math.min(
-                    maxScroll,
-                    maxScroll * 0.48
+                Math.max(
+                    0,
+                    Math.min(
+                        desiredScroll,
+                        maxScroll
+                    )
                 );
 
 
@@ -301,10 +362,18 @@ document.addEventListener(
                 startingScroll;
 
 
-            if (distance <= 0) {
+            if (distance <= 1) {
+
+                updateHero();
+
                 return;
             }
 
+
+            /*
+             * Five seconds gives the movement
+             * a deliberate, cinematic pace.
+             */
 
             const duration =
                 5000;
@@ -390,15 +459,10 @@ document.addEventListener(
         }
 
 
-        // ========================================
-        // WAIT FOR INTRO
-        // ========================================
 
-        /*
-         * We wait until the announcement has
-         * finished entering before beginning
-         * the slow cinematic scroll.
-         */
+        // ========================================
+        // WAIT FOR ANNOUNCEMENT
+        // ========================================
 
         if (heroAnnouncement) {
 
@@ -415,10 +479,17 @@ document.addEventListener(
                     }
 
 
+                    /*
+                     * Small pause after
+                     * "Vi ska gifta oss!"
+                     * has appeared.
+                     */
+
                     setTimeout(
                         startAutomaticScroll,
                         500
                     );
+
                 },
                 {
                     once: true
@@ -427,8 +498,8 @@ document.addEventListener(
 
 
             /*
-             * Fallback in case the browser
-             * doesn't fire animationend.
+             * Fallback for browsers/settings
+             * where animationend doesn't fire.
              */
 
             animationFallback =
@@ -448,6 +519,7 @@ document.addEventListener(
                 1800
             );
         }
+
 
 
         // ========================================
@@ -489,6 +561,7 @@ document.addEventListener(
                     assistantCard.classList.toggle(
                         "open"
                     );
+
                 }
             );
 
@@ -500,6 +573,7 @@ document.addEventListener(
                     assistantCard.classList.remove(
                         "open"
                     );
+
                 }
             );
 
@@ -569,10 +643,13 @@ document.addEventListener(
                                     assistantMessage.innerHTML =
                                         answer;
                                 }
+
                             }
                         );
+
                     }
                 );
+
         }
 
     }

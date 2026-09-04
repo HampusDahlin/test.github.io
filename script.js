@@ -1,14 +1,9 @@
 // ========================================
 // BRÖLLOPSDAGEN
 // ========================================
-//
-// Exakt tid är ännu inte bestämd.
-// Därför räknar vi just nu mot början
-// av den 30 december 2026.
-//
 
 const weddingDate = new Date(
-    "2026-12-30T00:00:00"
+    "2027-12-31T15:00:00"
 ).getTime();
 
 
@@ -16,8 +11,7 @@ function updateCountdown() {
 
     const now = new Date().getTime();
 
-    const distance =
-        weddingDate - now;
+    const distance = weddingDate - now;
 
 
     if (distance <= 0) {
@@ -31,41 +25,27 @@ function updateCountdown() {
     }
 
 
-    const days =
-        Math.floor(
-            distance /
-            (1000 * 60 * 60 * 24)
-        );
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
 
 
-    const hours =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60 * 24)
-            ) /
-            (1000 * 60 * 60)
-        );
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
 
 
-    const minutes =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60)
-            ) /
-            (1000 * 60)
-        );
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
 
 
-    const seconds =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60)
-            ) /
-            1000
-        );
+    const seconds = Math.floor(
+        (distance % (1000 * 60))
+        / 1000
+    );
 
 
     document.getElementById("days").textContent =
@@ -87,393 +67,286 @@ function updateCountdown() {
 
 updateCountdown();
 
-setInterval(
-    updateCountdown,
-    1000
-);
+setInterval(updateCountdown, 1000);
 
 
 
 // ========================================
-// HERO
+// HERO SCROLL ANIMATION
 // ========================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        const hero =
-            document.querySelector(".hero");
-
-        const heroAnnouncement =
-            document.getElementById(
-                "heroAnnouncement"
-            );
-
-        const heroNames =
-            document.getElementById(
-                "heroNames"
-            );
-
-        const scrollLink =
-            document.getElementById(
-                "scrollLink"
-            );
+    const hero =
+        document.querySelector(".hero");
 
 
-        // ========================================
-        // AUTOMATIC HERO SCROLL
-        // ========================================
-
-        let autoScrollStarted = false;
+    const heroIntro =
+        document.querySelector(".hero-intro");
 
 
-        function easeInOutCubic(t) {
+    const heroNames =
+        document.getElementById("heroNames");
 
-            return t < 0.5
-                ? 4 * t * t * t
-                : 1 -
-                    Math.pow(
-                        -2 * t + 2,
-                        3
-                    ) / 2;
+
+    function updateHero() {
+
+        if (!hero || !heroIntro || !heroNames) {
+            return;
         }
 
 
-        function scrollToNames() {
-
-            if (
-                autoScrollStarted ||
-                !hero ||
-                !heroNames
-            ) {
-                return;
-            }
+        const heroHeight =
+            hero.offsetHeight;
 
 
-            autoScrollStarted = true;
+        const viewportHeight =
+            window.innerHeight;
 
 
-            const namesRect =
-                heroNames.getBoundingClientRect();
+        /*
+         * How far we've travelled through
+         * the hero.
+         *
+         * 0 = top of hero
+         * 1 = bottom of hero
+         */
+
+        const maxScroll =
+            heroHeight - viewportHeight;
 
 
-            const currentScroll =
-                window.scrollY;
-
-
-            const namesCenter =
-                namesRect.top +
-                (
-                    namesRect.height / 2
-                );
-
-
-            const targetScroll =
-                currentScroll +
-                namesCenter -
-                (
-                    window.innerHeight / 2
-                );
-
-
-            const maxScroll =
-                Math.max(
-                    0,
-                    document.documentElement
-                        .scrollHeight -
-                    window.innerHeight
-                );
-
-
-            const finalTarget =
-                Math.max(
-                    0,
-                    Math.min(
-                        targetScroll,
-                        maxScroll
-                    )
-                );
-
-
-            const startTime =
-                performance.now();
-
-
-            const duration = 5000;
-
-
-            function animateScroll(
-                currentTime
-            ) {
-
-                const elapsed =
-                    currentTime -
-                    startTime;
-
-
-                const progress =
-                    Math.min(
-                        elapsed / duration,
-                        1
-                    );
-
-
-                const eased =
-                    easeInOutCubic(
-                        progress
-                    );
-
-
-                const position =
-                    currentScroll +
-                    (
-                        finalTarget -
-                        currentScroll
-                    ) *
-                    eased;
-
-
-                window.scrollTo(
-                    0,
-                    position
-                );
-
-
-                if (progress < 1) {
-
-                    requestAnimationFrame(
-                        animateScroll
-                    );
-
-                } else {
-
-                    window.scrollTo(
-                        0,
-                        finalTarget
-                    );
-                }
-            }
-
-
-            requestAnimationFrame(
-                animateScroll
-            );
-        }
-
-
-        if (heroAnnouncement) {
-
-            heroAnnouncement.addEventListener(
-                "animationend",
-                (event) => {
-
-                    if (
-                        event.animationName ===
-                        "announcementIn"
-                    ) {
-
-                        setTimeout(
-                            scrollToNames,
-                            450
-                        );
-                    }
-                }
+        const scroll =
+            Math.max(
+                0,
+                Math.min(
+                    window.scrollY,
+                    maxScroll
+                )
             );
 
 
-            setTimeout(
-                () => {
+        const progress =
+            maxScroll > 0
+                ? scroll / maxScroll
+                : 0;
 
-                    if (!autoScrollStarted) {
-                        scrollToNames();
-                    }
 
-                },
-                3000
+        // ==================================
+        // INTRO FADES OUT
+        // ==================================
+
+        const introFade =
+            Math.max(
+                0,
+                1 - (progress * 4)
             );
-        }
 
 
-        // ========================================
-        // SCROLL LINK
-        // ========================================
-
-        function updateScrollLink() {
-
-            if (!scrollLink) {
-                return;
-            }
+        heroIntro.style.opacity =
+            introFade;
 
 
-            const fadeDistance =
-                window.innerHeight * 0.35;
+        // ==================================
+        // NAMES FADE IN
+        // ==================================
+
+        const namesProgress =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    (progress - 0.18) / 0.35
+                )
+            );
 
 
-            const opacity =
-                Math.max(
-                    0,
-                    1 -
-                    (
-                        window.scrollY /
-                        fadeDistance
-                    )
-                );
+        const namesOpacity =
+            namesProgress;
 
 
-            scrollLink.style.opacity =
-                opacity;
-        }
+        const namesTranslate =
+            100 -
+            (namesProgress * 100);
 
 
-        updateScrollLink();
+        const namesScale =
+            0.96 +
+            (namesProgress * 0.04);
 
 
-        window.addEventListener(
-            "scroll",
-            updateScrollLink,
-            { passive: true }
+        heroNames.style.opacity =
+            namesOpacity;
+
+
+        heroNames.style.transform =
+            `
+            translateY(${namesTranslate}px)
+            scale(${namesScale})
+            `;
+    }
+
+
+    /*
+     * Run once immediately.
+     */
+
+    updateHero();
+
+
+    /*
+     * Update while scrolling.
+     */
+
+    window.addEventListener(
+        "scroll",
+        updateHero,
+        { passive: true }
+    );
+
+
+    /*
+     * Update after resizing.
+     */
+
+    window.addEventListener(
+        "resize",
+        updateHero
+    );
+
+
+
+    // ========================================
+    // WEDDING ASSISTANT
+    // ========================================
+
+    const assistantButton =
+        document.getElementById(
+            "assistantButton"
         );
 
 
-
-        // ========================================
-        // WEDDING ASSISTANT
-        // ========================================
-
-        const assistantButton =
-            document.getElementById(
-                "assistantButton"
-            );
+    const assistantCard =
+        document.getElementById(
+            "assistantCard"
+        );
 
 
-        const assistantCard =
-            document.getElementById(
-                "assistantCard"
-            );
+    const assistantClose =
+        document.getElementById(
+            "assistantClose"
+        );
 
 
-        const assistantClose =
-            document.getElementById(
-                "assistantClose"
-            );
+    const assistantMessage =
+        document.getElementById(
+            "assistantMessage"
+        );
 
 
-        const assistantMessage =
-            document.getElementById(
-                "assistantMessage"
-            );
+    if (
+        assistantButton &&
+        assistantCard &&
+        assistantClose &&
+        assistantMessage
+    ) {
+
+        assistantButton.addEventListener(
+            "click",
+            () => {
+
+                assistantCard.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
 
 
-        if (
-            assistantButton &&
-            assistantCard &&
-            assistantClose &&
-            assistantMessage
-        ) {
+        assistantClose.addEventListener(
+            "click",
+            () => {
 
-            assistantButton.addEventListener(
-                "click",
-                () => {
+                assistantCard.classList.remove(
+                    "open"
+                );
 
-                    assistantCard.classList.toggle(
-                        "open"
-                    );
-
-                }
-            );
+            }
+        );
 
 
-            assistantClose.addEventListener(
-                "click",
-                () => {
+        const answers = {
 
-                    assistantCard.classList.remove(
-                        "open"
-                    );
-
-                }
-            );
-
-
-            const answers = {
-
-                vigsel: `
-                    Vigseln äger rum
-                    på eftermiddagen
-                    den <strong>30 december 2026</strong>.
-                    <br><br>
-                    Mer information om exakt tid
-                    kommer senare.
-                `,
+            vigsel: `
+                Vigseln äger rum
+                <strong>TIME</strong>
+                på <strong>VENUE</strong>.
+                <br><br>
+                Vi hoppas att du vill vara med!
+            `,
 
 
-                plats: `
-                    Vi kommer att vara i
-                    <strong>Göteborg</strong>.
-                    <br><br>
-                    Vilken lokal vi ska vara i
-                    meddelar vi senare.
-                `,
+            plats: `
+                Festen hålls på
+                <strong>VENUE</strong>.
+                <br>
+                ADDRESS, CITY.
+            `,
 
 
-                kladsel: `
-                    Klädkoden är
-                    <strong>inte bestämd ännu</strong>.
-                    <br><br>
-                    Vi återkommer med mer information
-                    närmare dagen.
-                `,
+            kladsel: `
+                Klädkoden är
+                <strong>DRESS CODE</strong>.
+                <br><br>
+                Vi ser fram emot att se dig där!
+            `,
 
 
-                osa: `
-                    Du kan svara på vår inbjudan
-                    senast <strong>31 oktober 2026</strong>.
-                    <br><br>
+            osa: `
+                Du kan svara på vår inbjudan
+                genom att klicka på länken nedan.
+                <br><br>
 
-                    <a
-                        href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Öppna OSA-formuläret →
-                    </a>
-                `
+                <a
+                    href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Öppna OSA-formuläret →
+                </a>
+            `
 
-            };
-
-
-            document
-                .querySelectorAll(
-                    ".assistant-options button"
-                )
-                .forEach(
-                    button => {
-
-                        button.addEventListener(
-                            "click",
-                            () => {
-
-                                const answer =
-                                    answers[
-                                        button.dataset.answer
-                                    ];
+        };
 
 
-                                if (answer) {
+        document
+            .querySelectorAll(
+                ".assistant-options button"
+            )
+            .forEach(button => {
 
-                                    assistantMessage.innerHTML =
-                                        answer;
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                                }
+                        const answer =
+                            answers[
+                                button.dataset.answer
+                            ];
 
-                            }
-                        );
+
+                        if (answer) {
+
+                            assistantMessage.innerHTML =
+                                answer;
+
+                        }
 
                     }
                 );
 
-        }
+            });
 
     }
-);
+
+});

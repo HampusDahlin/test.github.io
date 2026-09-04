@@ -2,10 +2,13 @@
 // BRÖLLOPSDAGEN
 // ========================================
 //
-// Exakt tid är ännu inte bestämd.
-// Därför räknar vi just nu mot början
-// av den 30 december 2026.
+// Datum: 30 december 2026
+// Tid: Eftermiddag — mer information kommer senare
 //
+// Eftersom den exakta tiden ännu inte är
+// bestämd räknar countdownen tills vidare
+// mot början av den 30 december 2026.
+// ========================================
 
 const weddingDate = new Date(
     "2026-12-30T00:00:00"
@@ -16,8 +19,7 @@ function updateCountdown() {
 
     const now = new Date().getTime();
 
-    const distance =
-        weddingDate - now;
+    const distance = weddingDate - now;
 
 
     if (distance <= 0) {
@@ -31,41 +33,37 @@ function updateCountdown() {
     }
 
 
-    const days =
-        Math.floor(
-            distance /
+    const days = Math.floor(
+        distance /
+        (1000 * 60 * 60 * 24)
+    );
+
+
+    const hours = Math.floor(
+        (
+            distance %
             (1000 * 60 * 60 * 24)
-        );
+        ) /
+        (1000 * 60 * 60)
+    );
 
 
-    const hours =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60 * 24)
-            ) /
+    const minutes = Math.floor(
+        (
+            distance %
             (1000 * 60 * 60)
-        );
+        ) /
+        (1000 * 60)
+    );
 
 
-    const minutes =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60 * 60)
-            ) /
+    const seconds = Math.floor(
+        (
+            distance %
             (1000 * 60)
-        );
-
-
-    const seconds =
-        Math.floor(
-            (
-                distance %
-                (1000 * 60)
-            ) /
-            1000
-        );
+        ) /
+        1000
+    );
 
 
     document.getElementById("days").textContent =
@@ -197,6 +195,7 @@ document.addEventListener(
                 performance.now();
 
 
+            // Slow, deliberate scroll
             const duration = 5000;
 
 
@@ -249,6 +248,7 @@ document.addEventListener(
                         0,
                         finalTarget
                     );
+
                 }
             }
 
@@ -259,10 +259,14 @@ document.addEventListener(
         }
 
 
-        /*
-         * Start the automatic scroll after
-         * the announcement animation finishes.
-         */
+        // ========================================
+        // START AUTO SCROLL
+        // ========================================
+        //
+        // Wait for "Vi ska gifta oss!"
+        // to finish entering, then wait
+        // another 450ms before scrolling.
+        //
 
         if (heroAnnouncement) {
 
@@ -279,15 +283,15 @@ document.addEventListener(
                             scrollToNames,
                             450
                         );
+
                     }
+
                 }
             );
 
 
-            /*
-             * Fallback in case animationend
-             * doesn't fire.
-             */
+            // Fallback in case animationend
+            // doesn't fire for some reason.
 
             setTimeout(
                 () => {
@@ -378,14 +382,15 @@ document.addEventListener(
                     Vi kommer att vara i
                     <strong>Göteborg</strong>.
                     <br><br>
-                    Vilken lokal vi ska vara i
-                    meddelar vi senare.
+                    Lokal:
+                    <strong>TBA</strong>.
+                    <br><br>
+                    Mer information kommer senare.
                 `,
 
 
                 kladsel: `
-                    Klädkoden är
-                    <strong>inte bestämd ännu</strong>.
+                    Klädkoden kommer senare.
                     <br><br>
                     Vi återkommer med mer information
                     närmare dagen.
@@ -394,7 +399,8 @@ document.addEventListener(
 
                 osa: `
                     Du kan svara på vår inbjudan
-                    senast <strong>31 oktober 2026</strong>.
+                    senast
+                    <strong>31 oktober 2026</strong>.
                     <br><br>
 
                     <a

@@ -112,112 +112,6 @@ document.addEventListener(
 
 
         // ==================================
-        // MANUAL SCROLL DETECTION
-        // ==================================
-
-        /*
-         * The automatic scroll should only happen
-         * when the visitor has stayed at the very
-         * top of the page.
-         *
-         * Any real user interaction with scrolling
-         * cancels the automatic scroll permanently
-         * for this page load.
-         */
-
-        let userHasScrolled =
-            window.scrollY > 0;
-
-        let autoScrollStarted = false;
-
-
-        function cancelAutoScroll() {
-
-            if (autoScrollStarted) {
-                return;
-            }
-
-            userHasScrolled = true;
-        }
-
-
-        /*
-         * Wheel / trackpad
-         */
-
-        window.addEventListener(
-            "wheel",
-            cancelAutoScroll,
-            {
-                passive: true
-            }
-        );
-
-
-        /*
-         * Touch scrolling
-         */
-
-        window.addEventListener(
-            "touchmove",
-            cancelAutoScroll,
-            {
-                passive: true
-            }
-        );
-
-
-        /*
-         * Keyboard scrolling:
-         * arrows, Page Up/Down, Space, Home, End.
-         */
-
-        window.addEventListener(
-            "keydown",
-            (event) => {
-
-                const scrollingKeys = [
-                    "ArrowUp",
-                    "ArrowDown",
-                    "PageUp",
-                    "PageDown",
-                    "Home",
-                    "End",
-                    " "
-                ];
-
-                if (
-                    scrollingKeys.includes(
-                        event.key
-                    )
-                ) {
-                    cancelAutoScroll();
-                }
-            }
-        );
-
-
-        /*
-         * Also watch the actual scroll position.
-         *
-         * Ignore scrolling caused by our own
-         * automatic animation.
-         */
-
-        function handleScroll() {
-
-            if (
-                !autoScrollStarted &&
-                window.scrollY > 2
-            ) {
-                userHasScrolled = true;
-            }
-
-            updateHero();
-        }
-
-
-        // ==================================
         // HERO VISUAL STATE
         // ==================================
 
@@ -229,22 +123,12 @@ document.addEventListener(
             const viewportHeight =
                 window.innerHeight;
 
-
-            /*
-             * How far we've travelled through
-             * the hero.
-             *
-             * 0 = top of hero
-             * 1 = bottom of hero
-             */
-
             const maxScroll =
                 Math.max(
                     0,
                     heroHeight -
                     viewportHeight
                 );
-
 
             const scroll =
                 Math.max(
@@ -255,34 +139,22 @@ document.addEventListener(
                     )
                 );
 
-
             const progress =
                 maxScroll > 0
                     ? scroll / maxScroll
                     : 0;
 
 
-            // ==================================
-            // INTRO FADES OUT
-            // ==================================
+            const heroIntro =
+                document.querySelector(
+                    ".hero-intro"
+                );
 
-            /*
-             * Keep HURRA visible at first.
-             *
-             * Then gradually fade it away
-             * as the visitor scrolls.
-             */
 
             const introFade =
                 Math.max(
                     0,
                     1 - (progress * 4)
-                );
-
-
-            const heroIntro =
-                document.querySelector(
-                    ".hero-intro"
                 );
 
 
@@ -292,15 +164,6 @@ document.addEventListener(
                     introFade;
             }
 
-
-            // ==================================
-            // NAMES FADE IN
-            // ==================================
-
-            /*
-             * Names begin appearing after
-             * roughly 18% scroll.
-             */
 
             const namesProgress =
                 Math.max(
@@ -339,29 +202,17 @@ document.addEventListener(
         }
 
 
-        /*
-         * Run once immediately.
-         */
-
         updateHero();
 
 
-        /*
-         * Update while scrolling.
-         */
-
         window.addEventListener(
             "scroll",
-            handleScroll,
+            updateHero,
             {
                 passive: true
             }
         );
 
-
-        /*
-         * Update after resizing.
-         */
 
         window.addEventListener(
             "resize",
@@ -372,6 +223,10 @@ document.addEventListener(
         // ==================================
         // AUTOMATIC SCROLL TO NAMES
         // ==================================
+
+        let autoScrollStarted =
+            false;
+
 
         function easeInOutCubic(t) {
 
@@ -388,14 +243,15 @@ document.addEventListener(
         function scrollToNames() {
 
             /*
-             * Never take control away from someone
-             * who has already started scrolling.
+             * Only auto-scroll if the visitor
+             * is still exactly at the top.
+             *
+             * This check happens at the moment
+             * the auto-scroll actually starts.
              */
-
             if (
-                userHasScrolled ||
-                autoScrollStarted ||
-                window.scrollY > 2
+                window.scrollY !== 0 ||
+                autoScrollStarted
             ) {
                 return;
             }
@@ -411,12 +267,6 @@ document.addEventListener(
             const namesRect =
                 heroNames.getBoundingClientRect();
 
-
-            /*
-             * Put the names comfortably into view,
-             * rather than simply scrolling to the
-             * very bottom of the hero.
-             */
 
             const targetPosition =
                 Math.max(
@@ -501,7 +351,7 @@ document.addEventListener(
 
             if (
                 autoScrollScheduled ||
-                userHasScrolled
+                autoScrollStarted
             ) {
                 return;
             }
@@ -514,14 +364,14 @@ document.addEventListener(
                 () => {
 
                     /*
-                     * Give the visitor a final chance
-                     * to interact manually before we
-                     * take control of scrolling.
+                     * Check the actual scroll position
+                     * after the delay.
+                     *
+                     * If the visitor has moved even
+                     * slightly, do nothing.
                      */
-
                     if (
-                        !userHasScrolled &&
-                        window.scrollY <= 2
+                        window.scrollY === 0
                     ) {
                         scrollToNames();
                     }
@@ -533,11 +383,10 @@ document.addEventListener(
 
 
         /*
-         * Preferred method:
-         * wait for the CSS announcement animation
-         * to finish.
+         * Preferred trigger:
+         * wait until the announcement animation
+         * has completely finished.
          */
-
         heroAnnouncement.addEventListener(
             "animationend",
             (event) => {
@@ -553,15 +402,15 @@ document.addEventListener(
 
 
         /*
-         * Fallback in case animationend doesn't fire.
+         * Fallback in case animationend doesn't
+         * fire for some reason.
          */
-
         setTimeout(
             () => {
 
                 if (
                     !autoScrollScheduled &&
-                    !userHasScrolled
+                    !autoScrollStarted
                 ) {
                     scheduleAutoScroll();
                 }
@@ -602,7 +451,6 @@ document.addEventListener(
             assistantClose &&
             assistantMessage
         ) {
-
 
             assistantButton.addEventListener(
                 "click",

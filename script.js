@@ -116,27 +116,26 @@ document.addEventListener(
 
 
         // ==================================
-        // HERO ANIMATION SETTINGS
+        // HERO SCROLL SETTINGS
         // ==================================
 
         /*
-         * Names start appearing at 18% of the
-         * hero scroll range and finish at 53%.
+         * The names begin appearing at 18%
+         * and are fully visible at 53%.
          *
-         * Keep the auto-scroll destination tied
-         * to these values so the scroll cannot
-         * overshoot the actual animation.
+         * The automatic scroll stops exactly
+         * at that 53% point.
          */
 
         const namesStartProgress =
             0.18;
 
-        const namesAnimationLength =
-            0.35;
-
         const namesEndProgress =
-            namesStartProgress +
-            namesAnimationLength;
+            0.53;
+
+        const namesAnimationLength =
+            namesEndProgress -
+            namesStartProgress;
 
 
         // ==================================
@@ -144,11 +143,10 @@ document.addEventListener(
         // ==================================
 
         /*
-         * This flag is deliberately one-way.
-         *
-         * If the visitor manually scrolls away
-         * from the top, automatic scrolling is
-         * cancelled permanently for this page load.
+         * Once the visitor manually scrolls
+         * away from the top, automatic scrolling
+         * is permanently cancelled for this
+         * page load.
          */
 
         let userHasLeftTop =
@@ -214,7 +212,7 @@ document.addEventListener(
 
 
             // ==================================
-            // NAMES
+            // HAMPUS & KRISTINA + DATE
             // ==================================
 
             const namesProgress =
@@ -254,26 +252,6 @@ document.addEventListener(
                 translateY(${namesTranslate}px)
                 scale(${namesScale})
                 `;
-
-
-            // ==================================
-            // OPTIONAL OLD SCROLL LINK
-            // ==================================
-
-            const scrollLink =
-                document.querySelector(
-                    ".scroll-link"
-                );
-
-
-            if (scrollLink) {
-
-                scrollLink.style.opacity =
-                    Math.max(
-                        0,
-                        1 - (progress * 5)
-                    );
-            }
         }
 
 
@@ -287,11 +265,11 @@ document.addEventListener(
         function handleScroll() {
 
             /*
-             * Any movement away from the very top
+             * Any movement away from the top
              * means the visitor has taken control.
              *
-             * Do NOT reset this flag if they return
-             * to scrollY === 0.
+             * This flag is never reset, even if
+             * the visitor later returns to the top.
              */
 
             if (
@@ -343,12 +321,9 @@ document.addEventListener(
         function scrollToNames() {
 
             /*
-             * Two independent safety checks:
-             *
-             * 1. The visitor must never have manually
-             *    left the top.
-             *
-             * 2. We must still physically be at the top.
+             * Automatic scrolling is only allowed
+             * when the visitor has never manually
+             * scrolled and is still at the top.
              */
 
             if (
@@ -370,6 +345,14 @@ document.addEventListener(
                 window.innerHeight;
 
 
+            /*
+             * Because .hero-content is sticky
+             * and .hero-names is centered inside
+             * that viewport, the correct destination
+             * is the point where the names animation
+             * reaches 100%.
+             */
+
             const maxScroll =
                 Math.max(
                     0,
@@ -378,32 +361,13 @@ document.addEventListener(
                 );
 
 
-            /*
-             * IMPORTANT:
-             *
-             * The destination is the exact point
-             * where the names animation reaches 100%.
-             *
-             * names:
-             *
-             * (progress - 0.18) / 0.35
-             *
-             * reaches 1 at:
-             *
-             * 0.18 + 0.35 = 0.53
-             */
-
-            const targetProgress =
+            const targetPosition =
+                maxScroll *
                 namesEndProgress;
 
 
             const startPosition =
                 window.scrollY;
-
-
-            const targetPosition =
-                maxScroll *
-                targetProgress;
 
 
             const distance =
@@ -461,6 +425,17 @@ document.addEventListener(
 
                 } else {
 
+                    /*
+                     * Force the exact final
+                     * destination to avoid a
+                     * fractional-pixel difference.
+                     */
+
+                    window.scrollTo(
+                        0,
+                        targetPosition
+                    );
+
                     updateHero();
                 }
             }
@@ -494,8 +469,8 @@ document.addEventListener(
                 () => {
 
                     /*
-                     * Re-check at the exact moment
-                     * the automatic scroll would begin.
+                     * Re-check everything immediately
+                     * before starting the scroll.
                      */
 
                     if (
@@ -512,7 +487,7 @@ document.addEventListener(
 
 
         // ==================================
-        // ANNOUNCEMENT ANIMATION
+        // ANNOUNCEMENT ANIMATION FINISHED
         // ==================================
 
         heroAnnouncement.addEventListener(
@@ -531,7 +506,7 @@ document.addEventListener(
 
         // ==================================
         // FALLBACK
-        // ========================================
+        // ==================================
 
         setTimeout(
             () => {

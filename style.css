@@ -74,7 +74,7 @@ body {
 
     background-attachment: fixed;
 
-    overflow: hidden;
+    overflow: clip;
 }
 
 

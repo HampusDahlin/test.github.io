@@ -112,6 +112,32 @@ document.addEventListener(
 
 
         // ==================================
+        // AUTO-SCROLL STATE
+        // ==================================
+
+        /*
+         * Once the visitor manually leaves the
+         * top of the page, automatic scrolling
+         * is cancelled for this page load.
+         *
+         * This is intentionally a one-way flag.
+         *
+         * Even if the visitor later scrolls back
+         * to the very top, we do NOT automatically
+         * scroll them again.
+         */
+
+        let userHasLeftTop =
+            window.scrollY > 0;
+
+        let autoScrollStarted =
+            false;
+
+        let autoScrollScheduled =
+            false;
+
+
+        // ==================================
         // HERO VISUAL STATE
         // ==================================
 
@@ -130,6 +156,7 @@ document.addEventListener(
                     viewportHeight
                 );
 
+
             const scroll =
                 Math.max(
                     0,
@@ -139,11 +166,16 @@ document.addEventListener(
                     )
                 );
 
+
             const progress =
                 maxScroll > 0
                     ? scroll / maxScroll
                     : 0;
 
+
+            // ==================================
+            // HURRA FADES OUT
+            // ==================================
 
             const heroIntro =
                 document.querySelector(
@@ -164,6 +196,10 @@ document.addEventListener(
                     introFade;
             }
 
+
+            // ==================================
+            // NAMES REVEAL
+            // ==================================
 
             const namesProgress =
                 Math.max(
@@ -205,9 +241,31 @@ document.addEventListener(
         updateHero();
 
 
+        // ==================================
+        // SCROLL HANDLER
+        // ==================================
+
+        function handleScroll() {
+
+            /*
+             * Any actual movement away from the
+             * top permanently disables the
+             * automatic announcement scroll.
+             */
+            if (
+                window.scrollY > 0
+            ) {
+                userHasLeftTop = true;
+            }
+
+
+            updateHero();
+        }
+
+
         window.addEventListener(
             "scroll",
-            updateHero,
+            handleScroll,
             {
                 passive: true
             }
@@ -221,12 +279,8 @@ document.addEventListener(
 
 
         // ==================================
-        // AUTOMATIC SCROLL TO NAMES
+        // AUTOMATIC SCROLL
         // ==================================
-
-        let autoScrollStarted =
-            false;
-
 
         function easeInOutCubic(t) {
 
@@ -243,13 +297,13 @@ document.addEventListener(
         function scrollToNames() {
 
             /*
-             * Only auto-scroll if the visitor
-             * is still exactly at the top.
+             * This is the final safety check.
              *
-             * This check happens at the moment
-             * the auto-scroll actually starts.
+             * Automatic scrolling is only allowed
+             * if the visitor has NEVER left the top.
              */
             if (
+                userHasLeftTop ||
                 window.scrollY !== 0 ||
                 autoScrollStarted
             ) {
@@ -260,21 +314,36 @@ document.addEventListener(
             autoScrollStarted = true;
 
 
+            const heroHeight =
+                hero.offsetHeight;
+
+            const viewportHeight =
+                window.innerHeight;
+
+
+            const maxScroll =
+                Math.max(
+                    0,
+                    heroHeight -
+                    viewportHeight
+                );
+
+
+            /*
+             * This target position is intentionally
+             * kept at the same destination as before.
+             */
+            const targetProgress =
+                0.55;
+
+
             const startPosition =
                 window.scrollY;
 
 
-            const namesRect =
-                heroNames.getBoundingClientRect();
-
-
             const targetPosition =
-                Math.max(
-                    0,
-                    window.scrollY +
-                    namesRect.top -
-                    (window.innerHeight * 0.28)
-                );
+                maxScroll *
+                targetProgress;
 
 
             const distance =
@@ -315,8 +384,10 @@ document.addEventListener(
                 window.scrollTo(
                     0,
                     startPosition +
-                    (distance *
-                        easedProgress)
+                    (
+                        distance *
+                        easedProgress
+                    )
                 );
 
 
@@ -340,18 +411,15 @@ document.addEventListener(
 
 
         // ==================================
-        // START AUTO-SCROLL AFTER ANNOUNCEMENT
+        // SCHEDULE AUTO-SCROLL
         // ==================================
-
-        let autoScrollScheduled =
-            false;
-
 
         function scheduleAutoScroll() {
 
             if (
                 autoScrollScheduled ||
-                autoScrollStarted
+                autoScrollStarted ||
+                userHasLeftTop
             ) {
                 return;
             }
@@ -364,13 +432,16 @@ document.addEventListener(
                 () => {
 
                     /*
-                     * Check the actual scroll position
-                     * after the delay.
+                     * Check BOTH:
                      *
-                     * If the visitor has moved even
-                     * slightly, do nothing.
+                     * 1. Has the visitor ever scrolled?
+                     * 2. Are we actually still at the top?
+                     *
+                     * Either one failing prevents
+                     * automatic scrolling.
                      */
                     if (
+                        !userHasLeftTop &&
                         window.scrollY === 0
                     ) {
                         scrollToNames();
@@ -382,11 +453,10 @@ document.addEventListener(
         }
 
 
-        /*
-         * Preferred trigger:
-         * wait until the announcement animation
-         * has completely finished.
-         */
+        // ==================================
+        // ANNOUNCEMENT ANIMATION FINISHED
+        // ==================================
+
         heroAnnouncement.addEventListener(
             "animationend",
             (event) => {
@@ -401,16 +471,17 @@ document.addEventListener(
         );
 
 
-        /*
-         * Fallback in case animationend doesn't
-         * fire for some reason.
-         */
+        // ==================================
+        // FALLBACK
+        // ==================================
+
         setTimeout(
             () => {
 
                 if (
                     !autoScrollScheduled &&
-                    !autoScrollStarted
+                    !autoScrollStarted &&
+                    !userHasLeftTop
                 ) {
                     scheduleAutoScroll();
                 }

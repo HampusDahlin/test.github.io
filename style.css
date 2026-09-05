@@ -35,9 +35,11 @@
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
+
 
 body {
     background: var(--ivory);
@@ -59,8 +61,8 @@ body {
 .hero {
     position: relative;
 
-    height: 180vh;
-    min-height: 1200px;
+    height: 135vh;
+    min-height: 1000px;
 
     color: var(--white);
 
@@ -265,11 +267,6 @@ body {
 
     align-items: center;
 
-    /*
-       JavaScript controls opacity and transform while
-       the visitor moves through the hero.
-    */
-
     opacity: 0;
 
     transform:
@@ -379,18 +376,6 @@ body {
 }
 
 
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-
 /* ==================================================
    GENERAL TYPOGRAPHY
 ================================================== */
@@ -413,12 +398,7 @@ body {
 h2 {
     margin-top: 18px;
 
-    font-size:
-        clamp(
-            2.6rem,
-            5vw,
-            4.2rem
-        );
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
 
     font-weight: 300;
 
@@ -430,7 +410,6 @@ h2 {
     position: relative;
 
     width: 65px;
-
     height: 1px;
 
     margin: 35px auto 45px;
@@ -447,8 +426,7 @@ h2 {
 
     top: 50%;
 
-    transform:
-        translateY(-55%);
+    transform: translateY(-55%);
 
     color: var(--gold);
 
@@ -511,13 +489,11 @@ section {
 
 
 .countdown-section::before {
-    content:
-        "✦   ·       ✧          ·     ✦        ·        ✧     ·    ✦";
+    content: "✦   ·       ✧          ·     ✦        ·        ✧     ·    ✦";
 
     position: absolute;
 
     top: 25px;
-
     left: 0;
 
     width: 100%;
@@ -549,12 +525,7 @@ section {
 
     justify-content: center;
 
-    gap:
-        clamp(
-            25px,
-            7vw,
-            80px
-        );
+    gap: clamp(25px, 7vw, 80px);
 
     margin-top: 55px;
 }
@@ -568,12 +539,7 @@ section {
 .countdown span {
     display: block;
 
-    font-size:
-        clamp(
-            2.8rem,
-            6vw,
-            4.5rem
-        );
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
 
     font-weight: 300;
 
@@ -612,11 +578,7 @@ section {
 .details-grid {
     display: grid;
 
-    grid-template-columns:
-        repeat(
-            2,
-            1fr
-        );
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 25px;
 
@@ -643,13 +605,7 @@ section {
     transform: translateY(-6px);
 
     box-shadow:
-        0 15px 40px
-        rgba(
-            21,
-            28,
-            39,
-            0.08
-        );
+        0 15px 40px rgba(21, 28, 39, 0.08);
 }
 
 
@@ -663,14 +619,7 @@ section {
     bottom: 12px;
     left: 12px;
 
-    border:
-        1px solid
-        rgba(
-            183,
-            160,
-            120,
-            0.18
-        );
+    border: 1px solid rgba(183, 160, 120, 0.18);
 
     pointer-events: none;
 }
@@ -767,12 +716,9 @@ section {
 
     margin-top: 40px;
 
-    padding:
-        17px 45px;
+    padding: 17px 45px;
 
-    border:
-        1px solid
-        var(--gold-light);
+    border: 1px solid var(--gold-light);
 
     color: var(--white);
 
@@ -811,8 +757,7 @@ section {
 .music-intro {
     max-width: 550px;
 
-    margin:
-        0 auto 35px;
+    margin: 0 auto 35px;
 
     color: #50545a;
 }
@@ -821,21 +766,14 @@ section {
 .spotify-player {
     max-width: 700px;
 
-    margin:
-        40px auto 0;
+    margin: 40px auto 0;
 
     overflow: hidden;
 
     border-radius: 12px;
 
     box-shadow:
-        0 15px 40px
-        rgba(
-            21,
-            28,
-            39,
-            0.12
-        );
+        0 15px 40px rgba(21, 28, 39, 0.12);
 }
 
 
@@ -899,28 +837,18 @@ footer p:last-child {
 
     border-radius: 50%;
 
-    border:
-        1px solid
-        var(--gold-light);
+    border: 1px solid var(--gold-light);
 
     background: var(--midnight);
 
     color: var(--gold-light);
 
-    font-family: Georgia, serif;
-
-    font-size: 25px;
+    font-size: 20px;
 
     cursor: pointer;
 
     box-shadow:
-        0 8px 25px
-        rgba(
-            0,
-            0,
-            0,
-            0.2
-        );
+        0 10px 30px rgba(21, 28, 39, 0.2);
 
     transition:
         transform 0.3s ease,
@@ -929,18 +857,10 @@ footer p:last-child {
 
 
 .assistant-character:hover {
-    transform:
-        translateY(-4px)
-        rotate(8deg);
+    transform: translateY(-4px);
 
     box-shadow:
-        0 12px 30px
-        rgba(
-            0,
-            0,
-            0,
-            0.25
-        );
+        0 15px 35px rgba(21, 28, 39, 0.28);
 }
 
 
@@ -948,35 +868,26 @@ footer p:last-child {
     position: absolute;
 
     right: 0;
-
     bottom: 75px;
 
-    width: 310px;
+    width: 320px;
 
-    padding: 28px;
+    padding: 35px 30px;
 
     background: var(--paper);
 
     color: var(--charcoal);
 
-    border:
-        1px solid
-        var(--gold-light);
+    border: 1px solid var(--border-light);
 
     box-shadow:
-        0 20px 50px
-        rgba(
-            21,
-            28,
-            39,
-            0.2
-        );
+        0 20px 60px rgba(21, 28, 39, 0.2);
 
     opacity: 0;
 
     transform:
         translateY(15px)
-        scale(0.95);
+        scale(0.97);
 
     pointer-events: none;
 
@@ -997,76 +908,56 @@ footer p:last-child {
 }
 
 
-.assistant-card::after {
-    content: "";
-
-    position: absolute;
-
-    right: 18px;
-
-    bottom: -10px;
-
-    width: 18px;
-    height: 18px;
-
-    background: var(--paper);
-
-    border-right:
-        1px solid
-        var(--gold-light);
-
-    border-bottom:
-        1px solid
-        var(--gold-light);
-
-    transform: rotate(45deg);
-}
-
-
 .assistant-close {
     position: absolute;
 
-    top: 10px;
-    right: 13px;
+    top: 12px;
+    right: 15px;
 
-    border: none;
+    border: 0;
 
-    background: none;
+    background: transparent;
 
     color: var(--winter-blue);
 
-    font-size: 22px;
+    font-size: 25px;
+
+    line-height: 1;
 
     cursor: pointer;
 }
 
 
 .assistant-sparkle {
+    margin-bottom: 8px;
+
     color: var(--gold);
 
-    font-size: 20px;
+    font-size: 18px;
 
-    margin-bottom: 5px;
+    text-align: center;
 }
 
 
 .assistant-card h3 {
-    margin-bottom: 5px;
+    margin-bottom: 12px;
 
-    font-size: 1.8rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+
+    font-size: 2rem;
 
     font-weight: 400;
+
+    text-align: center;
 }
 
 
 .assistant-card p {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 
-    color: #555b62;
+    font-size: 1.05rem;
 
-    font-size: 1rem;
-
-    line-height: 1.5;
+    text-align: center;
 }
 
 
@@ -1075,35 +966,33 @@ footer p:last-child {
 
     flex-direction: column;
 
-    gap: 8px;
+    gap: 9px;
 }
 
 
 .assistant-options button {
-    padding:
-        9px 12px;
+    padding: 11px 15px;
 
-    border:
-        1px solid
-        var(--border-light);
+    border: 1px solid var(--border-light);
 
-    background: var(--ivory);
+    background: transparent;
 
     color: var(--charcoal);
 
-    text-align: left;
-
     font-family: "Montserrat", sans-serif;
 
-    font-size: 9px;
+    font-size: 8px;
 
-    letter-spacing: 0.5px;
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
 
@@ -1116,73 +1005,89 @@ footer p:last-child {
 }
 
 
+.assistant-card a {
+    color: var(--gold);
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    text-decoration: none;
+}
+
+
+.assistant-card a:hover {
+    text-decoration: underline;
+}
+
+
 /* ==================================================
-   MOBILE
+   RESPONSIVE
 ================================================== */
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 
     body {
-        font-size: 17px;
+        font-size: 18px;
     }
 
 
-    section {
-        padding:
-            85px 20px;
-    }
-
-
-    .hero::before {
-        top: 14px;
-        right: 14px;
-        bottom: 14px;
-        left: 14px;
+    .hero {
+        min-height: 850px;
     }
 
 
     .hero-content {
-        padding:
-            40px 15px;
+        padding: 20px;
     }
 
 
-    .hero-eyebrow {
-        font-size: 10px;
+    .hero::before {
+        top: 18px;
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+    }
 
-        letter-spacing: 5px;
+
+    .hero-hurra {
+        font-size: clamp(4.5rem, 20vw, 7rem);
     }
 
 
     .hero-announcement {
-        font-size: 2.2rem;
+        margin-top: 28px;
 
-        margin-top: 18px;
-        margin-bottom: 28px;
+        font-size: clamp(1.8rem, 8vw, 3rem);
     }
 
 
-    h1 {
-        font-size: 5rem;
+    .hero-names h1 {
+        font-size: clamp(4rem, 19vw, 7rem);
 
-        letter-spacing: -1px;
+        letter-spacing: -2px;
     }
 
 
-    .hero .date {
-        font-size: 9px;
-
-        letter-spacing: 3px;
+    section {
+        padding: 90px 20px;
     }
 
 
     h2 {
-        font-size: 2.7rem;
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+    }
+
+
+    .details-grid {
+        grid-template-columns: 1fr;
     }
 
 
     .countdown {
-        gap: 15px;
+        gap: 18px;
     }
 
 
@@ -1192,55 +1097,37 @@ footer p:last-child {
 
 
     .countdown span {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
 
     .countdown small {
         font-size: 7px;
 
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
     }
 
 
-    .details-grid {
-        grid-template-columns: 1fr;
-
-        gap: 18px;
-    }
-
-
-    .detail-card {
-        padding:
-            40px 20px;
-    }
-
-
-    .story p:last-child {
-        font-size: 1.15rem;
-    }
-
-
-    .footer-names {
-        font-size: 2.3rem;
+    .spotify-player iframe {
+        height: 352px;
     }
 
 
     .wedding-assistant {
-        right: 15px;
-        bottom: 15px;
+        right: 18px;
+        bottom: 18px;
     }
 
 
     .assistant-card {
-        right: 0;
+        right: -2px;
 
-        width:
-            min(
-                310px,
-                calc(100vw - 30px)
-            );
+        width: min(
+            320px,
+            calc(100vw - 36px)
+        );
     }
+
 }
 
 
@@ -1250,16 +1137,8 @@ footer p:last-child {
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-
-        animation-iteration-count: 1 !important;
-
-        transition-duration: 0.01ms !important;
-
-        scroll-behavior: auto !important;
+    html {
+        scroll-behavior: auto;
     }
 
 
@@ -1277,5 +1156,15 @@ footer p:last-child {
         opacity: 1;
 
         transform: none;
+
+        animation: none;
     }
+
+
+    .detail-card,
+    .assistant-character,
+    .assistant-card {
+        transition: none;
+    }
+
 }

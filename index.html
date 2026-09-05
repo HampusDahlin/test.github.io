@@ -1,476 +1,328 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Hampus & Kristinas bröllop – 30 december 2026 i Göteborg."
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Hampus & Kristina — Vårt bröllop</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
 
-    <!-- ==================================================
-         HERO
-    ================================================== -->
-
+    <!-- HERO -->
     <header class="hero">
-
+    
         <div class="hero-content">
-
+    
+            <!-- FIRST MESSAGE -->
             <div class="hero-intro">
+    
                 <p class="hero-hurra">
                     Hurra!
                 </p>
-
-                <p
-                    class="hero-announcement"
-                    id="heroAnnouncement"
-                >
+    
+                <div class="hero-announcement" id="heroAnnouncement">
                     Vi ska gifta oss!
-                </p>
+                </div>
+    
             </div>
-
-
-            <div
-                class="hero-names"
-                id="heroNames"
-                aria-label="Hampus & Kristina, 30 december 2026"
-            >
+    
+    
+            <!-- REVEALED ON SCROLL -->
+            <div class="hero-names" id="heroNames">
+    
                 <h1>
                     Hampus
                     <span>&</span>
                     Kristina
                 </h1>
-
-                <p class="hero-date">
+    
+                <p class="date">
                     30 december 2026
                 </p>
+    
+            </div>
+    
+        </div>
+    
+    </header>
+
+
+    <!-- VÄLKOMMEN -->
+    <section id="welcome">
+        <div class="container">
+
+            <p class="eyebrow">Vår stora dag</p>
+
+            <h2>Vi vill fira tillsammans med dig</h2>
+
+            <div class="divider"></div>
+
+            <p class="intro">
+                Vi skulle bli så glada om du vill vara med
+                och fira vår stora dag tillsammans med oss.
+            </p>
+
+        </div>
+    </section>
+
+
+    <!-- NEDRÄKNING -->
+    <section class="countdown-section">
+
+        <div class="container">
+
+            <p class="eyebrow">Vi räknar ner</p>
+
+            <h2>Snart är dagen här</h2>
+
+            <div class="divider"></div>
+
+            <div class="countdown">
+
+                <div>
+                    <span id="days">00</span>
+                    <small>Dagar</small>
+                </div>
+
+                <div>
+                    <span id="hours">00</span>
+                    <small>Timmar</small>
+                </div>
+
+                <div>
+                    <span id="minutes">00</span>
+                    <small>Minuter</small>
+                </div>
+
+                <div>
+                    <span id="seconds">00</span>
+                    <small>Sekunder</small>
+                </div>
+
             </div>
 
         </div>
 
-    </header>
+    </section>
 
 
-    <main>
+    <!-- DETALJER -->
+    <section id="details">
 
-        <!-- ==================================================
-             WELCOME
-        ================================================== -->
+        <div class="container">
 
-        <section id="welcome">
+            <p class="eyebrow">Praktisk information</p>
 
-            <div class="container">
+            <h2>Allt du behöver veta</h2>
 
-                <p class="eyebrow">
-                    Vår stora dag
-                </p>
+            <div class="divider"></div>
 
-                <h2>
-                    Vi vill fira tillsammans med dig
-                </h2>
+            <div class="details-grid">
 
-                <div class="divider"></div>
+                <div class="detail-card">
+                    <h3>Vigsel</h3>
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+                </div>
 
-                <p class="intro">
-                    Vi skulle bli så glada om du vill vara med
-                    och fira vår stora dag tillsammans med oss.
-                </p>
+                <div class="detail-card">
+                    <h3>Fest</h3>
+                    <p>
+                        TIME<br>
+                        VENUE
+                    </p>
+                </div>
 
-            </div>
+                <div class="detail-card">
+                    <h3>Plats</h3>
+                    <p>
+                        ADDRESS<br>
+                        CITY
+                    </p>
+                </div>
 
-        </section>
-
-
-        <!-- ==================================================
-             COUNTDOWN
-        ================================================== -->
-
-        <section class="countdown-section">
-
-            <div class="container">
-
-                <p class="eyebrow">
-                    Vi räknar ner
-                </p>
-
-                <h2>
-                    Snart är dagen här
-                </h2>
-
-                <div class="divider"></div>
-
-
-                <div
-                    class="countdown"
-                    aria-label="Nedräkning till bröllopet"
-                >
-
-                    <div class="countdown-item">
-                        <span id="days">00</span>
-                        <small>Dagar</small>
-                    </div>
-
-                    <div class="countdown-item">
-                        <span id="hours">00</span>
-                        <small>Timmar</small>
-                    </div>
-
-                    <div class="countdown-item">
-                        <span id="minutes">00</span>
-                        <small>Minuter</small>
-                    </div>
-
-                    <div class="countdown-item">
-                        <span id="seconds">00</span>
-                        <small>Sekunder</small>
-                    </div>
-
+                <div class="detail-card">
+                    <h3>Klädsel</h3>
+                    <p>
+                        DRESS CODE
+                    </p>
                 </div>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- ==================================================
-             DETAILS
-        ================================================== -->
+    <!-- VÅR HISTORIA -->
+    <section>
 
-        <section id="details">
+        <div class="container story">
 
-            <div class="container">
+            <p class="eyebrow">Vår historia</p>
 
-                <p class="eyebrow">
-                    Praktisk information
-                </p>
+            <h2>Hur allt började</h2>
 
-                <h2>
-                    Allt du behöver veta
-                </h2>
+            <div class="divider"></div>
 
-                <div class="divider"></div>
+            <p>
+                YOUR STORY GOES HERE.
+            </p>
 
+        </div>
 
-                <div class="details-grid">
-
-                    <article class="detail-card">
-
-                        <h3>
-                            Vigsel
-                        </h3>
-
-                        <p>
-                            Eftermiddag<br>
-                            30 december 2026
-                        </p>
-
-                        <small>
-                            Mer information kommer senare.
-                        </small>
-
-                    </article>
+    </section>
 
 
-                    <article class="detail-card">
+    <!-- RSVP -->
+    <section class="rsvp">
 
-                        <h3>
-                            Fest
-                        </h3>
+        <div class="container">
 
-                        <p>
-                            Göteborg
-                        </p>
+            <p class="eyebrow">Vi hoppas att du kommer</p>
 
-                        <small>
-                            Mer information kommer senare.
-                        </small>
+            <h2>OSA</h2>
 
-                    </article>
+            <div class="divider"></div>
 
+            <p>
+                Vänligen svara på vår inbjudan
+                senast DATE.
+            </p>
 
-                    <article class="detail-card">
+            <a
+                href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+                class="button"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Svara på inbjudan
+            </a>
 
-                        <h3>
-                            Plats
-                        </h3>
+        </div>
 
-                        <p>
-                            Göteborg
-                        </p>
+    </section>
 
-                        <small>
-                            Lokal och adress kommer senare.
-                        </small>
+    <!-- ====================
+         MUSIK
+    ==================== -->
+    
 
-                    </article>
-
-
-                    <article class="detail-card">
-
-                        <h3>
-                            Klädsel
-                        </h3>
-
-                        <p>
-                            Kavaj
-                        </p>
-
-                    </article>
-
-                </div>
-
+    <section class="music">
+    
+        <div class="container">
+    
+            <p class="eyebrow">Musik för vår dag</p>
+    
+            <h2>Våra låtar</h2>
+    
+            <div class="divider"></div>
+    
+            <p class="music-intro">
+                En liten samling låtar som betyder något för oss.
+            </p>
+    
+            <div class="spotify-player">
+    
+                <iframe
+                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcecv7ESbOPu?utm_source=generator"
+                    width="100%"
+                    height="352"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        fullscreen;
+                        picture-in-picture
+                    "
+                    loading="lazy">
+                </iframe>
+    
             </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             STORY
-        ================================================== -->
-
-        <section>
-
-            <div class="container story">
-
-                <p class="eyebrow">
-                    Vår historia
-                </p>
-
-                <h2>
-                    Hur allt började
-                </h2>
-
-                <div class="divider"></div>
-
-                <p>
-                    Mer om vår historia kommer snart.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             RSVP
-        ================================================== -->
-
-        <section class="rsvp">
-
-            <div class="container">
-
-                <p class="eyebrow">
-                    Vi hoppas att du kommer
-                </p>
-
-                <h2>
-                    OSA
-                </h2>
-
-                <div class="divider"></div>
-
-                <p>
-                    Vänligen svara på vår inbjudan
-                    senast 31 oktober 2026.
-                </p>
-
-                <a
-                    class="button"
-                    href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Svara på inbjudan
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             MUSIC
-        ================================================== -->
-
-        <section class="music">
-
-            <div class="container">
-
-                <p class="eyebrow">
-                    Musik för vår dag
-                </p>
-
-                <h2>
-                    Våra låtar
-                </h2>
-
-                <div class="divider"></div>
-
-                <p class="music-intro">
-                    En liten samling låtar som betyder något för oss.
-                </p>
-
-
-                <div class="spotify-player">
-
-                    <iframe
-                        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcecv7ESbOPu?utm_source=generator"
-                        title="Hampus & Kristinas Spotify-spellista"
-                        width="100%"
-                        height="352"
-                        frameborder="0"
-                        allowfullscreen
-                        allow="
-                            autoplay;
-                            clipboard-write;
-                            encrypted-media;
-                            fullscreen;
-                            picture-in-picture
-                        "
-                        loading="lazy"
-                    ></iframe>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ==================================================
-         FOOTER
-    ================================================== -->
-
+    
+        </div>
+    
+    </section>
+    
+    <!-- FOOTER -->
     <footer>
-
-        <p class="footer-names">
-            Hampus & Kristina
-        </p>
-
-        <p>
-            30 december 2026 · Göteborg
-        </p>
-
+        <p class="footer-names">Hampus & Kristina</p>
+        <p>30 december 2026 · Göteborg</p>
     </footer>
 
-
-    <!-- ==================================================
+    
+    <!-- ====================
          WEDDING ASSISTANT
-    ================================================== -->
-
-    <aside
-        class="wedding-assistant"
-        aria-label="Bröllopsassistent"
-    >
-
+    ==================== -->
+    
+    <div class="wedding-assistant">
+    
         <button
             class="assistant-character"
             id="assistantButton"
-            type="button"
             aria-label="Öppna bröllopsassistenten"
-            aria-expanded="false"
-            aria-controls="assistantCard"
         >
             ✦
         </button>
-
-
-        <div
-            class="assistant-card"
-            id="assistantCard"
-            aria-hidden="true"
-        >
-
+    
+    
+        <div class="assistant-card" id="assistantCard">
+    
             <button
                 class="assistant-close"
                 id="assistantClose"
-                type="button"
-                aria-label="Stäng bröllopsassistenten"
+                aria-label="Stäng"
             >
                 ×
             </button>
-
-
-            <div
-                class="assistant-sparkle"
-                aria-hidden="true"
-            >
-                ✦
-            </div>
-
-
-            <h3>
-                Hej där!
-            </h3>
-
-
+    
+            <div class="assistant-sparkle">✦</div>
+    
+            <h3>Hej där!</h3>
+    
             <p id="assistantMessage">
                 Jag är här för att hjälpa till.
                 Vad vill du veta?
             </p>
-
-
+    
+    
             <div class="assistant-options">
-
-                <button
-                    type="button"
-                    data-answer="vigsel"
-                >
+    
+                <button data-answer="vigsel">
                     När är vigseln?
                 </button>
-
-                <button
-                    type="button"
-                    data-answer="plats"
-                >
+    
+                <button data-answer="plats">
                     Var är festen?
                 </button>
-
-                <button
-                    type="button"
-                    data-answer="kladsel"
-                >
+    
+                <button data-answer="kladsel">
                     Vad ska jag ha på mig?
                 </button>
-
-                <button
-                    type="button"
-                    data-answer="osa"
-                >
+    
+                <button data-answer="osa">
                     Hur svarar jag?
                 </button>
-
-                <button
-                    type="button"
-                    data-answer="presenter"
-                >
+    
+                <button data-answer="presenter">
                     Vad önskar ni er?
                 </button>
-
+    
             </div>
-
+    
         </div>
-
-    </aside>
-
+    
+    </div>
 
     <script src="script.js"></script>
 
 </body>
-
 </html>

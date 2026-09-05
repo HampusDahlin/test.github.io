@@ -411,6 +411,17 @@ document.addEventListener(
                     >
                         Öppna OSA-formuläret →
                     </a>
+                `,
+
+
+                presenter: `
+                    Vi önskar oss ingenting annat än
+                    att ni är med och firar tillsammans
+                    med oss.
+                    <br><br>
+                    Men för er som är envisa så uppskattar
+                    vi alltid kvalitetstid och roliga
+                    aktiviteter ihop!
                 `
 
             };

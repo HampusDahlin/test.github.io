@@ -131,7 +131,7 @@ document.addEventListener(
             0.18;
 
         const namesEndProgress =
-            0.60;
+            0.80;
 
         const namesAnimationLength =
             namesEndProgress -

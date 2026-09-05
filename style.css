@@ -99,27 +99,6 @@ body {
     pointer-events: none;
 }
 
-
-/* Elegant frame */
-
-.hero::before {
-    content: "";
-
-    position: absolute;
-
-    top: 28px;
-    right: 28px;
-    bottom: 28px;
-    left: 28px;
-
-    border: 1px solid rgba(255, 255, 255, 0.32);
-
-    z-index: 5;
-
-    pointer-events: none;
-}
-
-
 /* ==================================================
    HERO CONTENT
 ================================================== */
@@ -189,8 +168,6 @@ body {
 
     font-weight: 300;
 
-    font-style: italic;
-
     line-height: 0.8;
 
     opacity: 0;
@@ -225,8 +202,6 @@ body {
             5vw,
             4rem
         );
-
-    font-style: italic;
 
     font-weight: 400;
 

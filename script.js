@@ -91,6 +91,9 @@ document.addEventListener(
         const hero =
             document.querySelector(".hero");
 
+        const heroIntro =
+            document.querySelector(".hero-intro");
+
         const heroAnnouncement =
             document.getElementById(
                 "heroAnnouncement"
@@ -104,6 +107,7 @@ document.addEventListener(
 
         if (
             !hero ||
+            !heroIntro ||
             !heroAnnouncement ||
             !heroNames
         ) {
@@ -112,19 +116,39 @@ document.addEventListener(
 
 
         // ==================================
+        // HERO ANIMATION SETTINGS
+        // ==================================
+
+        /*
+         * Names start appearing at 18% of the
+         * hero scroll range and finish at 53%.
+         *
+         * Keep the auto-scroll destination tied
+         * to these values so the scroll cannot
+         * overshoot the actual animation.
+         */
+
+        const namesStartProgress =
+            0.18;
+
+        const namesAnimationLength =
+            0.35;
+
+        const namesEndProgress =
+            namesStartProgress +
+            namesAnimationLength;
+
+
+        // ==================================
         // AUTO-SCROLL STATE
         // ==================================
 
         /*
-         * Once the visitor manually leaves the
-         * top of the page, automatic scrolling
-         * is cancelled for this page load.
+         * This flag is deliberately one-way.
          *
-         * This is intentionally a one-way flag.
-         *
-         * Even if the visitor later scrolls back
-         * to the very top, we do NOT automatically
-         * scroll them again.
+         * If the visitor manually scrolls away
+         * from the top, automatic scrolling is
+         * cancelled permanently for this page load.
          */
 
         let userHasLeftTop =
@@ -148,6 +172,7 @@ document.addEventListener(
 
             const viewportHeight =
                 window.innerHeight;
+
 
             const maxScroll =
                 Math.max(
@@ -174,14 +199,8 @@ document.addEventListener(
 
 
             // ==================================
-            // HURRA FADES OUT
+            // HURRA
             // ==================================
-
-            const heroIntro =
-                document.querySelector(
-                    ".hero-intro"
-                );
-
 
             const introFade =
                 Math.max(
@@ -190,15 +209,12 @@ document.addEventListener(
                 );
 
 
-            if (heroIntro) {
-
-                heroIntro.style.opacity =
-                    introFade;
-            }
+            heroIntro.style.opacity =
+                introFade;
 
 
             // ==================================
-            // NAMES REVEAL
+            // NAMES
             // ==================================
 
             const namesProgress =
@@ -206,8 +222,11 @@ document.addEventListener(
                     0,
                     Math.min(
                         1,
-                        (progress - 0.18) /
-                        0.35
+                        (
+                            progress -
+                            namesStartProgress
+                        ) /
+                        namesAnimationLength
                     )
                 );
 
@@ -235,6 +254,26 @@ document.addEventListener(
                 translateY(${namesTranslate}px)
                 scale(${namesScale})
                 `;
+
+
+            // ==================================
+            // OPTIONAL OLD SCROLL LINK
+            // ==================================
+
+            const scrollLink =
+                document.querySelector(
+                    ".scroll-link"
+                );
+
+
+            if (scrollLink) {
+
+                scrollLink.style.opacity =
+                    Math.max(
+                        0,
+                        1 - (progress * 5)
+                    );
+            }
         }
 
 
@@ -248,10 +287,13 @@ document.addEventListener(
         function handleScroll() {
 
             /*
-             * Any actual movement away from the
-             * top permanently disables the
-             * automatic announcement scroll.
+             * Any movement away from the very top
+             * means the visitor has taken control.
+             *
+             * Do NOT reset this flag if they return
+             * to scrollY === 0.
              */
+
             if (
                 window.scrollY > 0
             ) {
@@ -279,7 +321,7 @@ document.addEventListener(
 
 
         // ==================================
-        // AUTOMATIC SCROLL
+        // EASING
         // ==================================
 
         function easeInOutCubic(t) {
@@ -294,14 +336,21 @@ document.addEventListener(
         }
 
 
+        // ==================================
+        // AUTO-SCROLL
+        // ==================================
+
         function scrollToNames() {
 
             /*
-             * This is the final safety check.
+             * Two independent safety checks:
              *
-             * Automatic scrolling is only allowed
-             * if the visitor has NEVER left the top.
+             * 1. The visitor must never have manually
+             *    left the top.
+             *
+             * 2. We must still physically be at the top.
              */
+
             if (
                 userHasLeftTop ||
                 window.scrollY !== 0 ||
@@ -330,11 +379,22 @@ document.addEventListener(
 
 
             /*
-             * This target position is intentionally
-             * kept at the same destination as before.
+             * IMPORTANT:
+             *
+             * The destination is the exact point
+             * where the names animation reaches 100%.
+             *
+             * names:
+             *
+             * (progress - 0.18) / 0.35
+             *
+             * reaches 1 at:
+             *
+             * 0.18 + 0.35 = 0.53
              */
+
             const targetProgress =
-                0.55;
+                namesEndProgress;
 
 
             const startPosition =
@@ -391,7 +451,9 @@ document.addEventListener(
                 );
 
 
-                if (progress < 1) {
+                if (
+                    progress < 1
+                ) {
 
                     requestAnimationFrame(
                         animateScroll
@@ -432,14 +494,10 @@ document.addEventListener(
                 () => {
 
                     /*
-                     * Check BOTH:
-                     *
-                     * 1. Has the visitor ever scrolled?
-                     * 2. Are we actually still at the top?
-                     *
-                     * Either one failing prevents
-                     * automatic scrolling.
+                     * Re-check at the exact moment
+                     * the automatic scroll would begin.
                      */
+
                     if (
                         !userHasLeftTop &&
                         window.scrollY === 0
@@ -454,7 +512,7 @@ document.addEventListener(
 
 
         // ==================================
-        // ANNOUNCEMENT ANIMATION FINISHED
+        // ANNOUNCEMENT ANIMATION
         // ==================================
 
         heroAnnouncement.addEventListener(
@@ -473,7 +531,7 @@ document.addEventListener(
 
         // ==================================
         // FALLBACK
-        // ==================================
+        // ========================================
 
         setTimeout(
             () => {

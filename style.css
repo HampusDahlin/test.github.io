@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bonheur+Royale&display=swap');
 
 /* ==================================================
    VARIABLES
@@ -175,10 +175,8 @@ body {
 
     color: var(--white);
 
-    font-family:
-        "Cormorant Garamond",
-        Georgia,
-        serif;
+    font-family: "Bonheur Royale", cursive;
+
 
     font-size:
         clamp(
@@ -187,7 +185,7 @@ body {
             10rem
         );
 
-    font-weight: 300;
+    font-weight: 400;
 
     font-style: italic;
 
@@ -214,10 +212,7 @@ body {
 
     color: var(--gold-light);
 
-    font-family:
-        "Cormorant Garamond",
-        Georgia,
-        serif;
+    font-family: "Bonheur Royale", cursive;
 
     font-size:
         clamp(

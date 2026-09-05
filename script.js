@@ -390,10 +390,11 @@ document.addEventListener(
 
 
                 kladsel: `
-                    Klädkoden kommer senare.
+                    Klädkoden är
+                    <strong>kavaj</strong>.
                     <br><br>
-                    Vi återkommer med mer information
-                    närmare dagen.
+                    Vi ser fram emot att fira
+                    tillsammans med er!
                 `,
 
 

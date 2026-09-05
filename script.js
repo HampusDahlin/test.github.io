@@ -8,55 +8,35 @@ const weddingDate = new Date(
 
 
 function updateCountdown() {
-
-    const now =
-        new Date().getTime();
-
-    const distance =
-        weddingDate - now;
-
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
 
     if (distance <= 0) {
-
         document.getElementById("days").textContent = "00";
         document.getElementById("hours").textContent = "00";
         document.getElementById("minutes").textContent = "00";
         document.getElementById("seconds").textContent = "00";
-
         return;
     }
 
+    const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+    );
 
-    const days =
-        Math.floor(
-            distance /
-            (1000 * 60 * 60 * 24)
-        );
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
 
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
 
-    const hours =
-        Math.floor(
-            (distance %
-                (1000 * 60 * 60 * 24)) /
-            (1000 * 60 * 60)
-        );
-
-
-    const minutes =
-        Math.floor(
-            (distance %
-                (1000 * 60 * 60)) /
-            (1000 * 60)
-        );
-
-
-    const seconds =
-        Math.floor(
-            (distance %
-                (1000 * 60)) /
-            1000
-        );
-
+    const seconds = Math.floor(
+        (distance % (1000 * 60))
+        / 1000
+    );
 
     document.getElementById("days").textContent =
         String(days).padStart(2, "0");
@@ -73,234 +53,307 @@ function updateCountdown() {
 
 
 updateCountdown();
-
-setInterval(
-    updateCountdown,
-    1000
-);
+setInterval(updateCountdown, 1000);
 
 
 // ========================================
 // HERO SCROLL ANIMATION
 // ========================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-        const hero =
-            document.querySelector(".hero");
+    const hero =
+        document.querySelector(".hero");
 
-        const heroIntro =
-            document.querySelector(".hero-intro");
+    const heroIntro =
+        document.querySelector(".hero-intro");
 
-        const heroAnnouncement =
-            document.getElementById(
-                "heroAnnouncement"
+    const heroNames =
+        document.getElementById("heroNames");
+
+    const heroAnnouncement =
+        document.querySelector(".hero-announcement");
+
+
+    /*
+     * The names animation is driven by the actual
+     * position of the page through the hero.
+     *
+     * These values describe only when the visual
+     * animation starts and ends. The automatic
+     * scroll target itself is calculated from the
+     * element's actual geometry.
+     */
+    const namesStartProgress = 0.18;
+    const namesAnimationLength = 0.35;
+
+
+    /*
+     * Once the visitor manually leaves the top,
+     * automatic scrolling is permanently cancelled
+     * for this page load.
+     */
+    let userHasLeftTop =
+        window.scrollY > 0;
+
+    let autoScrollStarted = false;
+    let autoScrollScheduled = false;
+
+
+    function getHeroProgress() {
+
+        if (!hero) {
+            return 0;
+        }
+
+        const maxScroll =
+            Math.max(
+                0,
+                hero.offsetHeight -
+                window.innerHeight
             );
 
-        const heroNames =
-            document.getElementById(
-                "heroNames"
-            );
+        if (maxScroll === 0) {
+            return 0;
+        }
 
+        return Math.max(
+            0,
+            Math.min(
+                1,
+                window.scrollY / maxScroll
+            )
+        );
+    }
+
+
+    function updateHero() {
 
         if (
             !hero ||
             !heroIntro ||
-            !heroAnnouncement ||
             !heroNames
         ) {
             return;
         }
 
 
-        // ==================================
-        // HERO SCROLL SETTINGS
-        // ==================================
-
-        /*
-         * The names begin appearing at 18%
-         * and are fully visible at 53%.
-         *
-         * The automatic scroll stops exactly
-         * at that 53% point.
-         */
-
-        const namesStartProgress =
-            0.18;
-
-        const namesEndProgress =
-            0.80;
-
-        const namesAnimationLength =
-            namesEndProgress -
-            namesStartProgress;
+        const progress =
+            getHeroProgress();
 
 
         // ==================================
-        // AUTO-SCROLL STATE
+        // INTRO FADES OUT
         // ==================================
 
-        /*
-         * Once the visitor manually scrolls
-         * away from the top, automatic scrolling
-         * is permanently cancelled for this
-         * page load.
-         */
+        const introFade =
+            Math.max(
+                0,
+                1 - (progress * 4)
+            );
 
-        let userHasLeftTop =
-            window.scrollY > 0;
-
-        let autoScrollStarted =
-            false;
-
-        let autoScrollScheduled =
-            false;
+        heroIntro.style.opacity =
+            introFade;
 
 
         // ==================================
-        // HERO VISUAL STATE
+        // NAMES ENTER
         // ==================================
 
-        function updateHero() {
-
-            const heroHeight =
-                hero.offsetHeight;
-
-            const viewportHeight =
-                window.innerHeight;
-
-
-            const maxScroll =
-                Math.max(
-                    0,
-                    heroHeight -
-                    viewportHeight
-                );
+        const namesProgress =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    (progress - namesStartProgress)
+                    / namesAnimationLength
+                )
+            );
 
 
-            const scroll =
-                Math.max(
-                    0,
-                    Math.min(
-                        window.scrollY,
-                        maxScroll
-                    )
-                );
+        const namesTranslate =
+            100 -
+            (namesProgress * 100);
 
 
-            const progress =
-                maxScroll > 0
-                    ? scroll / maxScroll
-                    : 0;
+        const namesScale =
+            0.96 +
+            (namesProgress * 0.04);
 
 
-            // ==================================
-            // HURRA
-            // ==================================
+        heroNames.style.opacity =
+            namesProgress;
 
-            const introFade =
-                Math.max(
-                    0,
-                    1 - (progress * 4)
-                );
-
-
-            heroIntro.style.opacity =
-                introFade;
+        heroNames.style.transform =
+            `
+            translateY(${namesTranslate}px)
+            scale(${namesScale})
+            `;
+    }
 
 
-            // ==================================
-            // HAMPUS & KRISTINA + DATE
-            // ==================================
-
-            const namesProgress =
-                Math.max(
-                    0,
-                    Math.min(
-                        1,
-                        (
-                            progress -
-                            namesStartProgress
-                        ) /
-                        namesAnimationLength
-                    )
-                );
+    /*
+     * Run once immediately.
+     */
+    updateHero();
 
 
-            const namesOpacity =
-                namesProgress;
+    /*
+     * Manual scrolling cancels the automatic
+     * announcement scroll as soon as the visitor
+     * has genuinely left the top.
+     */
+    window.addEventListener(
+        "scroll",
+        () => {
 
-
-            const namesTranslate =
-                100 -
-                (namesProgress * 100);
-
-
-            const namesScale =
-                0.96 +
-                (namesProgress * 0.04);
-
-
-            heroNames.style.opacity =
-                namesOpacity;
-
-
-            heroNames.style.transform =
-                `
-                translateY(${namesTranslate}px)
-                scale(${namesScale})
-                `;
-        }
-
-
-        updateHero();
-
-
-        // ==================================
-        // SCROLL HANDLER
-        // ==================================
-
-        function handleScroll() {
-
-            /*
-             * Any movement away from the top
-             * means the visitor has taken control.
-             *
-             * This flag is never reset, even if
-             * the visitor later returns to the top.
-             */
-
-            if (
-                window.scrollY > 0
-            ) {
+            if (window.scrollY > 0) {
                 userHasLeftTop = true;
             }
 
-
             updateHero();
+        },
+        { passive: true }
+    );
+
+
+    /*
+     * Update after resizing.
+     */
+    window.addEventListener(
+        "resize",
+        updateHero
+    );
+
+
+    // ========================================
+    // AUTOMATIC SCROLL TO NAMES
+    // ========================================
+
+    function getNamesCenteredTarget() {
+
+        if (!hero || !heroNames) {
+            return null;
         }
 
 
-        window.addEventListener(
-            "scroll",
-            handleScroll,
-            {
-                passive: true
-            }
+        /*
+         * The hero is sticky and the names element is
+         * positioned inside that viewport. Therefore
+         * its final centered position is determined by
+         * its actual rendered geometry, not by a guessed
+         * page percentage.
+         *
+         * Temporarily render the names in their final
+         * state, measure their real center, and calculate
+         * the page position needed to place that center
+         * at the viewport center.
+         */
+        const previousOpacity =
+            heroNames.style.opacity;
+
+        const previousTransform =
+            heroNames.style.transform;
+
+
+        heroNames.style.opacity = "1";
+
+        heroNames.style.transform =
+            "translateY(0) scale(1)";
+
+
+        const rect =
+            heroNames.getBoundingClientRect();
+
+
+        const elementCenter =
+            rect.top +
+            (rect.height / 2);
+
+        const viewportCenter =
+            window.innerHeight / 2;
+
+
+        const target =
+            window.scrollY +
+            elementCenter -
+            viewportCenter;
+
+
+        heroNames.style.opacity =
+            previousOpacity;
+
+        heroNames.style.transform =
+            previousTransform;
+
+
+        const maxScroll =
+            Math.max(
+                0,
+                hero.offsetHeight -
+                window.innerHeight
+            );
+
+
+        return Math.max(
+            0,
+            Math.min(
+                target,
+                maxScroll
+            )
         );
+    }
 
 
-        window.addEventListener(
-            "resize",
-            updateHero
-        );
+    function scrollToNames() {
+
+        if (
+            autoScrollStarted ||
+            userHasLeftTop ||
+            window.scrollY !== 0
+        ) {
+            return;
+        }
 
 
-        // ==================================
-        // EASING
-        // ==================================
+        const target =
+            getNamesCenteredTarget();
+
+
+        if (target === null) {
+            return;
+        }
+
+
+        autoScrollStarted = true;
+
+
+        const html =
+            document.documentElement;
+
+        const previousScrollBehavior =
+            html.style.scrollBehavior;
+
+        /*
+         * The stylesheet has global smooth scrolling.
+         * Disable it temporarily so that our own
+         * five-second easing is the only scroll animation.
+         */
+        html.style.scrollBehavior = "auto";
+
+
+        const start =
+            window.scrollY;
+
+        const distance =
+            target - start;
+
+        const duration =
+            5000;
+
+        const startTime =
+            performance.now();
+
 
         function easeInOutCubic(t) {
 
@@ -314,357 +367,271 @@ document.addEventListener(
         }
 
 
-        // ==================================
-        // AUTO-SCROLL
-        // ==================================
-
-        function scrollToNames() {
+        function step(now) {
 
             /*
-             * Automatic scrolling is only allowed
-             * when the visitor has never manually
-             * scrolled and is still at the top.
+             * If the visitor touches the scroll position
+             * while the automatic movement is running,
+             * respect that interaction and stop.
              */
-
             if (
-                userHasLeftTop ||
-                window.scrollY !== 0 ||
-                autoScrollStarted
+                userHasLeftTop &&
+                window.scrollY !== 0
             ) {
+                html.style.scrollBehavior =
+                    previousScrollBehavior;
+
                 return;
             }
 
 
-            autoScrollStarted = true;
+            const elapsed =
+                now - startTime;
 
-
-            const heroHeight =
-                hero.offsetHeight;
-
-            const viewportHeight =
-                window.innerHeight;
-
-
-            /*
-             * Because .hero-content is sticky
-             * and .hero-names is centered inside
-             * that viewport, the correct destination
-             * is the point where the names animation
-             * reaches 100%.
-             */
-
-            const maxScroll =
-                Math.max(
-                    0,
-                    heroHeight -
-                    viewportHeight
+            const progress =
+                Math.min(
+                    elapsed / duration,
+                    1
                 );
 
+            const eased =
+                easeInOutCubic(progress);
 
-            const targetPosition =
-                maxScroll *
-                namesEndProgress;
-
-
-            const startPosition =
-                window.scrollY;
+            const current =
+                start +
+                (distance * eased);
 
 
-            const distance =
-                targetPosition -
-                startPosition;
+            window.scrollTo({
+                top: current,
+                left: 0,
+                behavior: "auto"
+            });
 
 
-            const duration =
-                5000;
+            if (progress < 1) {
 
+                requestAnimationFrame(step);
 
-            const startTime =
-                performance.now();
+            } else {
 
+                /*
+                 * Force the exact calculated endpoint,
+                 * then restore the site's normal scrolling.
+                 */
+                window.scrollTo({
+                    top: target,
+                    left: 0,
+                    behavior: "auto"
+                });
 
-            function animateScroll(
-                currentTime
-            ) {
+                html.style.scrollBehavior =
+                    previousScrollBehavior;
 
-                const elapsed =
-                    currentTime -
-                    startTime;
-
-
-                const progress =
-                    Math.min(
-                        elapsed / duration,
-                        1
-                    );
-
-
-                const easedProgress =
-                    easeInOutCubic(
-                        progress
-                    );
-
-
-                window.scrollTo(
-                    0,
-                    startPosition +
-                    (
-                        distance *
-                        easedProgress
-                    )
-                );
-
-
-                if (
-                    progress < 1
-                ) {
-
-                    requestAnimationFrame(
-                        animateScroll
-                    );
-
-                } else {
-
-                    /*
-                     * Force the exact final
-                     * destination to avoid a
-                     * fractional-pixel difference.
-                     */
-
-                    window.scrollTo(
-                        0,
-                        targetPosition
-                    );
-
-                    updateHero();
-                }
+                updateHero();
             }
-
-
-            requestAnimationFrame(
-                animateScroll
-            );
         }
 
 
-        // ==================================
-        // SCHEDULE AUTO-SCROLL
-        // ==================================
+        requestAnimationFrame(step);
+    }
 
-        function scheduleAutoScroll() {
+
+    function scheduleAutomaticScroll() {
+
+        if (
+            autoScrollScheduled ||
+            autoScrollStarted ||
+            userHasLeftTop
+        ) {
+            return;
+        }
+
+
+        autoScrollScheduled = true;
+
+
+        window.setTimeout(() => {
 
             if (
-                autoScrollScheduled ||
-                autoScrollStarted ||
-                userHasLeftTop
+                !userHasLeftTop &&
+                window.scrollY === 0
             ) {
-                return;
+                scrollToNames();
             }
 
-
-            autoScrollScheduled = true;
-
-
-            setTimeout(
-                () => {
-
-                    /*
-                     * Re-check everything immediately
-                     * before starting the scroll.
-                     */
-
-                    if (
-                        !userHasLeftTop &&
-                        window.scrollY === 0
-                    ) {
-                        scrollToNames();
-                    }
-
-                },
-                450
-            );
-        }
+        }, 450);
+    }
 
 
-        // ==================================
-        // ANNOUNCEMENT ANIMATION FINISHED
-        // ==================================
+    /*
+     * Start the automatic scroll only after
+     * "Vi ska gifta oss!" has completed its
+     * actual CSS entrance animation.
+     */
+    if (heroAnnouncement) {
 
         heroAnnouncement.addEventListener(
             "animationend",
-            (event) => {
+            event => {
 
                 if (
                     event.animationName ===
                     "announcementIn"
                 ) {
-                    scheduleAutoScroll();
+                    scheduleAutomaticScroll();
                 }
+
             }
         );
 
 
-        // ==================================
-        // FALLBACK
-        // ==================================
+        /*
+         * Fallback in case animationend is unavailable
+         * or the animation is skipped by the browser.
+         */
+        window.setTimeout(() => {
 
-        setTimeout(
-            () => {
+            scheduleAutomaticScroll();
 
-                if (
-                    !autoScrollScheduled &&
-                    !autoScrollStarted &&
-                    !userHasLeftTop
-                ) {
-                    scheduleAutoScroll();
-                }
+        }, 3000);
+    }
 
-            },
-            3000
+
+    // ========================================
+    // WEDDING ASSISTANT
+    // ========================================
+
+    const assistantButton =
+        document.getElementById(
+            "assistantButton"
+        );
+
+    const assistantCard =
+        document.getElementById(
+            "assistantCard"
+        );
+
+    const assistantClose =
+        document.getElementById(
+            "assistantClose"
+        );
+
+    const assistantMessage =
+        document.getElementById(
+            "assistantMessage"
         );
 
 
-        // ========================================
-        // WEDDING ASSISTANT
-        // ========================================
+    if (
+        assistantButton &&
+        assistantCard &&
+        assistantClose &&
+        assistantMessage
+    ) {
 
-        const assistantButton =
-            document.getElementById(
-                "assistantButton"
-            );
+        assistantButton.addEventListener(
+            "click",
+            () => {
 
-        const assistantCard =
-            document.getElementById(
-                "assistantCard"
-            );
+                assistantCard.classList.toggle(
+                    "open"
+                );
 
-        const assistantClose =
-            document.getElementById(
-                "assistantClose"
-            );
-
-        const assistantMessage =
-            document.getElementById(
-                "assistantMessage"
-            );
+            }
+        );
 
 
-        if (
-            assistantButton &&
-            assistantCard &&
-            assistantClose &&
-            assistantMessage
-        ) {
+        assistantClose.addEventListener(
+            "click",
+            () => {
 
-            assistantButton.addEventListener(
-                "click",
-                () => {
+                assistantCard.classList.remove(
+                    "open"
+                );
 
-                    assistantCard.classList.toggle(
-                        "open"
-                    );
-                }
-            );
+            }
+        );
 
 
-            assistantClose.addEventListener(
-                "click",
-                () => {
+        const answers = {
 
-                    assistantCard.classList.remove(
-                        "open"
-                    );
-                }
-            );
+            vigsel: `
+                Vigseln äger rum
+                <strong>eftermiddag</strong>
+                den 30 december 2026.
+                <br><br>
+                Mer information kommer senare.
+            `,
 
+            plats: `
+                Vi gifter oss och firar
+                i <strong>Göteborg</strong>.
+                <br><br>
+                Mer information om platsen
+                kommer senare.
+            `,
 
-            const answers = {
+            kladsel: `
+                Klädkoden är
+                <strong>kavaj</strong>.
+                <br><br>
+                Vi ser fram emot att se dig där!
+            `,
 
-                vigsel: `
-                    Vigseln äger rum
-                    på eftermiddagen den
-                    <strong>30 december 2026</strong>.
-                    <br><br>
-                    Exakt tid och plats kommer
-                    senare.
-                `,
+            osa: `
+                OSA senast
+                <strong>31 oktober 2026</strong>.
+                <br><br>
+                <a
+                    href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Öppna OSA-formuläret →
+                </a>
+            `,
 
-
-                plats: `
-                    Vi kommer att fira i
-                    <strong>Göteborg</strong>.
-                    <br><br>
-                    Exakt lokal meddelas senare.
-                `,
-
-
-                kladsel: `
-                    Klädkoden är
-                    <strong>Kavaj</strong>.
-                    <br><br>
-                    Vi ser fram emot att se
-                    er uppklädda och fina!
-                `,
-
-
-                osa: `
-                    Vänligen svara på vår
-                    inbjudan senast
-                    <strong>31 oktober 2026</strong>.
-                    <br><br>
-
-                    <a
-                        href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Öppna OSA-formuläret →
-                    </a>
-                `,
+            presenter: `
+                Vi önskar oss ingenting annat än
+                att ni är med och firar tillsammans
+                med oss.
+                <br><br>
+                Men för er som är envisa så uppskattar
+                vi alltid kvalitetstid och roliga
+                aktiviteter ihop!
+            `
+        };
 
 
-                presenter: `
-                    Vi önskar oss ingenting
-                    annat än att ni är med och
-                    firar tillsammans med oss.
-                    <br><br>
-                    Men för er som är envisa så
-                    uppskattar vi alltid
-                    kvalitetstid och roliga
-                    aktiviteter ihop!
-                `
-            };
+        document
+            .querySelectorAll(
+                ".assistant-options button"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const answer =
+                            answers[
+                                button.dataset.answer
+                            ];
 
 
-            document
-                .querySelectorAll(
-                    ".assistant-options button"
-                )
-                .forEach(
-                    (button) => {
+                        if (answer) {
 
-                        button.addEventListener(
-                            "click",
-                            () => {
+                            assistantMessage.innerHTML =
+                                answer;
 
-                                const answer =
-                                    answers[
-                                        button.dataset
-                                            .answer
-                                    ];
+                        }
 
-
-                                if (answer) {
-
-                                    assistantMessage
-                                        .innerHTML =
-                                        answer;
-                                }
-                            }
-                        );
                     }
                 );
-        }
+
+            });
 
     }
-);
+
+});

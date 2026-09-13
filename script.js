@@ -3,7 +3,7 @@
 // ========================================
 
 const weddingDate = new Date(
-    "2026-12-30T00:00:00"
+    "2026-12-31T00:00:00"
 ).getTime();
 
 
@@ -915,43 +915,21 @@ document.addEventListener(
             const answers = {
 
                 vigsel: `
-                    Vigseln äger rum
-                    <strong>eftermiddag</strong>
-                    den 30 december 2026.
-                    <br><br>
-                    Mer information kommer senare.
+                    Vigseln är drop-in från kl. 11:00.
+                    Vi vet inte exakt när det blir vår tur,
+                    men någon gång från 11 och framåt händer det!
                 `,
 
 
                 plats: `
-                    Vi gifter oss och firar
-                    i <strong>Göteborg</strong>.
-                    <br><br>
-                    Mer information om platsen
-                    kommer senare.
+                    <strong>Vigsel:</strong> Masthuggskyrkan
+                    <br>
+                    <strong>Fest:</strong> Götaverksgatan
                 `,
 
 
                 kladsel: `
-                    Klädkoden är
-                    <strong>kavaj</strong>.
-                    <br><br>
-                    Vi ser fram emot att se dig där!
-                `,
-
-
-                osa: `
-                    OSA senast
-                    <strong>31 oktober 2026</strong>.
-                    <br><br>
-
-                    <a
-                        href="https://forms.gle/LFyQXTaBHwLzJJ5G8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Öppna OSA-formuläret →
-                    </a>
+                    <strong>Kavaj</strong> – gärna lite nyårsglitter! ✨
                 `,
 
 

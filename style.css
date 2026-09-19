@@ -542,6 +542,88 @@ section {
 
 
 /* ==================================================
+   SCHEDULE
+================================================== */
+
+.schedule-section {
+    background: var(--paper);
+}
+
+.schedule {
+    position: relative;
+    max-width: 780px;
+    margin: 60px auto 0;
+}
+
+.schedule::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 145px;
+    width: 1px;
+    background: var(--border-light);
+}
+
+.schedule-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 50px;
+    padding: 0 0 45px;
+}
+
+.schedule-item:last-child {
+    padding-bottom: 0;
+}
+
+.schedule-item::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 140px;
+    width: 11px;
+    height: 11px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    background: var(--paper);
+    transform: translateX(-50%);
+}
+
+.schedule-time {
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    line-height: 1.5;
+    text-align: right;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+.schedule-content {
+    padding-left: 0;
+}
+
+.schedule-content h3 {
+    margin: 0 0 10px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.65rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--midnight);
+}
+
+.schedule-content p {
+    max-width: 520px;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #50545a;
+}
+
+
+/* ==================================================
    DETAILS
 ================================================== */
 
@@ -1003,6 +1085,31 @@ footer p:last-child {
 ================================================== */
 
 @media (max-width: 700px) {
+
+.schedule::before {
+    left: 25px;
+}
+
+.schedule-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0 0 35px 55px;
+}
+
+.schedule-item::before {
+    left: 25px;
+    transform: translateX(-50%);
+}
+
+.schedule-time {
+    text-align: left;
+}
+
+.schedule-content h3 {
+    font-size: 1.45rem;
+}
+
+
 
     body {
         font-size: 18px;

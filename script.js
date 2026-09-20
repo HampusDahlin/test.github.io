@@ -1,3 +1,103 @@
+
+
+// ========================================
+// SPOTIFY EMBED
+// ========================================
+
+const spotifyPlaylistUri =
+    "spotify:playlist:2CRtxjwtr3o4Jcc8qcOOJm";
+
+
+function initSpotifyEmbed(IFrameAPI) {
+
+    const element =
+        document.getElementById("spotifyEmbed");
+
+
+    if (!element) {
+        return;
+    }
+
+
+    const options = {
+        width: "100%",
+        height: "352",
+        uri: spotifyPlaylistUri
+    };
+
+
+    IFrameAPI.createController(
+        element,
+        options,
+        EmbedController => {
+
+            /*
+             * Spotify's iFrame API supports the
+             * dark theme through loadUri().
+             * The playlist is loaded again with
+             * that theme as soon as the controller
+             * is ready.
+             */
+            EmbedController.loadUri(
+                spotifyPlaylistUri,
+                false,
+                0,
+                "dark"
+            );
+
+        }
+    );
+}
+
+
+window.onSpotifyIframeApiReady =
+    initSpotifyEmbed;
+
+
+function loadSpotifyIframeApi() {
+
+    if (
+        document.getElementById(
+            "spotify-iframe-api"
+        )
+    ) {
+        return;
+    }
+
+
+    const script =
+        document.createElement("script");
+
+
+    script.id =
+        "spotify-iframe-api";
+
+    script.src =
+        "https://open.spotify.com/embed/iframe-api/v1";
+
+    script.async = true;
+
+
+    document.body.appendChild(script);
+}
+
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadSpotifyIframeApi,
+        { once: true }
+    );
+
+} else {
+
+    loadSpotifyIframeApi();
+}
+
 // ========================================
 // BRÖLLOPSDAGEN
 // ========================================
@@ -107,6 +207,12 @@ document.addEventListener(
         const heroIntro =
             document.querySelector(".hero-intro");
 
+        const heroContent =
+            document.querySelector(".hero-content");
+
+        const heroBackground =
+            document.querySelector(".hero-background");
+
         const heroNames =
             document.getElementById("heroNames");
 
@@ -119,6 +225,8 @@ document.addEventListener(
         if (
             !hero ||
             !heroIntro ||
+            !heroContent ||
+            !heroBackground ||
             !heroNames
         ) {
             return;
@@ -208,6 +316,42 @@ document.addEventListener(
         }
 
 
+        function getHeroLocalScroll(
+            scrollY = window.scrollY
+        ) {
+
+            const heroTop =
+                hero.getBoundingClientRect().top +
+                window.scrollY;
+
+            return clamp(
+                scrollY - heroTop,
+                0,
+                getHeroMaxScroll()
+            );
+        }
+
+
+        function updateHeroLayers(
+            scrollY = window.scrollY
+        ) {
+
+            const localScroll =
+                getHeroLocalScroll(
+                    scrollY
+                );
+
+            const translate =
+                `translate3d(0, ${localScroll}px, 0)`;
+
+            heroBackground.style.transform =
+                translate;
+
+            heroContent.style.transform =
+                translate;
+        }
+
+
         function getHeroProgress(
             scrollY = window.scrollY
         ) {
@@ -252,6 +396,10 @@ document.addEventListener(
         function renderHero(
             scrollY = window.scrollY
         ) {
+
+            updateHeroLayers(
+                scrollY
+            );
 
             if (isReducedMotion()) {
 

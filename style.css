@@ -66,6 +66,26 @@ body {
 
     color: var(--white);
 
+    isolation: isolate;
+
+    overflow: clip;
+}
+
+
+/* Hero image layer
+ *
+ * Kept separate from the hero itself so iOS Safari never
+ * has to interpret background-attachment: fixed.
+ */
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -2;
+
     background:
         linear-gradient(
             rgba(13, 19, 28, 0.42),
@@ -74,9 +94,7 @@ body {
         url("images/hero.png")
         center center / cover no-repeat;
 
-    background-attachment: fixed;
-
-    overflow: clip;
+    pointer-events: none;
 }
 
 
@@ -89,6 +107,8 @@ body {
 
     inset: 0;
 
+    z-index: -1;
+
     background:
         radial-gradient(
             circle at center,
@@ -98,7 +118,6 @@ body {
 
     pointer-events: none;
 }
-
 
 /* ==================================================
    HERO CONTENT
@@ -603,6 +622,9 @@ section {
 }
 
 .schedule-content {
+    width: 100%;
+    max-width: 610px;
+    margin: 0 auto;
     padding-left: 0;
 }
 
@@ -616,8 +638,8 @@ section {
 }
 
 .schedule-content p {
-    max-width: 520px;
-    margin: 0;
+    max-width: 470px;
+    margin: 0 auto;
     font-size: 1rem;
     line-height: 1.7;
     color: #50545a;
@@ -1087,28 +1109,40 @@ footer p:last-child {
 
 @media (max-width: 700px) {
 
-    .schedule::before {
-        left: 25px;
-    }
+.schedule::before {
+    left: 25px;
+}
 
-    .schedule-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        padding: 0 0 35px 55px;
-    }
+.schedule-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0 0 35px 55px;
+}
 
-    .schedule-item::before {
-        left: 25px;
-        transform: translateX(-50%);
-    }
+.schedule-item::before {
+    left: 25px;
+    transform: translateX(-50%);
+}
 
-    .schedule-time {
-        text-align: left;
-    }
+.schedule-time {
+    text-align: left;
+}
 
-    .schedule-content h3 {
-        font-size: 1.45rem;
-    }
+.schedule-content {
+    max-width: 100%;
+    margin: 0;
+}
+
+.schedule-content h3 {
+    font-size: 1.45rem;
+}
+
+.schedule-content p {
+    max-width: 470px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
 
 
     body {
@@ -1123,14 +1157,6 @@ footer p:last-child {
 
     .hero-content {
         padding: 20px;
-    }
-
-
-    .hero::before {
-        top: 18px;
-        right: 18px;
-        bottom: 18px;
-        left: 18px;
     }
 
 
@@ -1208,20 +1234,6 @@ footer p:last-child {
             320px,
             calc(100vw - 36px)
         );
-    }
-
-}
-
-
-/* ==================================================
-   SAFARI / IOS HERO FALLBACK
-================================================== */
-
-@supports (-webkit-touch-callout: none) {
-
-    .hero {
-        background-attachment: scroll;
-        background-position: center center;
     }
 
 }

@@ -66,6 +66,28 @@ body {
 
     color: var(--white);
 
+    overflow: visible;
+}
+
+
+/*
+ * The image is a real layer with a viewport-sized box.
+ * This deliberately avoids background-attachment: fixed,
+ * position: sticky and a background sized to the full 135vh hero.
+ * JavaScript translates this layer through the hero so it stays
+ * visually pinned while the visitor moves through the hero.
+ */
+.hero-background {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    margin: 0;
+
     background:
         linear-gradient(
             rgba(13, 19, 28, 0.42),
@@ -74,15 +96,15 @@ body {
         url("images/hero.png")
         center center / cover no-repeat;
 
-    background-attachment: fixed;
+    z-index: 0;
 
-    overflow: clip;
+    pointer-events: none;
 }
 
 
 /* Vignette */
 
-.hero::after {
+.hero-background::after {
     content: "";
 
     position: absolute;
@@ -105,9 +127,10 @@ body {
 ================================================== */
 
 .hero-content {
-    position: sticky;
+    position: absolute;
 
     top: 0;
+    left: 0;
 
     height: 100vh;
 
@@ -550,132 +573,76 @@ section {
     background: var(--paper);
 }
 
-
 .schedule {
     position: relative;
-
     max-width: 780px;
-
     margin: 60px auto 0;
 }
 
-
 .schedule::before {
     content: "";
-
     position: absolute;
-
     top: 8px;
     bottom: 8px;
-
     left: 145px;
-
     width: 1px;
-
     background: var(--border-light);
 }
 
-
 .schedule-item {
     position: relative;
-
     display: grid;
-
     grid-template-columns: 120px 1fr;
-
     gap: 50px;
-
     padding: 0 0 45px;
 }
-
 
 .schedule-item:last-child {
     padding-bottom: 0;
 }
 
-
 .schedule-item::before {
     content: "";
-
     position: absolute;
-
     top: 5px;
-
     left: 140px;
-
     width: 11px;
     height: 11px;
-
     border: 1px solid var(--gold);
-
     border-radius: 50%;
-
     background: var(--paper);
-
     transform: translateX(-50%);
 }
 
-
 .schedule-time {
     font-family: "Montserrat", sans-serif;
-
     font-size: 10px;
-
     font-weight: 500;
-
     letter-spacing: 1.5px;
-
     line-height: 1.5;
-
     text-align: right;
-
     text-transform: uppercase;
-
     color: var(--gold);
 }
 
-
-/*
-   The content column is explicitly centered so
-   the heading and paragraph share the same
-   visual center.
-*/
-
 .schedule-content {
-    width: 100%;
-
-    max-width: 610px;
-
-    margin: 0 auto;
-
     padding-left: 0;
 }
 
-
 .schedule-content h3 {
     margin: 0 0 10px;
-
     font-family: "Cormorant Garamond", serif;
-
     font-size: 1.65rem;
-
     font-weight: 500;
-
     line-height: 1.15;
-
     color: var(--midnight);
 }
 
-
 .schedule-content p {
-    max-width: 470px;
-
-    margin: 0 auto;
-
+    max-width: 520px;
+    margin: 0;
     font-size: 1rem;
-
     line-height: 1.7;
-
     color: #50545a;
 }
 
@@ -882,17 +849,29 @@ section {
 
     margin: 40px auto 0;
 
+    padding: 8px;
+
     overflow: hidden;
 
-    border-radius: 12px;
+    border: 1px solid rgba(183, 160, 120, 0.45);
+
+    border-radius: 16px;
+
+    background: var(--midnight);
 
     box-shadow:
-        0 15px 40px rgba(21, 28, 39, 0.12);
+        0 20px 50px rgba(21, 28, 39, 0.18);
 }
 
 
 .spotify-player iframe {
     display: block;
+
+    width: 100%;
+
+    border: 0;
+
+    border-radius: 10px;
 }
 
 
@@ -1143,51 +1122,29 @@ footer p:last-child {
 
 @media (max-width: 700px) {
 
-    .schedule::before {
-        left: 25px;
-    }
+.schedule::before {
+    left: 25px;
+}
 
+.schedule-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0 0 35px 55px;
+}
 
-    .schedule-item {
-        grid-template-columns: 1fr;
+.schedule-item::before {
+    left: 25px;
+    transform: translateX(-50%);
+}
 
-        gap: 8px;
+.schedule-time {
+    text-align: left;
+}
 
-        padding: 0 0 35px 55px;
-    }
+.schedule-content h3 {
+    font-size: 1.45rem;
+}
 
-
-    .schedule-item::before {
-        left: 25px;
-
-        transform: translateX(-50%);
-    }
-
-
-    .schedule-time {
-        text-align: left;
-    }
-
-
-    .schedule-content {
-        max-width: 100%;
-
-        margin: 0;
-    }
-
-
-    .schedule-content h3 {
-        font-size: 1.45rem;
-    }
-
-
-    .schedule-content p {
-        max-width: 470px;
-
-        margin-left: 0;
-
-        margin-right: auto;
-    }
 
 
     body {
@@ -1196,7 +1153,13 @@ footer p:last-child {
 
 
     .hero {
+        height: 135svh;
         min-height: 850px;
+    }
+
+    .hero-background,
+    .hero-content {
+        height: 100svh;
     }
 
 
@@ -1204,13 +1167,6 @@ footer p:last-child {
         padding: 20px;
     }
 
-
-    .hero::before {
-        top: 18px;
-        right: 18px;
-        bottom: 18px;
-        left: 18px;
-    }
 
 
     .hero-hurra {

@@ -395,8 +395,6 @@ body {
 
 
 h2 {
-    margin-top: 18px;
-
     font-size: clamp(2.6rem, 5vw, 4.2rem);
 
     font-weight: 300;

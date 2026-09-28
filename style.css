@@ -625,7 +625,7 @@ section {
 
 .schedule-content {
     padding-left: 0;
-    justify-content: center;
+    justify-self: center;
 }
 
 .schedule-content h3 {
